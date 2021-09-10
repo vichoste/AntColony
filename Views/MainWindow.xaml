@@ -12,7 +12,7 @@
 		<Style TargetType="Window">
 			<Style.Setters>
 				<Setter Property="Background" Value="Transparent"/>
-				<Setter Property="Title" Value="El Laboratorio de Imágenes PGM"/>
+				<Setter Property="Title" Value="Colonia de Hormigas"/>
 				<Setter Property="MinHeight" Value="576"/>
 				<Setter Property="MinWidth" Value="720"/>
 				<Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
@@ -32,7 +32,7 @@
 					<ColumnDefinition Width="1*"/>
 				</Grid.ColumnDefinitions>
 				<TextBlock Grid.Column="0" Foreground="{DynamicResource MaterialDesignDarkForeground}" Style="{DynamicResource MaterialDesignBody1TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center">
-				<MaterialDesign:PackIcon Kind="Image"/>
+				<MaterialDesign:PackIcon Kind="LocationPath"/>
 				</TextBlock>
 				<Menu Grid.Column="1" Style="{DynamicResource MaterialDesignMenu}">
 					<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Archivo">
