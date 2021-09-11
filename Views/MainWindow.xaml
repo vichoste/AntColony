@@ -13,46 +13,44 @@
 			<Style.Setters>
 				<Setter Property="Background" Value="Transparent"/>
 				<Setter Property="Title" Value="Colonia de Hormigas"/>
-				<Setter Property="MinHeight" Value="576"/>
-				<Setter Property="MinWidth" Value="720"/>
+				<Setter Property="MinHeight" Value="720"/>
+				<Setter Property="MinWidth" Value="1280"/>
 				<Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
 				<Setter Property="WindowStyle" Value="ThreeDBorderWindow"/>
 			</Style.Setters>
 		</Style>
 	</Window.Style>
 	<DockPanel LastChildFill="True" Margin="4">
-		<MaterialDesign:Card Background="{DynamicResource MaterialDesignDarkBackground}" DockPanel.Dock="Top" Panel.ZIndex="1024">
+		<MaterialDesign:Card Background="{DynamicResource MaterialDesignDarkBackground}" DockPanel.Dock="Top" Panel.ZIndex="1024" Padding="8, 6, 8, 0">
 			<Grid DockPanel.Dock="Top" Background="Transparent" MouseDown="CheckMouseDown" HorizontalAlignment="Stretch">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="1*"/>
-					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition Width="3*"/>
 					<ColumnDefinition Width="10*"/>
-					<ColumnDefinition Width="1*"/>
-					<ColumnDefinition Width="1*"/>
-					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="3*"/>
 				</Grid.ColumnDefinitions>
-				<TextBlock Grid.Column="0" Foreground="{DynamicResource MaterialDesignDarkForeground}" Style="{DynamicResource MaterialDesignBody1TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center">
-				<MaterialDesign:PackIcon Kind="LocationPath"/>
-				</TextBlock>
-				<Menu Grid.Column="1" Style="{DynamicResource MaterialDesignMenu}">
-					<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Archivo">
-						<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Nuevo"/>
-						<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Abrir..."/>
-						<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Guardar"/>
-						<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Guardar como..."/>
-						<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Salir" Click="Exit"/>
-					</MenuItem>
-				</Menu>
-				<TextBlock Grid.Column="2" Foreground="{DynamicResource MaterialDesignDarkForeground}" Style="{DynamicResource MaterialDesignBody1TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Title, ElementName=Window}"/>
-				<Button Click="Minimize" Grid.Column="3" Foreground="{DynamicResource MaterialDesignDarkForeground}" Style="{DynamicResource MaterialDesignIconButton}" HorizontalAlignment="Center" VerticalAlignment="Center">
-					<MaterialDesign:PackIcon Kind="WindowMinimize"/>
-				</Button>
-				<Button Click="Maximize" Grid.Column="4" Foreground="{DynamicResource MaterialDesignDarkForeground}" Style="{DynamicResource MaterialDesignIconButton}" HorizontalAlignment="Center" VerticalAlignment="Center">
-					<MaterialDesign:PackIcon Kind="{Binding MaximizeIcon, ElementName=Window, FallbackValue=WindowMaximize}"/>
-				</Button>
-				<Button Click="Exit" Grid.Column="5" Foreground="{DynamicResource MaterialDesignDarkForeground}" Style="{DynamicResource MaterialDesignIconButton}" HorizontalAlignment="Center" VerticalAlignment="Center">
-					<MaterialDesign:PackIcon Kind="Close"/>
-				</Button>
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0">
+					<Menu Style="{DynamicResource MaterialDesignMenu}">
+						<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Archivo">
+							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Nuevo"/>
+							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Abrir..."/>
+							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Guardar"/>
+							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Guardar como..."/>
+							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Salir" Click="Exit"/>
+						</MenuItem>
+					</Menu>
+				</StackPanel>
+				<TextBlock Grid.Column="1" Foreground="{DynamicResource MaterialDesignDarkForeground}" Style="{DynamicResource MaterialDesignBody1TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Title, ElementName=Window}"/>
+				<StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+					<Button Click="Minimize" Foreground="{DynamicResource MaterialDesignDarkForeground}" Style="{DynamicResource MaterialDesignIconButton}" HorizontalAlignment="Center" VerticalAlignment="Center">
+						<MaterialDesign:PackIcon Kind="WindowMinimize"/>
+					</Button>
+					<Button Click="Maximize" Foreground="{DynamicResource MaterialDesignDarkForeground}" Style="{DynamicResource MaterialDesignIconButton}" HorizontalAlignment="Center" VerticalAlignment="Center">
+						<MaterialDesign:PackIcon Kind="{Binding MaximizeIcon, ElementName=Window, FallbackValue=WindowMaximize}"/>
+					</Button>
+					<Button Click="Exit" Foreground="{DynamicResource MaterialDesignDarkForeground}" Style="{DynamicResource MaterialDesignIconButton}" HorizontalAlignment="Center" VerticalAlignment="Center">
+						<MaterialDesign:PackIcon Kind="Close"/>
+					</Button>
+				</StackPanel>
 			</Grid>
 		</MaterialDesign:Card>
 		<MaterialDesign:Card></MaterialDesign:Card>
