@@ -78,6 +78,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged {
 			}
 			if (e.LeftButton == MouseButtonState.Pressed && this.WindowState == WindowState.Maximized && e.ClickCount < 2) {
 				this.WindowState = WindowState.Normal;
+				this.MaximizeIcon = PackIconKind.WindowMaximize;
 				var mousePositionRelativetoWindow = Mouse.GetPosition(this);
 				var mousePositionRelativeToScreen = GetMousePositionRelativeToScreen();
 				this.Top = mousePositionRelativetoWindow.X - mousePositionRelativeToScreen.X;
