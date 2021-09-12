@@ -7,7 +7,7 @@ namespace PGMLab.Models.MainWindow;
 /// </summary>
 internal class RelayCommand : ICommand {
 	#region Atrributes
-	private Action<object> _Action;
+	private readonly Action<object> _Action;
 	#endregion
 	#region Constructors
 	/// <summary>
