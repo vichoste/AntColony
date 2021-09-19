@@ -5,11 +5,11 @@ using System.Windows.Input;
 
 using MaterialDesignThemes.Wpf;
 
-namespace PGMLab.Views;
+namespace PGMLab.Views.Main;
 /// <summary>
 /// Main window
 /// </summary>
-public partial class MainWindow : Window, INotifyPropertyChanged {
+public partial class MainView : Window, INotifyPropertyChanged {
 	#region Attributes
 	private PackIconKind? _MaximizeIcon;
 	#endregion
@@ -29,7 +29,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged {
 	/// <summary>
 	/// Initializes the window
 	/// </summary>
-	public MainWindow() {
+	public MainView() {
 		this.InitializeComponent();
 		this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 	}

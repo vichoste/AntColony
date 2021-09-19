@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace PGMLab.Models.MainWindow;
+namespace PGMLab.Models.Main;
 /// <summary>
 /// Creates a relay command that executes an action
 /// </summary>
-internal class RelayCommand : ICommand {
+internal class MainCommmand : ICommand {
 	#region Atrributes
 	private readonly Action<object> _Action;
 	#endregion
@@ -14,7 +14,7 @@ internal class RelayCommand : ICommand {
 	/// Create relay command
 	/// </summary>
 	/// <param name="action">Action to perform</param>
-	public RelayCommand(Action<object> action) => this._Action = action;
+	public MainCommmand(Action<object> action) => this._Action = action;
 	#endregion
 	#region Methods
 	/// <summary>

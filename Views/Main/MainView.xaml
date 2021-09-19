@@ -1,9 +1,9 @@
-﻿<Window x:Name="Window" x:Class="PGMLab.Views.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+﻿<Window x:Name="Main" x:Class="PGMLab.Views.Main.MainView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 		xmlns:MaterialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" TextElement.Foreground="{DynamicResource MaterialDesignBody}" TextElement.FontWeight="Regular" TextElement.FontSize="13" TextOptions.TextFormattingMode="Ideal" TextOptions.TextRenderingMode="Auto" Background="Transparent" FontFamily="{DynamicResource MaterialDesignFont}" AllowsTransparency="True"
 		WindowStyle="None" WindowStartupLocation="CenterScreen"
-		xmlns:ViewModels="clr-namespace:PGMLab.ViewModels.MainWindow">
+		xmlns:Main="clr-namespace:PGMLab.ViewModels.Main">
 	<Window.DataContext>
-		<ViewModels:MainWindowViewModel/>
+		<Main:MainViewModel/>
 	</Window.DataContext>
 	<Window.InputBindings>
 		<KeyBinding Command="{Binding TestCommand}" Modifiers="Ctrl" Key="T"/>
@@ -12,7 +12,7 @@
 		<Style TargetType="Window">
 			<Style.Setters>
 				<Setter Property="Background" Value="Transparent"/>
-				<Setter Property="Title" Value="Colonia de Hormigas"/>
+				<Setter Property="Title" Value="Ant Colony"/>
 				<Setter Property="MinHeight" Value="720"/>
 				<Setter Property="MinWidth" Value="1280"/>
 				<Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
@@ -30,22 +30,22 @@
 				</Grid.ColumnDefinitions>
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0">
 					<Menu Style="{DynamicResource MaterialDesignMenu}">
-						<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Archivo">
-							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Nuevo"/>
-							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Abrir..."/>
-							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Guardar"/>
-							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Guardar como..."/>
-							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Salir" Click="Exit"/>
+						<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_File">
+							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_New"/>
+							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Open..."/>
+							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Save"/>
+							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Save as..."/>
+							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Exit" Click="Exit"/>
 						</MenuItem>
 					</Menu>
 				</StackPanel>
-				<TextBlock Grid.Column="1" Foreground="{DynamicResource MaterialDesignDarkForeground}" Style="{DynamicResource MaterialDesignBody1TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Title, ElementName=Window}"/>
+				<TextBlock Grid.Column="1" Foreground="{DynamicResource MaterialDesignDarkForeground}" Style="{DynamicResource MaterialDesignBody1TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Title, ElementName=Main}"/>
 				<StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
 					<Button Click="Minimize" Foreground="{DynamicResource MaterialDesignDarkForeground}" Style="{DynamicResource MaterialDesignIconButton}" HorizontalAlignment="Center" VerticalAlignment="Center">
 						<MaterialDesign:PackIcon Kind="WindowMinimize"/>
 					</Button>
 					<Button Click="Maximize" Foreground="{DynamicResource MaterialDesignDarkForeground}" Style="{DynamicResource MaterialDesignIconButton}" HorizontalAlignment="Center" VerticalAlignment="Center">
-						<MaterialDesign:PackIcon Kind="{Binding MaximizeIcon, ElementName=Window, FallbackValue=WindowMaximize}"/>
+						<MaterialDesign:PackIcon Kind="{Binding MaximizeIcon, ElementName=Main, TargetNullValue=WindowMaximize}"/>
 					</Button>
 					<Button Click="Exit" Foreground="{DynamicResource MaterialDesignDarkForeground}" Style="{DynamicResource MaterialDesignIconButton}" HorizontalAlignment="Center" VerticalAlignment="Center">
 						<MaterialDesign:PackIcon Kind="Close"/>
