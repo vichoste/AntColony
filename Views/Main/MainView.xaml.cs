@@ -1,29 +1,17 @@
-﻿using System.ComponentModel;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 
 using MaterialDesignThemes.Wpf;
 
+using PGMLab.ViewModels.Main;
+
 namespace PGMLab.Views.Main;
 /// <summary>
 /// Main window
 /// </summary>
-public partial class MainView : Window, INotifyPropertyChanged {
+public partial class MainView : Window {
 	#region Attributes
-	private PackIconKind? _MaximizeIcon;
-	#endregion
-	#region Properties
-	/// <summary>
-	/// Sets the current maximize icon
-	/// </summary>
-	public PackIconKind? MaximizeIcon {
-		get => this._MaximizeIcon;
-		private set {
-			this._MaximizeIcon = value;
-			this.OnPropertyChanged("MaximizeIcon");
-		}
-	}
 	#endregion
 	#region Constructors
 	/// <summary>
@@ -33,17 +21,6 @@ public partial class MainView : Window, INotifyPropertyChanged {
 		this.InitializeComponent();
 		this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 	}
-	#endregion
-	#region Events
-	/// <summary>
-	/// Event
-	/// </summary>
-	public event PropertyChangedEventHandler? PropertyChanged;
-	/// <summary>
-	/// When property changes, call this function
-	/// </summary>
-	/// <param name="value">Property name</param>
-	public void OnPropertyChanged(string value) => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(value));
 	#endregion
 	#region Event methods
 	/// <summary>
@@ -76,7 +53,8 @@ public partial class MainView : Window, INotifyPropertyChanged {
 			}
 			if (e.LeftButton == MouseButtonState.Pressed && this.WindowState == WindowState.Maximized && e.ClickCount < 2) {
 				this.WindowState = WindowState.Normal;
-				this.MaximizeIcon = PackIconKind.WindowMaximize;
+				var dataContext = (MainViewModel) this.DataContext;
+				dataContext.MaximizeIcon = PackIconKind.WindowMaximize;
 				var mousePositionRelativetoWindow = Mouse.GetPosition(this);
 				var mousePositionRelativeToScreen = GetMousePositionRelativeToScreen();
 				this.Top = mousePositionRelativetoWindow.X - mousePositionRelativeToScreen.X;
@@ -92,7 +70,9 @@ public partial class MainView : Window, INotifyPropertyChanged {
 	/// </summary>
 	private void MaximizeWindow() {
 		this.WindowState = this.WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
-		this.MaximizeIcon = this.WindowState == WindowState.Normal ? PackIconKind.WindowMaximize : PackIconKind.WindowRestore;
+		var dataContext = (MainViewModel) this.DataContext;
+		dataContext.MaximizeIcon = PackIconKind.WindowMaximize;
+		dataContext.MaximizeIcon = this.WindowState == WindowState.Normal ? PackIconKind.WindowMaximize : PackIconKind.WindowRestore;
 	}
 	#endregion
 	#region Win32: https://stackoverflow.com/questions/4226740/how-do-i-get-the-current-mouse-screen-coordinates-in-wpf
