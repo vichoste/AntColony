@@ -77,14 +77,10 @@ namespace PGMLab.Views.Main {
 			var graph = new Graph();
 			graph.AddEdge("47", "58");
 			graph.AddEdge("70", "71");
-
-
-
 			var subgraph = new Subgraph("subgraph1");
 			graph.RootSubgraph.AddSubgraph(subgraph);
 			subgraph.AddNode(graph.FindNode("47"));
 			subgraph.AddNode(graph.FindNode("58"));
-
 			var subgraph2 = new Subgraph("subgraph2");
 			subgraph2.Attr.Color = Color.Black;
 			subgraph2.Attr.FillColor = Color.Yellow;
