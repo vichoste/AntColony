@@ -15,9 +15,7 @@ public class MainViewModel {
 	/// <summary>
 	/// Test command
 	/// </summary>
-	public ICommand TestCommand {
-		get; set;
-	}
+	public ICommand TestCommand { get; set; }
 	#endregion
 	#region Constructors
 	/// <summary>
@@ -30,6 +28,6 @@ public class MainViewModel {
 	/// Test command
 	/// </summary>
 	/// <param name="obj">Object to manipulate</param>
-	public static void ExecuteTestCommand(object obj) => _ = MessageBox.Show($"Hecho por Vicente \"vichoste\" Calderón");
+	public static void ExecuteTestCommand(object obj) => _ = MessageBox.Show($"Made by Vicente \"vichoste\" Calderón");
 	#endregion
 }
