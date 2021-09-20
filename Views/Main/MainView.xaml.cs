@@ -75,8 +75,8 @@ namespace PGMLab.Views.Main {
 			var graphViewer = new GraphViewer();
 			graphViewer.BindToPanel(this.GraphContainer);
 			var graph = new Graph();
-			graph.AddEdge("47", "58");
-			graph.AddEdge("70", "71");
+			_ = graph.AddEdge("47", "58");
+			_ = graph.AddEdge("70", "71");
 			var subgraph = new Subgraph("subgraph1");
 			graph.RootSubgraph.AddSubgraph(subgraph);
 			subgraph.AddNode(graph.FindNode("47"));
@@ -89,6 +89,7 @@ namespace PGMLab.Views.Main {
 			subgraph.AddSubgraph(subgraph2);
 			graph.AddEdge("58", subgraph2.Id);
 			graph.Attr.LayerDirection = LayerDirection.LR;
+			graphViewer.NeedToCalculateLayout = true;
 			graphViewer.Graph = graph;
 		}
 		#endregion
