@@ -6,7 +6,13 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <IsPublishable>False</IsPublishable>
+    <ApplicationIcon>circuit.ico</ApplicationIcon>
+    <DebugType>none</DebugType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="circuit.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignColors" Version="2.0.1" />
