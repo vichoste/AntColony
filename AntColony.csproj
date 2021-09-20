@@ -7,6 +7,7 @@
     <IsPublishable>False</IsPublishable>
     <ApplicationIcon>circuit.ico</ApplicationIcon>
     <DebugType>none</DebugType>
+    <StartupObject>PGMLab.App</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
