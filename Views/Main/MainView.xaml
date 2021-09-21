@@ -29,7 +29,7 @@
 			</Style.Setters>
 		</Style>
 	</Window.Style>
-	<Border BorderBrush="{DynamicResource MaterialDesignDarkBackground}" BorderThickness="16">
+	<Border BorderBrush="{DynamicResource MaterialDesignDarkBackground}" BorderThickness="8">
 		<DockPanel LastChildFill="True" Background="{DynamicResource MaterialDesignDarkBackground}">
 			<MaterialDesign:Card Margin="0, 0, 0, 8" Background="{DynamicResource MaterialDesignDarkBackground}" DockPanel.Dock="Top">
 				<Grid DockPanel.Dock="Top" Background="Transparent" MouseDown="CheckMouseDown" HorizontalAlignment="Stretch">
@@ -60,7 +60,7 @@
 					</StackPanel>
 				</Grid>
 			</MaterialDesign:Card>
-			<MaterialDesign:Card VerticalAlignment="Center" MinWidth="300" Margin="16, 0, 0, 0" DockPanel.Dock="Right">
+			<MaterialDesign:Card VerticalAlignment="Center" MinWidth="300" Margin="8, 0, 0, 0" DockPanel.Dock="Right">
 				<StackPanel Margin="8">
 					<TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}" HorizontalAlignment="Center">TSP Options</TextBlock>
 					<Grid Margin="8">
