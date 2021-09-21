@@ -83,14 +83,14 @@ namespace PGMLab.ViewModels.Main {
 			get => this._EvaporationRate;
 			set {
 				if (this._EvaporationRate != value) {
-					if (value >= 0 && value <= 1) {
+					if (value >= 0.001 && value <= 1) {
 						this._EvaporationRate = value;
 						this.OnPropertyChanged("EvaporationRate");
 					} else if (value < 0) {
 						this._EvaporationRate = 0;
 						this.OnPropertyChanged("EvaporationRate");
 					} else {
-						this._EvaporationRate = 1;
+						this._EvaporationRate = 0.001;
 						this.OnPropertyChanged("EvaporationRate");
 					}
 				}
@@ -105,6 +105,8 @@ namespace PGMLab.ViewModels.Main {
 			this.OpenCommand = new MainCommmand(new Action<object>(ExecuteOpenCommand));
 			this.MaximizeIcon = PackIconKind.WindowMaximize;
 			this.Status = State.Ready;
+			this.AntCount = 4;
+			this.EvaporationRate = .5;
 		}
 		#endregion
 		#region Events

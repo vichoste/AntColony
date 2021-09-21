@@ -13,6 +13,7 @@
 	<Window.Resources>
 		<ResourceDictionary>
 			<MainViews:AntCountConverter x:Key="AntCountConverter"/>
+			<MainViews:EvaporationRateConverter x:Key="EvaporationRateConverter"/>
 			<MainViews:StatusConverter x:Key="StatusConverter"/>
 		</ResourceDictionary>
 	</Window.Resources>
@@ -73,8 +74,8 @@
 						</Grid.ColumnDefinitions>
 						<TextBlock Grid.Row="0" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center">Number of ants</TextBlock>
 						<TextBlock Grid.Row="1" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center">Evaporation rate</TextBlock>
-						<TextBox Grid.Row="0" Grid.Column="1" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding AntCount, Converter={StaticResource AntCountConverter}, Mode=TwoWay, FallbackValue=4, TargetNullValue=4}"/>
-						<TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding EvaporationRate, Mode=TwoWay, FallbackValue=0.5, TargetNullValue=0.5}"/>
+						<TextBox Grid.Row="0" Grid.Column="1" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding AntCount, Converter={StaticResource AntCountConverter}, Mode=TwoWay}"/>
+						<TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding EvaporationRate, Converter={StaticResource EvaporationRateConverter}, Mode=TwoWay}"/>
 					</Grid>
 					<Button Margin="8" Style="{DynamicResource MaterialDesignFlatDarkBgButton}">Run</Button>
 				</StackPanel>
