@@ -60,7 +60,7 @@
 					</StackPanel>
 				</Grid>
 			</MaterialDesign:Card>
-			<MaterialDesign:Card VerticalAlignment="Center" MinWidth="300" Margin="8, 0, 0, 0" DockPanel.Dock="Right">
+			<MaterialDesign:Card VerticalAlignment="Center" MinWidth="300" Margin="16, 0, 0, 0" DockPanel.Dock="Right">
 				<StackPanel Margin="8">
 					<TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}" HorizontalAlignment="Center">TSP Options</TextBlock>
 					<Grid Margin="8">
