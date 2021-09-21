@@ -16,7 +16,7 @@ namespace PGMLab.Views.Main {
 	/// </summary>
 	public partial class MainView : Window {
 		#region Attributes
-		private MainViewModel _DataContext;
+		private readonly MainViewModel _DataContext;
 		#endregion
 		#region Constructors
 		/// <summary>

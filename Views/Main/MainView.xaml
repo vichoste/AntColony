@@ -12,6 +12,7 @@
 	</Window.InputBindings>
 	<Window.Resources>
 		<ResourceDictionary>
+			<MainViews:AntCountConverter x:Key="AntCountConverter"/>
 			<MainViews:StatusConverter x:Key="StatusConverter"/>
 		</ResourceDictionary>
 	</Window.Resources>
@@ -57,6 +58,26 @@
 						</Button>
 					</StackPanel>
 				</Grid>
+			</MaterialDesign:Card>
+			<MaterialDesign:Card VerticalAlignment="Center" MinWidth="300" Margin="8, 0, 0, 0" DockPanel.Dock="Right">
+				<StackPanel Margin="8">
+					<TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}" HorizontalAlignment="Center">TSP Options</TextBlock>
+					<Grid Margin="8">
+						<Grid.RowDefinitions>
+							<RowDefinition/>
+							<RowDefinition/>
+						</Grid.RowDefinitions>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="4*"/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<TextBlock Grid.Row="0" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center">Number of ants</TextBlock>
+						<TextBlock Grid.Row="1" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center">Evaporation rate</TextBlock>
+						<TextBox Grid.Row="0" Grid.Column="1" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding AntCount, Converter={StaticResource AntCountConverter}, Mode=TwoWay, FallbackValue=4, TargetNullValue=4}"/>
+						<TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding EvaporationRate, Mode=TwoWay, FallbackValue=0.5, TargetNullValue=0.5}"/>
+					</Grid>
+					<Button Margin="8" Style="{DynamicResource MaterialDesignFlatDarkBgButton}">Run</Button>
+				</StackPanel>
 			</MaterialDesign:Card>
 			<MaterialDesign:Card Margin="0, 0, 0, 0" DockPanel.Dock="Bottom">
 				<StatusBar Margin="8" Background="Transparent" Foreground="{DynamicResource MaterialDesignDarkForeground}">

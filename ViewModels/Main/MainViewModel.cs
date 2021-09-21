@@ -15,6 +15,9 @@ namespace PGMLab.ViewModels.Main {
 		#region Attributes
 		private PackIconKind? _MaximizeIcon;
 		private State _Status;
+		private bool _CanOperate;
+		private int _AntCount;
+		private double _EvaporationRate;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -38,6 +41,58 @@ namespace PGMLab.ViewModels.Main {
 				if (this._Status != value) {
 					this._Status = value;
 					this.OnPropertyChanged("Status");
+				}
+			}
+		}
+		/// <summary>
+		/// Checks if the program can execute the TSP
+		/// </summary>
+		public bool CanOperate {
+			get => this._CanOperate;
+			set {
+				if (this._CanOperate != value) {
+					this._CanOperate = value;
+					this.OnPropertyChanged("CanOperate");
+				}
+			}
+		}
+		/// <summary>
+		/// Ant count for TSP
+		/// </summary>
+		public int AntCount {
+			get => this._AntCount;
+			set {
+				if (this._AntCount != value) {
+					if (value >= 0 && value <= 128) {
+						this._AntCount = value;
+						this.OnPropertyChanged("AntCount");
+					} else if (value < 0) {
+						this._AntCount = 0;
+						this.OnPropertyChanged("AntCount");
+					} else {
+						this._AntCount = 128;
+						this.OnPropertyChanged("AntCount");
+					}
+				}
+			}
+		}
+		/// <summary>
+		/// Evaporation rate for TSP
+		/// </summary>
+		public double EvaporationRate {
+			get => this._EvaporationRate;
+			set {
+				if (this._EvaporationRate != value) {
+					if (value >= 0 && value <= 1) {
+						this._EvaporationRate = value;
+						this.OnPropertyChanged("EvaporationRate");
+					} else if (value < 0) {
+						this._EvaporationRate = 0;
+						this.OnPropertyChanged("EvaporationRate");
+					} else {
+						this._EvaporationRate = 1;
+						this.OnPropertyChanged("EvaporationRate");
+					}
 				}
 			}
 		}
