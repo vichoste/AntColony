@@ -6,8 +6,7 @@ using PGMLab.ViewModels.Main;
 
 namespace PGMLab.Views.Main {
 	/// <summary>
-	/// Converts a state enum to string
-	/// Based on: https://stackoverflow.com/questions/13354892/converting-from-rgb-ints-to-hex
+	/// Makes the status observable
 	/// </summary>
 	internal class StatusConverter : IValueConverter {
 		#region Converter methods

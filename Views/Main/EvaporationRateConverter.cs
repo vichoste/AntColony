@@ -7,7 +7,6 @@ using PGMLab.ViewModels.Main;
 namespace PGMLab.Views.Main {
 	/// <summary>
 	/// Makes evaporation rate observable
-	/// Based on: https://stackoverflow.com/questions/13354892/converting-from-rgb-ints-to-hex
 	/// </summary>
 	internal class EvaporationRateConverter : IValueConverter {
 		#region Converter methods

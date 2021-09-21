@@ -7,7 +7,6 @@ using PGMLab.ViewModels.Main;
 namespace PGMLab.Views.Main {
 	/// <summary>
 	/// Makes ant count rate observable
-	/// Based on: https://stackoverflow.com/questions/13354892/converting-from-rgb-ints-to-hex
 	/// </summary>
 	internal class AntCountConverter : IValueConverter {
 		#region Converter methods
