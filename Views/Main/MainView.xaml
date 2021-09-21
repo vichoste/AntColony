@@ -8,7 +8,7 @@
 		<MainViewModels:MainViewModel/>
 	</Window.DataContext>
 	<Window.InputBindings>
-		<KeyBinding Command="{Binding TestCommand}" Modifiers="Ctrl" Key="T"/>
+		<KeyBinding Command="{Binding OpenCommand}" Modifiers="Ctrl" Key="O"/>
 	</Window.InputBindings>
 	<Window.Resources>
 		<ResourceDictionary>
@@ -39,10 +39,7 @@
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0">
 						<Menu Margin="8" Style="{DynamicResource MaterialDesignMenu}">
 							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_File">
-								<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_New"/>
-								<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Open..."/>
-								<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Save"/>
-								<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Save as..."/>
+								<MenuItem Command="{Binding OpenCommand}" Style="{DynamicResource MaterialDesignMenuItem}" Header="_Open..."/>
 								<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Exit" Click="Exit"/>
 							</MenuItem>
 						</Menu>

@@ -47,7 +47,7 @@ namespace PGMLab.ViewModels.Main {
 		/// Creates the view model
 		/// </summary>
 		public MainViewModel() {
-			this.TestCommand = new MainCommmand(new Action<object>(ExecuteTestCommand));
+			this.OpenCommand = new MainCommmand(new Action<object>(ExecuteOpenCommand));
 			this.MaximizeIcon = PackIconKind.WindowMaximize;
 			this.Status = State.Ready;
 		}
@@ -67,14 +67,14 @@ namespace PGMLab.ViewModels.Main {
 		/// <summary>
 		/// Test command
 		/// </summary>
-		public ICommand TestCommand { get; set; }
+		public ICommand OpenCommand { get; set; }
 		#endregion
 		#region Command methods
 		/// <summary>
 		/// Test command
 		/// </summary>
 		/// <param name="obj">Object to manipulate</param>
-		public static void ExecuteTestCommand(object obj) => _ = MessageBox.Show($"Made by Vicente \"vichoste\" Calderón");
+		public static void ExecuteOpenCommand(object obj) => _ = MessageBox.Show($"Made by Vicente \"vichoste\" Calderón");
 		#endregion
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 using MaterialDesignThemes.Wpf;
@@ -15,6 +16,7 @@ namespace PGMLab.Views.Main {
 	/// </summary>
 	public partial class MainView : Window {
 		#region Attributes
+		private MainViewModel _DataContext;
 		#endregion
 		#region Constructors
 		/// <summary>
@@ -23,6 +25,8 @@ namespace PGMLab.Views.Main {
 		public MainView() {
 			this.InitializeComponent();
 			this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+			this.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
+			this._DataContext = (MainViewModel) this.DataContext;
 		}
 		#endregion
 		#region Event methods
@@ -99,9 +103,8 @@ namespace PGMLab.Views.Main {
 		/// </summary>
 		private void MaximizeWindow() {
 			this.WindowState = this.WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
-			var dataContext = (MainViewModel) this.DataContext;
-			dataContext.MaximizeIcon = PackIconKind.WindowMaximize;
-			dataContext.MaximizeIcon = this.WindowState == WindowState.Normal ? PackIconKind.WindowMaximize : PackIconKind.WindowRestore;
+			this._DataContext.MaximizeIcon = PackIconKind.WindowMaximize;
+			this._DataContext.MaximizeIcon = this.WindowState == WindowState.Normal ? PackIconKind.WindowMaximize : PackIconKind.WindowRestore;
 		}
 		#endregion
 		#region Win32: https://stackoverflow.com/questions/4226740/how-do-i-get-the-current-mouse-screen-coordinates-in-wpf
