@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Shapes;
 
 using AsyncAwaitBestPractices.MVVM;
 
@@ -114,7 +116,7 @@ namespace AntColony.Main {
 						return;
 					}
 					// Read all lines
-					var lines = File.ReadAllLines(openFileDialog.FileName);
+					var lines = await FileEx.ReadAllLinesAsync(openFileDialog.FileName, Encoding.UTF8);
 					if (!lines[4].EndsWith("EUC_2D")) { // Only allow Euclidian 2D, because I don't have time for other graph types
 						_ = MessageBox.Show("Can't open file. Only EUC_2D graphs are allowed!");
 						return;
@@ -123,11 +125,9 @@ namespace AntColony.Main {
 						_ = MessageBox.Show("Can't open file. Expected \"NODE_COORD_SECTION : \" : at line 6");
 						return;
 					}
-					var readLineTasks = new List<Task>();
 					for (var i = 6; i < lines.Length - 1; i++) {
-						readLineTasks.Add(Task.Run(() => System.Diagnostics.Debug.WriteLine($"{lines[i]}")));
+						System.Diagnostics.Debug.WriteLine($"{lines[i]}");
 					}
-					await Task.WhenAll(readLineTasks);
 				}
 				this.Status = Status.Ready;
 			});
