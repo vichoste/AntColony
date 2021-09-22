@@ -99,7 +99,7 @@ namespace AntColony.Main {
 		/// Creates the view model
 		/// </summary>
 		public MainViewModel() {
-			this.OpenTspFileCommand = new MainCommmand(new Action<object>(ExecuteOpenTspFile));
+			this.OpenTspFileCommand = new MainCommmand(new Action<object>(this.ExecuteOpenTspFile));
 			this._MainModel = new MainModel() {
 				MaximizeIcon = PackIconKind.WindowMaximize,
 				Status = Status.Ready,
@@ -130,7 +130,8 @@ namespace AntColony.Main {
 		/// Opens an tsp file
 		/// </summary>
 		/// <returns>True if a file is valid and opened successfully</returns>
-		private static void ExecuteOpenTspFile(object obj) {
+		private void ExecuteOpenTspFile(object obj) {
+			this.Status = Status.Opening;
 			var openFileDialog = new OpenFileDialog();
 			if (openFileDialog.ShowDialog() == true) {
 				// Allow only TSP files
@@ -140,35 +141,19 @@ namespace AntColony.Main {
 				}
 				// Read all lines
 				var lines = File.ReadAllLines(openFileDialog.FileName);
-				for (var i = 0; i < lines.Length; i++) {
-					if (lines[i] == "EOF") { // Break when EOF
-						break;
-					}
-					switch (i) { // See first 6 lines
-						case 0:
-							continue;
-						case 1:
-							continue;
-						case 2:
-							continue;
-						case 3:
-							continue;
-						case 4:
-							if (!lines[i].EndsWith("EUC_2D")) { // Only allow Euclidian 2D, because I don't have time for other graph types
-								_ = MessageBox.Show("Can't open file. Only EUC_2D graphs are allowed!");
-								return;
-							}
-							break;
-						case 5:
-							if (!lines[i].Equals("NODE_COORD_SECTION")) {
-								_ = MessageBox.Show("Can't open file. Expected \"NODE_COORD_SECTION : \" : at line 6");
-								return;
-							}
-							break;
-					}
+				if (!lines[4].EndsWith("EUC_2D")) { // Only allow Euclidian 2D, because I don't have time for other graph types
+					_ = MessageBox.Show("Can't open file. Only EUC_2D graphs are allowed!");
+					return;
+				}
+				if (!lines[5].Equals("NODE_COORD_SECTION")) {
+					_ = MessageBox.Show("Can't open file. Expected \"NODE_COORD_SECTION : \" : at line 6");
+					return;
+				}
+				for (var i = 6; i < lines.Length - 1; i++) {
 					System.Diagnostics.Debug.WriteLine(lines[i]);
 				}
 			}
+			this.Status = Status.Ready;
 		}
 		#endregion
 	}
