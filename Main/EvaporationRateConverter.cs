@@ -6,7 +6,7 @@ namespace AntColony.Main {
 	/// <summary>
 	/// Makes evaporation rate observable
 	/// </summary>
-	public class EvaporationRateConverter : IValueConverter {
+	internal class EvaporationRateConverter : IValueConverter {
 		#region Converter methods
 		/// <summary>
 		/// Convert ant count to string

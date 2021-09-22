@@ -4,7 +4,7 @@ namespace AntColony.Ant {
 	/// <summary>
 	/// A.K.A. the ant colony
 	/// </summary>
-	public class AntViewModel {
+	internal class AntViewModel {
 		#region Collection
 		private readonly ObservableCollection<AntModel> Ants;
 		#endregion

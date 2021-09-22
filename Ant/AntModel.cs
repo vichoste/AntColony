@@ -2,7 +2,7 @@
 	/// <summary>
 	/// This is an ant
 	/// </summary>
-	public class AntModel {
+	internal class AntModel {
 		/// <summary>
 		/// Ant ID
 		/// </summary>

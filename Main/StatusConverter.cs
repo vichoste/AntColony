@@ -6,7 +6,7 @@ namespace AntColony.Main {
 	/// <summary>
 	/// Makes the status observable
 	/// </summary>
-	public class StatusConverter : IValueConverter {
+	internal class StatusConverter : IValueConverter {
 		#region Converter methods
 		/// <summary>
 		/// Convert status enum to string

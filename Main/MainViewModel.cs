@@ -9,7 +9,7 @@ namespace AntColony.Main {
 	/// <summary>
 	/// View model for the main window
 	/// </summary>
-	public class MainViewModel : INotifyPropertyChanged {
+	internal class MainViewModel : INotifyPropertyChanged {
 		#region Model
 		private readonly MainModel _MainModel;
 		#endregion

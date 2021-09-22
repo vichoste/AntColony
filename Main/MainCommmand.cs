@@ -5,7 +5,7 @@ namespace AntColony.Main {
 	/// <summary>
 	/// Creates a relay command that executes an action
 	/// </summary>
-	public class MainCommmand : ICommand {
+	internal class MainCommmand : ICommand {
 		#region Atrributes
 		private readonly Action<object> _Action;
 		#endregion

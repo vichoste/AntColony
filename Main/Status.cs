@@ -2,7 +2,7 @@
 	/// <summary>
 	/// Current program status
 	/// </summary>
-	public enum Status {
+	internal enum Status {
 		#region Statuses
 		/// <summary>
 		/// Program is ready

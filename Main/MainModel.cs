@@ -4,7 +4,7 @@ namespace AntColony.Main {
 	/// <summary>
 	/// Model for the main window
 	/// </summary>
-	public class MainModel {
+	internal class MainModel {
 		#region Fields
 		/// <summary>
 		/// Sets the current maximize icon
