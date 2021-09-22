@@ -1,9 +1,9 @@
 ﻿namespace AntColony.Main {
 	/// <summary>
-	/// Current program state
+	/// Current program status
 	/// </summary>
-	public enum State {
-		#region States
+	public enum Status {
+		#region Statuses
 		/// <summary>
 		/// Program is ready
 		/// </summary>

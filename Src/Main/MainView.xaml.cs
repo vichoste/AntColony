@@ -12,8 +12,8 @@ namespace AntColony.Main {
 	/// Main window
 	/// </summary>
 	public partial class MainView : Window {
-		#region Attributes
-		private readonly MainViewModel _DataContext;
+		#region View model
+		private readonly MainViewModel _MainViewModel;
 		#endregion
 		#region Constructors
 		/// <summary>
@@ -23,7 +23,7 @@ namespace AntColony.Main {
 			this.InitializeComponent();
 			this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 			this.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
-			this._DataContext = (MainViewModel) this.DataContext;
+			this._MainViewModel = (MainViewModel) this.DataContext;
 		}
 		#endregion
 		#region Event methods
@@ -100,8 +100,8 @@ namespace AntColony.Main {
 		/// </summary>
 		private void MaximizeWindow() {
 			this.WindowState = this.WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
-			this._DataContext.MaximizeIcon = PackIconKind.WindowMaximize;
-			this._DataContext.MaximizeIcon = this.WindowState == WindowState.Normal ? PackIconKind.WindowMaximize : PackIconKind.WindowRestore;
+			this._MainViewModel.MaximizeIcon = PackIconKind.WindowMaximize;
+			this._MainViewModel.MaximizeIcon = this.WindowState == WindowState.Normal ? PackIconKind.WindowMaximize : PackIconKind.WindowRestore;
 		}
 		#endregion
 		#region Win32: https://stackoverflow.com/questions/4226740/how-do-i-get-the-current-mouse-screen-coordinates-in-wpf

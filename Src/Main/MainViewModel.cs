@@ -13,7 +13,7 @@ namespace AntColony.Main {
 		#region Model
 		private readonly MainModel _MainModel;
 		#endregion
-		#region Properties
+		#region Fields
 		/// <summary>
 		/// Sets the current maximize icon
 		/// </summary>
@@ -29,7 +29,7 @@ namespace AntColony.Main {
 		/// <summary>
 		/// Current program status
 		/// </summary>
-		public State Status {
+		public Status Status {
 			get => this._MainModel.Status;
 			set {
 				if (this._MainModel.Status != value) {
@@ -99,7 +99,7 @@ namespace AntColony.Main {
 			this.OpenCommand = new MainCommmand(new Action<object>(ExecuteOpenCommand));
 			this._MainModel = new MainModel() {
 				MaximizeIcon = PackIconKind.WindowMaximize,
-				Status = State.Ready,
+				Status = Status.Ready,
 				AntCount = 4,
 				EvaporationRate = .5
 			};

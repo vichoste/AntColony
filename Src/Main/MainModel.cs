@@ -1,12 +1,11 @@
-﻿
-using MaterialDesignThemes.Wpf;
+﻿using MaterialDesignThemes.Wpf;
 
 namespace AntColony.Main {
 	/// <summary>
 	/// Model for the main window
 	/// </summary>
 	public class MainModel {
-		#region Properties
+		#region Fields
 		/// <summary>
 		/// Sets the current maximize icon
 		/// </summary>
@@ -14,7 +13,7 @@ namespace AntColony.Main {
 		/// <summary>
 		/// Current program status
 		/// </summary>
-		public State Status { get; set; }
+		public Status Status { get; set; }
 		/// <summary>
 		/// Checks if the control button is pressed
 		/// </summary>

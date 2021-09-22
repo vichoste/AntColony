@@ -15,7 +15,7 @@ namespace AntColony.Main {
 		/// <param name="targetType"></param>
 		/// <param name="parameter"></param>
 		/// <param name="culture"></param>
-		/// <returns>State as string</returns>
+		/// <returns>Status as string</returns>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value is double antCount ? antCount.ToString() : MainModel.MinEvaporationRate.ToString();
 		/// <summary>
 		/// Convert ant count to int
@@ -24,7 +24,7 @@ namespace AntColony.Main {
 		/// <param name="targetType"></param>
 		/// <param name="parameter"></param>
 		/// <param name="culture"></param>
-		/// <returns>State as enum</returns>
+		/// <returns>Status as enum</returns>
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => value is string antCount && double.TryParse(antCount, out var result) ? result : MainModel.MinEvaporationRate;
 		#endregion
 	}
