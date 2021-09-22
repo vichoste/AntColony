@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+
+using AntColony.Main.Command;
 
 using MaterialDesignThemes.Wpf;
 
@@ -99,7 +103,35 @@ namespace AntColony.Main {
 		/// Creates the view model
 		/// </summary>
 		public MainViewModel() {
-			this.OpenTspFileCommand = new MainCommmand(new Action<object>(this.ExecuteOpenTspFile));
+			this.OpenTspFileCommand = new AsyncCommand(async () => {
+				this.Status = Status.Opening;;
+				var openFileDialogTask = new Task<OpenFileDialog>(() => new OpenFileDialog());
+				openFileDialogTask.Wait();
+				var openFileDialog = openFileDialogTask.Result;
+				if (openFileDialog.ShowDialog() == true) {
+					// Allow only TSP files
+					if (!openFileDialog.FileName.ToLower().EndsWith(".tsp")) {
+						_ = MessageBox.Show("Can't open file. Only *.tsp files are allowed!");
+						return;
+					}
+					// Read all lines
+					var lines = File.ReadAllLines(openFileDialog.FileName);
+					if (!lines[4].EndsWith("EUC_2D")) { // Only allow Euclidian 2D, because I don't have time for other graph types
+						_ = MessageBox.Show("Can't open file. Only EUC_2D graphs are allowed!");
+						return;
+					}
+					if (!lines[5].Equals("NODE_COORD_SECTION")) {
+						_ = MessageBox.Show("Can't open file. Expected \"NODE_COORD_SECTION : \" : at line 6");
+						return;
+					}
+					var readLineTasks = new List<Task>();
+					for (var i = 6; i < lines.Length - 1; i++) {
+						readLineTasks.Add(Task.Run(() => System.Diagnostics.Debug.WriteLine($"{lines[i]}")));
+					}
+					await Task.WhenAll(readLineTasks);
+				}
+				this.Status = Status.Ready;
+			});
 			this._MainModel = new MainModel() {
 				MaximizeIcon = PackIconKind.WindowMaximize,
 				Status = Status.Ready,
@@ -123,38 +155,7 @@ namespace AntColony.Main {
 		/// <summary>
 		/// Test command
 		/// </summary>
-		public ICommand OpenTspFileCommand { get; set; }
-		#endregion
-		#region Command methods
-		/// <summary>
-		/// Opens an tsp file
-		/// </summary>
-		/// <returns>True if a file is valid and opened successfully</returns>
-		private void ExecuteOpenTspFile(object obj) {
-			this.Status = Status.Opening;
-			var openFileDialog = new OpenFileDialog();
-			if (openFileDialog.ShowDialog() == true) {
-				// Allow only TSP files
-				if (!openFileDialog.FileName.ToLower().EndsWith(".tsp")) {
-					_ = MessageBox.Show("Can't open file. Only *.tsp files are allowed!");
-					return;
-				}
-				// Read all lines
-				var lines = File.ReadAllLines(openFileDialog.FileName);
-				if (!lines[4].EndsWith("EUC_2D")) { // Only allow Euclidian 2D, because I don't have time for other graph types
-					_ = MessageBox.Show("Can't open file. Only EUC_2D graphs are allowed!");
-					return;
-				}
-				if (!lines[5].Equals("NODE_COORD_SECTION")) {
-					_ = MessageBox.Show("Can't open file. Expected \"NODE_COORD_SECTION : \" : at line 6");
-					return;
-				}
-				for (var i = 6; i < lines.Length - 1; i++) {
-					System.Diagnostics.Debug.WriteLine(lines[i]);
-				}
-			}
-			this.Status = Status.Ready;
-		}
+		public IAsyncCommand OpenTspFileCommand { get; set; }
 		#endregion
 	}
 }

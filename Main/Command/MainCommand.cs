@@ -1,39 +1,25 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace AntColony.Main {
+namespace AntColony.Main.Command {
 	/// <summary>
-	/// Creates a relay command that executes an action
+	/// Asynchoronous command
+	/// https://docs.microsoft.com/en-us/archive/msdn-magazine/2014/april/async-programming-patterns-for-asynchronous-mvvm-applications-commands
 	/// </summary>
-	internal class MainCommmand : ICommand {
-		#region Atrributes
-		private readonly Action<object> _Action;
-		#endregion
-		#region Constructors
-		/// <summary>
-		/// Create relay command
-		/// </summary>
-		/// <param name="action">Action to perform</param>
-		public MainCommmand(Action<object> action) => this._Action = action;
-		#endregion
+	internal abstract class MainCommand : IAsyncCommand {
 		#region Methods
 		/// <summary>
 		/// Executes the command
 		/// <param name="parameter">Object to manipulate</param>
 		/// </summary>
-		public void Execute(object parameter) {
-			if (parameter != null) {
-				this._Action(parameter);
-			} else {
-				this._Action("There is no action");
-			}
-		}
+		public abstract Task ExecuteAsync(object parameter);
 		/// <summary>
 		/// If this command can be executed
 		/// </summary>
 		/// <param name="parameter">Object to manipulates</param>
 		/// <returns>True if it can be executed</returns>
-		public bool CanExecute(object parameter) => true;
+		public abstract bool CanExecute(object parameter);
 		#endregion
 		#region Events
 		/// <summary>
@@ -47,6 +33,10 @@ namespace AntColony.Main {
 				CommandManager.RequerySuggested -= value;
 			}
 		}
+		/// <summary>
+		/// Raise can execute changed
+		/// </summary>
+		protected void RaiseCanExecuteChanged() => CommandManager.InvalidateRequerySuggested();
 		#endregion
 	}
 }
