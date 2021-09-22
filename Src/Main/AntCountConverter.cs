@@ -2,13 +2,11 @@
 using System.Globalization;
 using System.Windows.Data;
 
-using PGMLab.ViewModels.Main;
-
-namespace PGMLab.Views.Main {
+namespace AntColony.Main {
 	/// <summary>
-	/// Makes evaporation rate observable
+	/// Makes ant count rate observable
 	/// </summary>
-	internal class EvaporationRateConverter : IValueConverter {
+	public class AntCountConverter : IValueConverter {
 		#region Converter methods
 		/// <summary>
 		/// Convert ant count to string
@@ -18,7 +16,7 @@ namespace PGMLab.Views.Main {
 		/// <param name="parameter"></param>
 		/// <param name="culture"></param>
 		/// <returns>State as string</returns>
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value is double antCount ? antCount.ToString() : "0";
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value is int antCount ? antCount.ToString() : MainModel.MaxAntCount.ToString();
 		/// <summary>
 		/// Convert ant count to int
 		/// </summary>
@@ -27,7 +25,7 @@ namespace PGMLab.Views.Main {
 		/// <param name="parameter"></param>
 		/// <param name="culture"></param>
 		/// <returns>State as enum</returns>
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => value is string antCount && double.TryParse(antCount, out var result) ? result : 0;
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => value is string antCount && int.TryParse(antCount, out var result) ? result : MainModel.MinAntCount;
 		#endregion
 	}
 }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace AntColony.Models.Main {
+namespace AntColony.Main {
 	/// <summary>
 	/// Creates a relay command that executes an action
 	/// </summary>
-	internal class MainCommmand : ICommand {
+	public class MainCommmand : ICommand {
 		#region Atrributes
 		private readonly Action<object> _Action;
 		#endregion

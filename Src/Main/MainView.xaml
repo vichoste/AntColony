@@ -1,20 +1,20 @@
-﻿<Window x:Name="Main" x:Class="PGMLab.Views.Main.MainView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+﻿<Window x:Name="Main" x:Class="AntColony.Main.MainView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 		xmlns:MaterialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" TextElement.Foreground="{DynamicResource MaterialDesignBody}" TextElement.FontWeight="Regular" TextElement.FontSize="13" TextOptions.TextFormattingMode="Ideal" TextOptions.TextRenderingMode="Auto" Background="Transparent" FontFamily="{DynamicResource MaterialDesignFont}"
 		AllowsTransparency="True" WindowStartupLocation="CenterScreen" WindowStyle="None"
-		xmlns:MainViews="clr-namespace:PGMLab.Views.Main" xmlns:MainViewModels="clr-namespace:PGMLab.ViewModels.Main"
+		xmlns:Main="clr-namespace:AntColony.Main"
 		xmlns:Msagl="clr-namespace:Microsoft.Msagl.GraphViewerGdi;assembly=Microsoft.Msagl.GraphViewerGdi"
 		Loaded="Main_Loaded">
 	<Window.DataContext>
-		<MainViewModels:MainViewModel/>
+		<Main:MainViewModel/>
 	</Window.DataContext>
 	<Window.InputBindings>
 		<KeyBinding Command="{Binding OpenCommand}" Modifiers="Ctrl" Key="O"/>
 	</Window.InputBindings>
 	<Window.Resources>
 		<ResourceDictionary>
-			<MainViews:AntCountConverter x:Key="AntCountConverter"/>
-			<MainViews:EvaporationRateConverter x:Key="EvaporationRateConverter"/>
-			<MainViews:StatusConverter x:Key="StatusConverter"/>
+			<Main:AntCountConverter x:Key="AntCountConverter"/>
+			<Main:EvaporationRateConverter x:Key="EvaporationRateConverter"/>
+			<Main:StatusConverter x:Key="StatusConverter"/>
 		</ResourceDictionary>
 	</Window.Resources>
 	<Window.Style>

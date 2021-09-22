@@ -1,6 +1,5 @@
 ﻿using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 using MaterialDesignThemes.Wpf;
@@ -8,9 +7,7 @@ using MaterialDesignThemes.Wpf;
 using Microsoft.Msagl.Drawing;
 using Microsoft.Msagl.WpfGraphControl;
 
-using PGMLab.ViewModels.Main;
-
-namespace PGMLab.Views.Main {
+namespace AntColony.Main {
 	/// <summary>
 	/// Main window
 	/// </summary>

@@ -3,31 +3,25 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 
-using AntColony.Models.Main;
-
 using MaterialDesignThemes.Wpf;
 
-namespace PGMLab.ViewModels.Main {
+namespace AntColony.Main {
 	/// <summary>
 	/// View model for the main window
 	/// </summary>
 	public class MainViewModel : INotifyPropertyChanged {
-		#region Attributes
-		private PackIconKind? _MaximizeIcon;
-		private State _Status;
-		private bool _CanOperate;
-		private int _AntCount;
-		private double _EvaporationRate;
+		#region Model
+		private readonly MainModel _MainModel;
 		#endregion
 		#region Properties
 		/// <summary>
 		/// Sets the current maximize icon
 		/// </summary>
 		public PackIconKind? MaximizeIcon {
-			get => this._MaximizeIcon;
+			get => this._MainModel.MaximizeIcon;
 			set {
-				if (this._MaximizeIcon != value) {
-					this._MaximizeIcon = value;
+				if (this._MainModel.MaximizeIcon != value) {
+					this._MainModel.MaximizeIcon = value;
 					this.OnPropertyChanged("MaximizeIcon");
 				}
 			}
@@ -36,10 +30,10 @@ namespace PGMLab.ViewModels.Main {
 		/// Current program status
 		/// </summary>
 		public State Status {
-			get => this._Status;
+			get => this._MainModel.Status;
 			set {
-				if (this._Status != value) {
-					this._Status = value;
+				if (this._MainModel.Status != value) {
+					this._MainModel.Status = value;
 					this.OnPropertyChanged("Status");
 				}
 			}
@@ -48,10 +42,10 @@ namespace PGMLab.ViewModels.Main {
 		/// Checks if the program can execute the TSP
 		/// </summary>
 		public bool CanOperate {
-			get => this._CanOperate;
+			get => this._MainModel.CanOperate;
 			set {
-				if (this._CanOperate != value) {
-					this._CanOperate = value;
+				if (this._MainModel.CanOperate != value) {
+					this._MainModel.CanOperate = value;
 					this.OnPropertyChanged("CanOperate");
 				}
 			}
@@ -60,17 +54,17 @@ namespace PGMLab.ViewModels.Main {
 		/// Ant count for TSP
 		/// </summary>
 		public int AntCount {
-			get => this._AntCount;
+			get => this._MainModel.AntCount;
 			set {
-				if (this._AntCount != value) {
-					if (value >= 0 && value <= 128) {
-						this._AntCount = value;
+				if (this._MainModel.AntCount != value) {
+					if (value >= MainModel.MinAntCount && value <= MainModel.MaxAntCount) {
+						this._MainModel.AntCount = value;
 						this.OnPropertyChanged("AntCount");
 					} else if (value < 0) {
-						this._AntCount = 0;
+						this._MainModel.AntCount = MainModel.MinAntCount;
 						this.OnPropertyChanged("AntCount");
 					} else {
-						this._AntCount = 128;
+						this._MainModel.AntCount = MainModel.MaxAntCount;
 						this.OnPropertyChanged("AntCount");
 					}
 				}
@@ -80,17 +74,17 @@ namespace PGMLab.ViewModels.Main {
 		/// Evaporation rate for TSP
 		/// </summary>
 		public double EvaporationRate {
-			get => this._EvaporationRate;
+			get => this._MainModel.EvaporationRate;
 			set {
-				if (this._EvaporationRate != value) {
-					if (value >= 0.001 && value <= 1) {
-						this._EvaporationRate = value;
+				if (this._MainModel.EvaporationRate != value) {
+					if (value >= MainModel.MinEvaporationRate && value <= MainModel.MaxEvaporationRate) {
+						this._MainModel.EvaporationRate = value;
 						this.OnPropertyChanged("EvaporationRate");
 					} else if (value < 0) {
-						this._EvaporationRate = 0;
+						this._MainModel.EvaporationRate = MainModel.MinEvaporationRate;
 						this.OnPropertyChanged("EvaporationRate");
 					} else {
-						this._EvaporationRate = 0.001;
+						this._MainModel.EvaporationRate = MainModel.MaxEvaporationRate;
 						this.OnPropertyChanged("EvaporationRate");
 					}
 				}
@@ -103,10 +97,12 @@ namespace PGMLab.ViewModels.Main {
 		/// </summary>
 		public MainViewModel() {
 			this.OpenCommand = new MainCommmand(new Action<object>(ExecuteOpenCommand));
-			this.MaximizeIcon = PackIconKind.WindowMaximize;
-			this.Status = State.Ready;
-			this.AntCount = 4;
-			this.EvaporationRate = .5;
+			this._MainModel = new MainModel() {
+				MaximizeIcon = PackIconKind.WindowMaximize,
+				Status = State.Ready,
+				AntCount = 4,
+				EvaporationRate = .5
+			};
 		}
 		#endregion
 		#region Events

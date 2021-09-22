@@ -1,8 +1,9 @@
-﻿namespace PGMLab.ViewModels.Main {
+﻿namespace AntColony.Main {
 	/// <summary>
 	/// Current program state
 	/// </summary>
 	public enum State {
+		#region States
 		/// <summary>
 		/// Program is ready
 		/// </summary>
@@ -31,5 +32,6 @@
 		/// Program is eroding the image
 		/// </summary>
 		Eroding
+		#endregion
 	}
 }
