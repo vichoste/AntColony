@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-using AntColony.Main.Command;
+using AsyncAwaitBestPractices.MVVM;
 
 using MaterialDesignThemes.Wpf;
 
@@ -104,10 +105,8 @@ namespace AntColony.Main {
 		/// </summary>
 		public MainViewModel() {
 			this.OpenTspFileCommand = new AsyncCommand(async () => {
-				this.Status = Status.Opening;;
-				var openFileDialogTask = new Task<OpenFileDialog>(() => new OpenFileDialog());
-				openFileDialogTask.Wait();
-				var openFileDialog = openFileDialogTask.Result;
+				this.Status = Status.Opening;
+				var openFileDialog = new OpenFileDialog();
 				if (openFileDialog.ShowDialog() == true) {
 					// Allow only TSP files
 					if (!openFileDialog.FileName.ToLower().EndsWith(".tsp")) {
