@@ -1,9 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
 using MaterialDesignThemes.Wpf;
+
+using Microsoft.Win32;
 
 namespace AntColony.Main {
 	/// <summary>
@@ -96,7 +99,7 @@ namespace AntColony.Main {
 		/// Creates the view model
 		/// </summary>
 		public MainViewModel() {
-			this.OpenCommand = new MainCommmand(new Action<object>(ExecuteOpenCommand));
+			this.OpenTspFileCommand = new MainCommmand(new Action<object>(ExecuteOpenTspFile));
 			this._MainModel = new MainModel() {
 				MaximizeIcon = PackIconKind.WindowMaximize,
 				Status = Status.Ready,
@@ -120,14 +123,53 @@ namespace AntColony.Main {
 		/// <summary>
 		/// Test command
 		/// </summary>
-		public ICommand OpenCommand { get; set; }
+		public ICommand OpenTspFileCommand { get; set; }
 		#endregion
 		#region Command methods
 		/// <summary>
-		/// Test command
+		/// Opens an tsp file
 		/// </summary>
-		/// <param name="obj">Object to manipulate</param>
-		public static void ExecuteOpenCommand(object obj) => _ = MessageBox.Show($"Made by Vicente \"vichoste\" Calderón");
+		/// <returns>True if a file is valid and opened successfully</returns>
+		private static void ExecuteOpenTspFile(object obj) {
+			var openFileDialog = new OpenFileDialog();
+			if (openFileDialog.ShowDialog() == true) {
+				// Allow only TSP files
+				if (!openFileDialog.FileName.ToLower().EndsWith(".tsp")) {
+					_ = MessageBox.Show("Can't open file. Only *.tsp files are allowed!");
+					return;
+				}
+				// Read all lines
+				var lines = File.ReadAllLines(openFileDialog.FileName);
+				for (var i = 0; i < lines.Length; i++) {
+					if (lines[i] == "EOF") { // Break when EOF
+						break;
+					}
+					switch (i) { // See first 6 lines
+						case 0:
+							continue;
+						case 1:
+							continue;
+						case 2:
+							continue;
+						case 3:
+							continue;
+						case 4:
+							if (!lines[i].EndsWith("EUC_2D")) { // Only allow Euclidian 2D, because I don't have time for other graph types
+								_ = MessageBox.Show("Can't open file. Only EUC_2D graphs are allowed!");
+								return;
+							}
+							break;
+						case 5:
+							if (!lines[i].Equals("NODE_COORD_SECTION")) {
+								_ = MessageBox.Show("Can't open file. Expected \"NODE_COORD_SECTION : \" : at line 6");
+								return;
+							}
+							break;
+					}
+					System.Diagnostics.Debug.WriteLine(lines[i]);
+				}
+			}
+		}
 		#endregion
 	}
 }

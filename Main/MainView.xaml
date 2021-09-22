@@ -2,13 +2,12 @@
 		xmlns:MaterialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" TextElement.Foreground="{DynamicResource MaterialDesignBody}" TextElement.FontWeight="Regular" TextElement.FontSize="13" TextOptions.TextFormattingMode="Ideal" TextOptions.TextRenderingMode="Auto" Background="Transparent" FontFamily="{DynamicResource MaterialDesignFont}"
 		AllowsTransparency="True" WindowStartupLocation="CenterScreen" WindowStyle="None"
 		xmlns:Main="clr-namespace:AntColony.Main"
-		xmlns:Msagl="clr-namespace:Microsoft.Msagl.GraphViewerGdi;assembly=Microsoft.Msagl.GraphViewerGdi"
-		Loaded="Main_Loaded">
+		xmlns:Msagl="clr-namespace:Microsoft.Msagl.GraphViewerGdi;assembly=Microsoft.Msagl.GraphViewerGdi">
 	<Window.DataContext>
 		<Main:MainViewModel/>
 	</Window.DataContext>
 	<Window.InputBindings>
-		<KeyBinding Command="{Binding OpenCommand}" Modifiers="Ctrl" Key="O"/>
+		<KeyBinding Command="{Binding OpenTspFileCommand}" Modifiers="Ctrl" Key="O"/>
 	</Window.InputBindings>
 	<Window.Resources>
 		<ResourceDictionary>
@@ -41,7 +40,7 @@
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0">
 						<Menu Margin="8" Style="{DynamicResource MaterialDesignMenu}">
 							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_File">
-								<MenuItem Command="{Binding OpenCommand}" Style="{DynamicResource MaterialDesignMenuItem}" Header="_Open..."/>
+								<MenuItem Command="{Binding OpenTspFileCommand}" Style="{DynamicResource MaterialDesignMenuItem}" Header="_Open..."/>
 								<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Exit" Click="Exit"/>
 							</MenuItem>
 						</Menu>
