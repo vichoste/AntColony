@@ -34,6 +34,10 @@ namespace AntColony.Main {
 		/// Evaporation rate for TSP
 		/// </summary>
 		public double EvaporationRate { get; set; }
+		/// <summary>
+		/// Border margin
+		/// </summary>
+		public int BorderMargin { get; set; }
 		#endregion
 		#region Constants
 		/// <summary>
@@ -52,6 +56,14 @@ namespace AntColony.Main {
 		/// Maximum evaporation rate
 		/// </summary>
 		public const double MaxEvaporationRate = 1;
+		/// <summary>
+		/// Normal border margin
+		/// </summary>
+		public const int NormalBorderMargin = 8;
+		/// <summary>
+		/// Maximized border margin
+		/// </summary>
+		public const int MaximizedBorderMargin = 16;
 		#endregion
 	}
 }

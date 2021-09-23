@@ -25,10 +25,6 @@
   <ItemGroup>
     <PackageReference Include="AsyncAwaitBestPractices" Version="6.0.0" />
     <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="6.0.0" />
-    <PackageReference Include="AutomaticGraphLayout" Version="1.1.12" />
-    <PackageReference Include="AutomaticGraphLayout.Drawing" Version="1.1.12" />
-    <PackageReference Include="AutomaticGraphLayout.GraphViewerGDI" Version="1.1.12" />
-    <PackageReference Include="AutomaticGraphLayout.WpfGraphControl" Version="1.1.12" />
     <PackageReference Include="MaterialDesignColors" Version="2.0.1" />
     <PackageReference Include="MaterialDesignThemes" Version="4.1.0" />
   </ItemGroup>

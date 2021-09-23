@@ -25,7 +25,7 @@ namespace AntColony.Main {
 			set {
 				if (this._MainModel.MaximizeIcon != value) {
 					this._MainModel.MaximizeIcon = value;
-					this.OnPropertyChanged("MaximizeIcon");
+					this.OnPropertyChanged(nameof(this.MaximizeIcon));
 				}
 			}
 		}
@@ -37,7 +37,7 @@ namespace AntColony.Main {
 			set {
 				if (this._MainModel.Status != value) {
 					this._MainModel.Status = value;
-					this.OnPropertyChanged("Status");
+					this.OnPropertyChanged(nameof(this.Status));
 				}
 			}
 		}
@@ -49,7 +49,7 @@ namespace AntColony.Main {
 			set {
 				if (this._MainModel.CanOperate != value) {
 					this._MainModel.CanOperate = value;
-					this.OnPropertyChanged("CanOperate");
+					this.OnPropertyChanged(nameof(this.CanOperate));
 				}
 			}
 		}
@@ -62,14 +62,12 @@ namespace AntColony.Main {
 				if (this._MainModel.AntCount != value) {
 					if (value >= MainModel.MinAntCount && value <= MainModel.MaxAntCount) {
 						this._MainModel.AntCount = value;
-						this.OnPropertyChanged("AntCount");
 					} else if (value < 0) {
 						this._MainModel.AntCount = MainModel.MinAntCount;
-						this.OnPropertyChanged("AntCount");
 					} else {
 						this._MainModel.AntCount = MainModel.MaxAntCount;
-						this.OnPropertyChanged("AntCount");
 					}
+					this.OnPropertyChanged(nameof(this.AntCount));
 				}
 			}
 		}
@@ -82,14 +80,24 @@ namespace AntColony.Main {
 				if (this._MainModel.EvaporationRate != value) {
 					if (value >= MainModel.MinEvaporationRate && value <= MainModel.MaxEvaporationRate) {
 						this._MainModel.EvaporationRate = value;
-						this.OnPropertyChanged("EvaporationRate");
 					} else if (value < 0) {
 						this._MainModel.EvaporationRate = MainModel.MinEvaporationRate;
-						this.OnPropertyChanged("EvaporationRate");
 					} else {
 						this._MainModel.EvaporationRate = MainModel.MaxEvaporationRate;
-						this.OnPropertyChanged("EvaporationRate");
 					}
+					this.OnPropertyChanged(nameof(this.EvaporationRate));
+				}
+			}
+		}
+		/// <summary>
+		/// Border margin
+		/// </summary>>
+		public int BorderMargin {
+			get => this._MainModel.BorderMargin;
+			set {
+				if (this._MainModel.BorderMargin != value) {
+					this._MainModel.BorderMargin = value;
+					this.OnPropertyChanged(nameof(this.BorderMargin));
 				}
 			}
 		}
@@ -128,7 +136,8 @@ namespace AntColony.Main {
 				MaximizeIcon = PackIconKind.WindowMaximize,
 				Status = Status.Ready,
 				AntCount = 4,
-				EvaporationRate = .5
+				EvaporationRate = .5,
+				BorderMargin = 8
 			};
 		}
 		#endregion
