@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Windows.Documents;
 
 namespace AntColony.Colony {
 	/// <summary>
 	/// This is an ant
 	/// </summary>
-	internal class Ant {
+	internal class AntModel {
 		#region Fields
 		/// <summary>
 		/// Ant ID
@@ -16,7 +15,7 @@ namespace AntColony.Colony {
 		/// <summary>
 		/// The ant colony itself
 		/// </summary>
-		public static List<Ant> Ants = new List<Ant>();
+		public static List<AntModel> Ants = new List<AntModel>();
 		#endregion
 	}
 }
