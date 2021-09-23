@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <IsPublishable>False</IsPublishable>
     <ApplicationIcon>circuit.ico</ApplicationIcon>
-    <DebugType>none</DebugType>
+    <DebugType>embedded</DebugType>
     <StartupObject>PGMLab.App</StartupObject>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
