@@ -42,6 +42,18 @@ namespace AntColony.Main {
 			}
 		}
 		/// <summary>
+		/// Border margin
+		/// </summary>>
+		public int BorderMargin {
+			get => this._MainModel.BorderMargin;
+			set {
+				if (this._MainModel.BorderMargin != value) {
+					this._MainModel.BorderMargin = value;
+					this.OnPropertyChanged(nameof(this.BorderMargin));
+				}
+			}
+		}
+		/// <summary>
 		/// Checks if the program can execute the TSP
 		/// </summary>
 		public bool CanOperate {
@@ -60,13 +72,9 @@ namespace AntColony.Main {
 			get => this._MainModel.AntCount;
 			set {
 				if (this._MainModel.AntCount != value) {
-					if (value >= MainModel.MinAntCount && value <= MainModel.MaxAntCount) {
-						this._MainModel.AntCount = value;
-					} else if (value < 0) {
-						this._MainModel.AntCount = MainModel.MinAntCount;
-					} else {
-						this._MainModel.AntCount = MainModel.MaxAntCount;
-					}
+					this._MainModel.AntCount = value >= MainModel.MinAntCount && value <= MainModel.MaxAntCount
+						? value
+						: value < 0 ? MainModel.MinAntCount : MainModel.MaxAntCount;
 					this.OnPropertyChanged(nameof(this.AntCount));
 				}
 			}
@@ -78,26 +86,10 @@ namespace AntColony.Main {
 			get => this._MainModel.EvaporationRate;
 			set {
 				if (this._MainModel.EvaporationRate != value) {
-					if (value >= MainModel.MinEvaporationRate && value <= MainModel.MaxEvaporationRate) {
-						this._MainModel.EvaporationRate = value;
-					} else if (value < 0) {
-						this._MainModel.EvaporationRate = MainModel.MinEvaporationRate;
-					} else {
-						this._MainModel.EvaporationRate = MainModel.MaxEvaporationRate;
-					}
+					this._MainModel.EvaporationRate = value >= MainModel.MinEvaporationRate && value <= MainModel.MaxEvaporationRate
+						? value
+						: value < 0 ? MainModel.MinEvaporationRate : MainModel.MaxEvaporationRate;
 					this.OnPropertyChanged(nameof(this.EvaporationRate));
-				}
-			}
-		}
-		/// <summary>
-		/// Border margin
-		/// </summary>>
-		public int BorderMargin {
-			get => this._MainModel.BorderMargin;
-			set {
-				if (this._MainModel.BorderMargin != value) {
-					this._MainModel.BorderMargin = value;
-					this.OnPropertyChanged(nameof(this.BorderMargin));
 				}
 			}
 		}
@@ -117,7 +109,7 @@ namespace AntColony.Main {
 						return;
 					}
 					// Read all lines
-					var lines = await FileEx.ReadAllLinesAsync(openFileDialog.FileName, Encoding.UTF8);
+					var lines = await AsyncFileReader.ReadAllLinesAsync(openFileDialog.FileName, Encoding.UTF8);
 					if (!lines[4].EndsWith("EUC_2D")) { // Only allow Euclidian 2D, because I don't have time for other graph types
 						_ = MessageBox.Show("Can't open file. Only EUC_2D graphs are allowed!");
 						return;
@@ -135,9 +127,9 @@ namespace AntColony.Main {
 			this._MainModel = new MainModel() {
 				MaximizeIcon = PackIconKind.WindowMaximize,
 				Status = Status.Ready,
+				BorderMargin = 8,
 				AntCount = 4,
-				EvaporationRate = .5,
-				BorderMargin = 8
+				EvaporationRate = .5
 			};
 		}
 		#endregion

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net48-windows10.0.20348.0</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <UseWPF>true</UseWPF>
     <IsPublishable>False</IsPublishable>
     <ApplicationIcon>circuit.ico</ApplicationIcon>

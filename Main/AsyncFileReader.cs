@@ -8,7 +8,7 @@ namespace AntColony.Main {
 	/// Read files asynchronously
 	/// https://stackoverflow.com/questions/13167934/how-to-async-files-readalllines-and-await-for-results
 	/// </summary>
-	public static class FileEx {
+	public static class AsyncFileReader {
 		private const int _DefaultBufferSize = 4096;
 		private const FileOptions _DefaultOptions = FileOptions.Asynchronous | FileOptions.SequentialScan;
 		/// <summary>

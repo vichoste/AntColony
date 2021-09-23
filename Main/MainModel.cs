@@ -15,13 +15,9 @@ namespace AntColony.Main {
 		/// </summary>
 		public Status Status { get; set; }
 		/// <summary>
-		/// Checks if the control button is pressed
+		/// Border margin
 		/// </summary>
-		public bool IsControlPressed { get; set; }
-		/// <summary>
-		/// Current zoom value
-		/// </summary>
-		public double ZoomValue { get; set; }
+		public int BorderMargin { get; set; }
 		/// <summary>
 		/// Checks if the program can execute the TSP
 		/// </summary>
@@ -34,10 +30,6 @@ namespace AntColony.Main {
 		/// Evaporation rate for TSP
 		/// </summary>
 		public double EvaporationRate { get; set; }
-		/// <summary>
-		/// Border margin
-		/// </summary>
-		public int BorderMargin { get; set; }
 		#endregion
 		#region Constants
 		/// <summary>
