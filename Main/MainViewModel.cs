@@ -1,6 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
+
+using AntColony.Colony;
 
 using AsyncAwaitBestPractices.MVVM;
 
@@ -119,7 +123,16 @@ namespace AntColony.Main {
 						return;
 					}
 					for (var i = 6; i < lines.Length - 1; i++) {
-						System.Diagnostics.Debug.WriteLine($"{lines[i]}");
+						// Parse integers (https://stackoverflow.com/questions/4961675/select-parsed-int-if-string-was-parseable-to-int)
+						var splitted = lines[i].Split(' ').Select(str => {
+							var success = int.TryParse(str, out var value);
+							return (value, success);
+						}).Where(pair => pair.success).Select(pair => pair.value).ToList();
+						var newNode = new Node() {
+							Id = splitted[0],
+							X = splitted[1],
+							Y = splitted[2]
+						};
 					}
 				}
 				this.Status = Status.Ready;
