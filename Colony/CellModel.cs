@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AntColony.Colony {
+﻿namespace AntColony.Colony {
 	/// <summary>
 	/// This is a cell from the environment
 	/// </summary>
