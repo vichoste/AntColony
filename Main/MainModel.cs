@@ -30,6 +30,10 @@ namespace AntColony.Main {
 		/// Evaporation rate for TSP
 		/// </summary>
 		public double EvaporationRate { get; set; }
+		/// <summary>
+		/// Maximum coordinate for the canvas
+		/// </summary>
+		public double MaxCoordinate { get; set; }
 		#endregion
 		#region Constants
 		/// <summary>

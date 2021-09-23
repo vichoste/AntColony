@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -96,6 +97,18 @@ namespace AntColony.Main {
 				}
 			}
 		}
+		/// <summary>
+		/// Maximum coordinate for the canvas
+		/// </summary>
+		public double MaxCoordinate {
+			get => this._MainModel.MaxCoordinate;
+			set {
+				if (this._MainModel.MaxCoordinate < value) { // Only save the ones who are bigger than the current value
+					this._MainModel.MaxCoordinate = value;
+					this.OnPropertyChanged(nameof(this.MaxCoordinate));
+				}
+			}
+		}
 		#endregion
 		#region Constructors
 		/// <summary>
@@ -124,14 +137,16 @@ namespace AntColony.Main {
 					for (var i = 6; i < lines.Length - 1; i++) {
 						// Parse integers (https://stackoverflow.com/questions/4961675/select-parsed-int-if-string-was-parseable-to-int)
 						var splitted = lines[i].Split(' ').Select(str => {
-							var success = int.TryParse(str, out var value);
+							var success = double.TryParse(str, out var value);
 							return (value, success);
 						}).Where(pair => pair.success).Select(pair => pair.value).ToList();
 						var newNode = new NodeModel() {
-							Id = splitted[0],
+							Id = int.Parse(splitted[0].ToString()),
 							X = splitted[1],
 							Y = splitted[2]
 						};
+						var maxCooordinateCandidante = splitted[1] >= splitted[2] ? splitted[1] : splitted[2];
+						this.MaxCoordinate = maxCooordinateCandidante;
 						NodeModel.Nodes.Add(newNode);
 					}
 				}

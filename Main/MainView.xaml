@@ -13,6 +13,7 @@
 			<Main:AntCountConverter x:Key="AntCountConverter"/>
 			<Main:EvaporationRateConverter x:Key="EvaporationRateConverter"/>
 			<Main:StatusConverter x:Key="StatusConverter"/>
+			<Main:MaxCoordinateConverter x:Key="MaxCoordinateConverter"/>
 		</ResourceDictionary>
 	</Window.Resources>
 	<Window.Style>
@@ -81,6 +82,8 @@
 			<MaterialDesign:Card Margin="0, 8, 0, 0" DockPanel.Dock="Bottom">
 				<StatusBar Margin="8" Background="Transparent" Foreground="{DynamicResource MaterialDesignDarkForeground}">
 					<TextBlock Text="{Binding Status, Converter={StaticResource StatusConverter}, FallbackValue=Ready, TargetNullValue=Ready}"/>
+					<TextBlock Text="| Maximum size:"/>
+					<TextBlock Text="{Binding MaxCoordinate, Converter={StaticResource MaxCoordinateConverter}, FallbackValue=0, TargetNullValue=0}"/>
 				</StatusBar>
 			</MaterialDesign:Card>
 			<MaterialDesign:Card/>
