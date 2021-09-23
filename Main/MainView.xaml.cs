@@ -20,7 +20,7 @@ namespace AntColony.Main {
 			this.InitializeComponent();
 			this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 			this.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
-			this._MainViewModel = (MainViewModel) this.DataContext;
+			this._MainViewModel = (MainViewModel)this.DataContext;
 		}
 		#endregion
 		#region Event methods
@@ -54,7 +54,7 @@ namespace AntColony.Main {
 				}
 				if (e.LeftButton == MouseButtonState.Pressed && this.WindowState == WindowState.Maximized && e.ClickCount < 2) {
 					this.WindowState = WindowState.Normal;
-					var dataContext = (MainViewModel) this.DataContext;
+					var dataContext = (MainViewModel)this.DataContext;
 					dataContext.MaximizeIcon = PackIconKind.WindowMaximize;
 					var mousePositionRelativetoWindow = Mouse.GetPosition(this);
 					var mousePositionRelativeToScreen = GetMousePositionRelativeToScreen();
