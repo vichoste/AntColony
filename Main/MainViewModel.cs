@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -128,11 +127,12 @@ namespace AntColony.Main {
 							var success = int.TryParse(str, out var value);
 							return (value, success);
 						}).Where(pair => pair.success).Select(pair => pair.value).ToList();
-						var newNode = new Node() {
+						var newNode = new NodeModel() {
 							Id = splitted[0],
 							X = splitted[1],
 							Y = splitted[2]
 						};
+						NodeModel.Nodes.Add(newNode);
 					}
 				}
 				this.Status = Status.Ready;

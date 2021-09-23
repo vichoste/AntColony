@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace AntColony.Colony {
 	/// <summary>
 	/// This is a node
 	/// </summary>
-	internal class Node {
+	internal class NodeModel {
+		#region Fields
 		/// <summary>
 		/// Node ID
 		/// </summary>
@@ -21,5 +18,12 @@ namespace AntColony.Colony {
 		/// Y coordinate
 		/// </summary>
 		public int Y { get; set; }
+		#endregion
+		#region Collections
+		/// <summary>
+		/// Node list
+		/// </summary>
+		public static ObservableCollection<NodeModel> Nodes = new ObservableCollection<NodeModel>();
+		#endregion
 	}
 }
