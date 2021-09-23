@@ -29,7 +29,7 @@ public static class AsyncFileReader {
 		var lines = new List<string>();
 		using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, _DefaultBufferSize, _DefaultOptions)) {
 			using var reader = new StreamReader(stream, encoding);
-			string line;
+			string? line;
 			while ((line = await reader.ReadLineAsync()) != null) {
 				lines.Add(line);
 			}

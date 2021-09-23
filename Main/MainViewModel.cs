@@ -160,7 +160,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 	/// <summary>
 	/// Event
 	/// </summary>
-	public event PropertyChangedEventHandler PropertyChanged;
+	public event PropertyChangedEventHandler? PropertyChanged;
 	/// <summary>
 	/// When property changes, call this function
 	/// </summary>
