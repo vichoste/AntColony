@@ -1,8 +1,8 @@
-﻿namespace AntColony.Ant {
+﻿namespace AntColony.Colony {
 	/// <summary>
 	/// This is an ant
 	/// </summary>
-	internal class AntModel {
+	internal class Ant {
 		/// <summary>
 		/// Ant ID
 		/// </summary>
