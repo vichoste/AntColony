@@ -155,6 +155,10 @@ internal class MainViewModel : INotifyPropertyChanged {
 							X = splitted[1],
 							Y = splitted[2]
 						});
+						if (this._GraphViewModel is not null) {
+							this._GraphViewModel.MinCoordinate = splitted[1] > splitted[2] ? splitted[1] : splitted[2];
+							this._GraphViewModel.MaxCoordinate = splitted[1] < splitted[2] ? splitted[1] : splitted[2];
+						}
 					});
 					if (!result) {
 						break;

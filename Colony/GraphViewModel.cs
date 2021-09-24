@@ -55,6 +55,28 @@ internal class GraphViewModel : INotifyPropertyChanged {
 			}
 		}
 	}
+	/// <summary>
+	/// Minimum graph coordinate
+	/// </summary>
+	public int MinCoordinate {
+		get => this._GraphModel.MinCoordinate;
+		set {
+			if (this._GraphModel.MinCoordinate != value && value < this.MinCoordinate) {
+				this._GraphModel.MinCoordinate = value;
+			}
+		}
+	}
+	/// <summary>
+	/// Minimum graph coordinate
+	/// </summary>
+	public int MaxCoordinate {
+		get => this._GraphModel.MaxCoordinate;
+		set {
+			if (this._GraphModel.MaxCoordinate != value && value > this.MaxCoordinate) {
+				this._GraphModel.MaxCoordinate = value;
+			}
+		}
+	}
 	#endregion
 	#region Constructors
 	/// <summary>
@@ -63,7 +85,9 @@ internal class GraphViewModel : INotifyPropertyChanged {
 	public GraphViewModel() {
 		this._Nodes = new();
 		this._GraphModel = new GraphModel() {
-			PixelsZoom = GraphModel.MinZoomFactor
+			PixelsZoom = GraphModel.MinZoomFactor,
+			MinCoordinate = int.MaxValue,
+			MaxCoordinate = 0
 		};
 	}
 	#endregion

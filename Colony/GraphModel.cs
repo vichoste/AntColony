@@ -17,6 +17,14 @@ internal class GraphModel {
 	/// Pheromone evaporation rate
 	/// </summary>
 	public double PheromoneEvaporationRate { get; set; }
+	/// <summary>
+	/// Minimum coordinate detected
+	/// </summary>
+	public int MinCoordinate { get; set; }
+	/// <summary>
+	/// Maximum coordinate detected
+	/// </summary>
+	public int MaxCoordinate { get; set; }
 	#endregion
 	#region Constants
 	/// <summary>

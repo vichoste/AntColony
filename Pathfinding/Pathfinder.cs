@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows.Documents;
 
 using AntColony.Colony;
 
@@ -10,22 +8,28 @@ namespace AntColony.Algorithms;
 /// TSP pathfinder
 /// </summary>
 internal class Pathfinder {
-	private GraphViewModel _GraphViewModel;
+	private readonly GraphViewModel _GraphViewModel;
 	/// <summary>
 	/// Creates a pathfinder for TSP
 	/// </summary>
 	/// <param name="graphViewModel"></param>
-	public Pathfinder(GraphViewModel graphViewModel) {
-		this._GraphViewModel = graphViewModel;
-	}
+	public Pathfinder(GraphViewModel graphViewModel) => this._GraphViewModel = graphViewModel;
 	/// <summary>
 	/// Starts the TSP
 	/// </summary>
 	/// <returns></returns>
-	//public async Task Run() {
-	//	var random = new Random();
-	//	var ants = new List<AntNode>();
-	//	random.Next(0, Node.MaxNodes);
-
-	//}
+	public async void Run() {
+		var random = new Random();
+		// Start colony in a random position
+		var colonyStartX = random.Next(this._GraphViewModel.MinCoordinate, this._GraphViewModel.MaxCoordinate);
+		var colonyStartY = random.Next(this._GraphViewModel.MinCoordinate, this._GraphViewModel.MaxCoordinate);
+		for (var i = 0; i < this._GraphViewModel.AntCount; i++) {
+			this._GraphViewModel.AddNode(new AntNode() {
+				Id = i,
+				X = colonyStartX,
+				Y = colonyStartY
+			});
+		}
+		this._GraphViewModel.OnPropertyChanged(nameof(this._GraphViewModel.Nodes));
+	}
 }
