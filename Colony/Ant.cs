@@ -2,7 +2,7 @@
 /// <summary>
 /// This is an ant
 /// </summary>
-internal class Ant {
+internal class Ant : Node {
 	#region Fields
 	/// <summary>
 	/// Ant ID

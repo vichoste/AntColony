@@ -1,6 +1,6 @@
 ﻿namespace AntColony.Colony;
 
-internal class Pheromone {
+internal class Pheromone : Node {
 	#region Constants
 	/// <summary>
 	/// Minimum evaporation rate
