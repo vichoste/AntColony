@@ -79,7 +79,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 		get => this._MainModel.AntCount;
 		set {
 			if (this._MainModel.AntCount != value) {
-				this._MainModel.AntCount = value >= MainModel.MinAntCount && value <= MainModel.MaxAntCount
+				this._MainModel.AntCount = value is >= MainModel.MinAntCount and <= MainModel.MaxAntCount
 					? value
 					: value < 0 ? MainModel.MinAntCount : MainModel.MaxAntCount;
 				this.OnPropertyChanged(nameof(this.AntCount));
@@ -93,7 +93,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 		get => this._MainModel.EvaporationRate;
 		set {
 			if (this._MainModel.EvaporationRate != value) {
-				this._MainModel.EvaporationRate = value >= MainModel.MinEvaporationRate && value <= MainModel.MaxEvaporationRate
+				this._MainModel.EvaporationRate = value is >= MainModel.MinEvaporationRate and <= MainModel.MaxEvaporationRate
 					? value
 					: value < 0 ? MainModel.MinEvaporationRate : MainModel.MaxEvaporationRate;
 				this.OnPropertyChanged(nameof(this.EvaporationRate));
