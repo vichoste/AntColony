@@ -10,39 +10,39 @@ namespace AntColony.Colony;
 /// </summary>
 internal class Graph : INotifyPropertyChanged {
 	#region Attributes
-	private readonly List<Node> _Nodes;
+	private readonly List<Food> _Foods;
 	#endregion
 	#region Fields
 	/// <summary>
-	/// Gets the current nodes
+	/// Gets the current food nodes
 	/// </summary>
-	public ObservableCollection<Node> Nodes => new(this._Nodes);
+	public ObservableCollection<Food> Foods => new(this._Foods);
 	#endregion
 	#region Constructors
 	/// <summary>
 	/// Creates the environment
 	/// </summary>
 	public Graph() {
-		this._Nodes = new();
-		this.OnPropertyChanged(nameof(this.Nodes));
+		this._Foods = new();
+		this.OnPropertyChanged(nameof(this.Foods));
 	}
 	#endregion
 	#region Indexers
 	/// <summary>
-	/// Gets or marks a node as discovered
+	/// Gets or marks a food node as discovered
 	/// </summary>
-	/// <param name="node">Node name</param>
-	/// <returns>Node</returns>
-	public bool this[Node? node] {
+	/// <param name="node">Food name</param>
+	/// <returns>Food</returns>
+	public bool this[Food? node] {
 		get {
-			this.OnPropertyChanged(nameof(this.Nodes));
+			this.OnPropertyChanged(nameof(this.Foods));
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-			return this._Nodes.ToList().Find(n => n.Id == node.Id).IsDiscovered;
+			return this._Foods.ToList().Find(n => n.Id == node.Id).IsDiscovered;
 		}
 		set {
-			this._Nodes.ToList().Find(n => n.Id == node.Id).IsDiscovered = value;
+			this._Foods.ToList().Find(n => n.Id == node.Id).IsDiscovered = value;
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
-			this.OnPropertyChanged(nameof(this.Nodes));
+			this.OnPropertyChanged(nameof(this.Foods));
 		}
 	}
 	#endregion
@@ -59,12 +59,12 @@ internal class Graph : INotifyPropertyChanged {
 	#endregion
 	#region Methods
 	/// <summary>
-	/// Adds a node into the graph
+	/// Adds a food node into the graph
 	/// </summary>
-	/// <param name="node">Node to add</param>
-	public void AddNode(Node node) {
-		this._Nodes.Add(node);
-		this.OnPropertyChanged(nameof(this.Nodes));
+	/// <param name="food">Food to add</param>
+	public void AddFood(Food food) {
+		this._Foods.Add(food);
+		this.OnPropertyChanged(nameof(this.Foods));
 	}
 	#endregion
 }

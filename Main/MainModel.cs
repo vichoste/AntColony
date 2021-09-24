@@ -27,9 +27,9 @@ internal class MainModel {
 	/// </summary>
 	public int AntCount { get; set; }
 	/// <summary>
-	/// Evaporation rate for TSP
+	/// Pheromone evaporation rate
 	/// </summary>
-	public double EvaporationRate { get; set; }
+	public double PheromoneEvaporationRate { get; set; }
 	#endregion
 	#region Constants
 	/// <summary>
@@ -44,22 +44,6 @@ internal class MainModel {
 	/// Maximum zoom factor
 	/// </summary>
 	public const double MaxZoomFactor = 24;
-	/// <summary>
-	/// Minimum ant count
-	/// </summary>
-	public const int MinAntCount = 0;
-	/// <summary>
-	/// Maximum ant count
-	/// </summary>
-	public const int MaxAntCount = 10;
-	/// <summary>
-	/// Minimum evaporation rate
-	/// </summary>
-	public const double MinEvaporationRate = .001;
-	/// <summary>
-	/// Maximum evaporation rate
-	/// </summary>
-	public const double MaxEvaporationRate = 1;
 	/// <summary>
 	/// Normal border margin
 	/// </summary>

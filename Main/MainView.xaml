@@ -11,7 +11,7 @@
 	<Window.Resources>
 		<ResourceDictionary>
 			<Main:AntCountConverter x:Key="AntCountConverter"/>
-			<Main:EvaporationRateConverter x:Key="EvaporationRateConverter"/>
+			<Main:PheromoneEvaporationRateConverter x:Key="PheromoneEvaporationRateConverter"/>
 			<Main:StatusConverter x:Key="StatusConverter"/>
 		</ResourceDictionary>
 	</Window.Resources>
@@ -73,7 +73,7 @@
 						<TextBlock Grid.Row="0" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center">Number of ants</TextBlock>
 						<TextBlock Grid.Row="1" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center">Evaporation rate</TextBlock>
 						<TextBox Grid.Row="0" Grid.Column="1" IsEnabled="{Binding CanOperate}" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding AntCount, Converter={StaticResource AntCountConverter}, Mode=TwoWay}"/>
-						<TextBox Grid.Row="1" Grid.Column="1" IsEnabled="{Binding CanOperate}" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding EvaporationRate, Converter={StaticResource EvaporationRateConverter}, Mode=TwoWay}"/>
+						<TextBox Grid.Row="1" Grid.Column="1" IsEnabled="{Binding CanOperate}" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding PheromoneEvaporationRate, Converter={StaticResource PheromoneEvaporationRateConverter}, Mode=TwoWay}"/>
 					</Grid>
 					<Button Margin="8" Style="{DynamicResource MaterialDesignFlatDarkBgButton}" IsEnabled="{Binding CanOperate}">Run</Button>
 				</StackPanel>
@@ -86,7 +86,7 @@
 			</MaterialDesign:Card>
 			<MaterialDesign:Card>
 				<ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
-					<ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding Graph}" ItemsSource="{Binding Nodes}">
+					<ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding Graph}" ItemsSource="{Binding Foods}">
 						<ItemsControl.Resources>
 							<Style x:Key="PixelStyle" TargetType="TextBlock">
 								<Setter Property="Width" Value="4"/>

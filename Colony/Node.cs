@@ -2,7 +2,7 @@
 /// <summary>
 /// This is a node from the environment
 /// </summary>
-internal class Node {
+internal abstract class Node {
 	#region Fields
 	/// <summary>
 	/// Node ID
@@ -24,10 +24,6 @@ internal class Node {
 	/// Y observable coordinate
 	/// </summary>
 	public int ObservableY => this.Y * ObservableMargin;
-	/// <summary>
-	/// IF this cell is marked as discovered
-	/// </summary>
-	public bool IsDiscovered { get; set; }
 	#endregion
 	#region Constants
 	/// <summary>

@@ -2,12 +2,12 @@
 /// <summary>
 /// This is an ant
 /// </summary>
-internal class Ant {
+internal class Food : Node {
 	#region Fields
 	/// <summary>
-	/// Ant ID
+	/// If this food cell is marked as discovered
 	/// </summary>
-	public int Id { get; set; }
+	public bool IsDiscovered { get; set; }
 	#endregion
 	#region Constants
 	/// <summary>

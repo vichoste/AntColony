@@ -21,7 +21,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 	private readonly MainModel _MainModel;
 	#endregion
 	#region References
-	private Graph? _CellViewModel;
+	private Graph? _Graph;
 	#endregion
 	#region Fields
 	/// <summary>
@@ -79,9 +79,9 @@ internal class MainViewModel : INotifyPropertyChanged {
 		get => this._MainModel.AntCount;
 		set {
 			if (this._MainModel.AntCount != value) {
-				this._MainModel.AntCount = value is >= MainModel.MinAntCount and <= MainModel.MaxAntCount
-					? value
-					: value < 0 ? MainModel.MinAntCount : MainModel.MaxAntCount;
+				this._MainModel.AntCount = value is >= Ant.MinAntCount and <= Ant.MaxAntCount ?
+					value : value is < Ant.MinAntCount ?
+						Ant.MinAntCount : Ant.MaxAntCount;
 				this.OnPropertyChanged(nameof(this.AntCount));
 			}
 		}
@@ -89,14 +89,14 @@ internal class MainViewModel : INotifyPropertyChanged {
 	/// <summary>
 	/// Evaporation rate for TSP
 	/// </summary>
-	public double EvaporationRate {
-		get => this._MainModel.EvaporationRate;
+	public double PheromoneEvaporationRate {
+		get => this._MainModel.PheromoneEvaporationRate;
 		set {
-			if (this._MainModel.EvaporationRate != value) {
-				this._MainModel.EvaporationRate = value is >= MainModel.MinEvaporationRate and <= MainModel.MaxEvaporationRate
-					? value
-					: value < 0 ? MainModel.MinEvaporationRate : MainModel.MaxEvaporationRate;
-				this.OnPropertyChanged(nameof(this.EvaporationRate));
+			if (this._MainModel.PheromoneEvaporationRate != value) {
+				this._MainModel.PheromoneEvaporationRate = value is >= Pheromone.MinPheromoneEvaporationRate and <= Pheromone.MaxPheromoneEvaporationRate ?
+					value : value is < Pheromone.MinPheromoneEvaporationRate ?
+					Pheromone.MinPheromoneEvaporationRate : Pheromone.MaxPheromoneEvaporationRate;
+				this.OnPropertyChanged(nameof(this.PheromoneEvaporationRate));
 			}
 		}
 	}
@@ -104,10 +104,10 @@ internal class MainViewModel : INotifyPropertyChanged {
 	/// Cell view model
 	/// </summary>>
 	public Graph? Graph {
-		get => this._CellViewModel;
+		get => this._Graph;
 		set {
-			if (this._CellViewModel != value) {
-				this._CellViewModel = value;
+			if (this._Graph != value) {
+				this._Graph = value;
 				this.OnPropertyChanged(nameof(this.Graph));
 			}
 		}
@@ -154,7 +154,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 							result = false;
 							return;
 						}
-						this.Graph.AddNode(new() {
+						this.Graph.AddFood(new() {
 							Id = splitted[0],
 							X = splitted[1],
 							Y = splitted[2]
@@ -181,7 +181,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 			Status = Status.Ready,
 			BorderMargin = 8,
 			AntCount = 4,
-			EvaporationRate = .5
+			PheromoneEvaporationRate = .5
 		};
 	}
 	#endregion
