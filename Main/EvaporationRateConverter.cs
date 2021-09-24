@@ -16,9 +16,7 @@ internal class EvaporationRateConverter : IValueConverter {
 	/// <param name="parameter"></param>
 	/// <param name="culture"></param>
 	/// <returns>Status as string</returns>
-	public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-		return value is double antCount ? antCount.ToString() : MainModel.MinEvaporationRate.ToString();
-	}
+	public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value is double antCount ? antCount.ToString() : MainModel.MinEvaporationRate.ToString();
 
 	/// <summary>
 	/// Convert ant count to double
@@ -28,8 +26,6 @@ internal class EvaporationRateConverter : IValueConverter {
 	/// <param name="parameter"></param>
 	/// <param name="culture"></param>
 	/// <returns>Status as enum</returns>
-	public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-		return value is string antCount && double.TryParse(antCount, out var result) ? result : MainModel.MinEvaporationRate;
-	}
+	public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => value is string antCount && double.TryParse(antCount, out var result) ? result : MainModel.MinEvaporationRate;
 	#endregion
 }

@@ -8,7 +8,7 @@
     <ApplicationIcon>circuit.ico</ApplicationIcon>
     <DebugType>full</DebugType>
     <StartupObject>PGMLab.App</StartupObject>
-    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
     <Nullable>enable</Nullable>
     <AnalysisLevel>6.0</AnalysisLevel>
   </PropertyGroup>

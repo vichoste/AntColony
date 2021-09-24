@@ -16,9 +16,7 @@ public static class AsyncFileReader {
 	/// </summary>
 	/// <param name="path">File path</param>
 	/// <returns>File string</returns>
-	public static Task<string[]> ReadAllLinesAsync(string path) {
-		return ReadAllLinesAsync(path, Encoding.UTF8);
-	}
+	public static Task<string[]> ReadAllLinesAsync(string path) => ReadAllLinesAsync(path, Encoding.UTF8);
 
 	/// <summary>
 	/// Read all lines in asynchronous way

@@ -55,9 +55,7 @@ internal class Graph : INotifyPropertyChanged {
 	/// When property changes, call this function
 	/// </summary>
 	/// <param name="value">Property name</param>
-	public void OnPropertyChanged(string value) {
-		this.PropertyChanged?.Invoke(this, new(value));
-	}
+	public void OnPropertyChanged(string value) => this.PropertyChanged?.Invoke(this, new(value));
 	#endregion
 	#region Methods
 	/// <summary>

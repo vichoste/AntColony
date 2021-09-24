@@ -29,27 +29,21 @@ public partial class MainView : Window {
 	/// </summary>
 	/// <param name="sender"></param>
 	/// <param name="e"></param>
-	private void Minimize(object sender, RoutedEventArgs e) {
-		this.WindowState = WindowState.Minimized;
-	}
+	private void Minimize(object sender, RoutedEventArgs e) => this.WindowState = WindowState.Minimized;
 
 	/// <summary>
 	/// Maximizes the application
 	/// </summary>
 	/// <param name="sender"></param>
 	/// <param name="e"></param>
-	private void Maximize(object sender, RoutedEventArgs e) {
-		this.MaximizeWindow();
-	}
+	private void Maximize(object sender, RoutedEventArgs e) => this.MaximizeWindow();
 
 	/// <summary>
 	/// Exits the application
 	/// </summary>
 	/// <param name="sender"></param>
 	/// <param name="e"></param>
-	private void Exit(object sender, RoutedEventArgs e) {
-		this.Close();
-	}
+	private void Exit(object sender, RoutedEventArgs e) => this.Close();
 
 	/// <summary>
 	/// Moves the window

@@ -16,9 +16,7 @@ internal class StatusConverter : IValueConverter {
 	/// <param name="parameter"></param>
 	/// <param name="culture"></param>
 	/// <returns>Status as string</returns>
-	public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-		return value is Status status ? status.ToString() : Status.Ready.ToString();
-	}
+	public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value is Status status ? status.ToString() : Status.Ready.ToString();
 
 	/// <summary>
 	/// Convert string to enum
@@ -28,8 +26,6 @@ internal class StatusConverter : IValueConverter {
 	/// <param name="parameter"></param>
 	/// <param name="culture"></param>
 	/// <returns>Status as enum</returns>
-	public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-		return value is string status ? Enum.Parse(typeof(Status), status) : Status.Ready;
-	}
+	public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => value is string status ? Enum.Parse(typeof(Status), status) : Status.Ready;
 	#endregion
 }
