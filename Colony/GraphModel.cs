@@ -9,6 +9,14 @@ internal class GraphModel {
 	/// Current pixels zoom
 	/// </summary>
 	public double PixelsZoom { get; set; }
+	/// <summary>
+	/// Ant count for TSP
+	/// </summary>
+	public int AntCount { get; set; }
+	/// <summary>
+	/// Pheromone evaporation rate
+	/// </summary>
+	public double PheromoneEvaporationRate { get; set; }
 	#endregion
 	#region Constants
 	/// <summary>

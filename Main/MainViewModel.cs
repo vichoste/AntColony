@@ -85,34 +85,6 @@ internal class MainViewModel : INotifyPropertyChanged {
 		}
 	}
 	/// <summary>
-	/// Ant count for TSP
-	/// </summary>
-	public int AntCount {
-		get => this._MainModel.AntCount;
-		set {
-			if (this._MainModel.AntCount != value) {
-				this._MainModel.AntCount = value is >= AntNode.MinAntCount and <= AntNode.MaxAntCount ?
-					value : value is < AntNode.MinAntCount ?
-						AntNode.MinAntCount : AntNode.MaxAntCount;
-				this.OnPropertyChanged(nameof(this.AntCount));
-			}
-		}
-	}
-	/// <summary>
-	/// Evaporation rate for TSP
-	/// </summary>
-	public double PheromoneEvaporationRate {
-		get => this._MainModel.PheromoneEvaporationRate;
-		set {
-			if (this._MainModel.PheromoneEvaporationRate != value) {
-				this._MainModel.PheromoneEvaporationRate = value is >= PheromoneNode.MinPheromoneEvaporationRate and <= PheromoneNode.MaxPheromoneEvaporationRate ?
-					value : value is < PheromoneNode.MinPheromoneEvaporationRate ?
-					PheromoneNode.MinPheromoneEvaporationRate : PheromoneNode.MaxPheromoneEvaporationRate;
-				this.OnPropertyChanged(nameof(this.PheromoneEvaporationRate));
-			}
-		}
-	}
-	/// <summary>
 	/// Cell view model
 	/// </summary>>
 	public GraphViewModel? GraphViewModel {
@@ -193,6 +165,8 @@ internal class MainViewModel : INotifyPropertyChanged {
 					this.CanOperate = false;
 				} else {
 					this.GraphViewModel.OnPropertyChanged(nameof(this.GraphViewModel.Nodes));
+					this.GraphViewModel.AntCount = 4;
+					this.GraphViewModel.PheromoneEvaporationRate = .5;
 					this.CanOperate = true;
 				}
 			} else {
@@ -205,8 +179,6 @@ internal class MainViewModel : INotifyPropertyChanged {
 			MaximizeIcon = PackIconKind.WindowMaximize,
 			Status = Status.Ready,
 			BorderMargin = 8,
-			AntCount = 4,
-			PheromoneEvaporationRate = .5
 		};
 	}
 	#endregion

@@ -1,4 +1,8 @@
-﻿using AntColony.Colony;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Documents;
+
+using AntColony.Colony;
 
 namespace AntColony.Algorithms;
 
@@ -18,7 +22,10 @@ internal class Pathfinder {
 	/// Starts the TSP
 	/// </summary>
 	/// <returns></returns>
-	public async Task Run() {
+	//public async Task Run() {
+	//	var random = new Random();
+	//	var ants = new List<AntNode>();
+	//	random.Next(0, Node.MaxNodes);
 
-	}
+	//}
 }

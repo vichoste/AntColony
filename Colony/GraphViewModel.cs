@@ -27,6 +27,34 @@ internal class GraphViewModel : INotifyPropertyChanged {
 			}
 		}
 	}
+	/// <summary>
+	/// Ant count for TSP
+	/// </summary>
+	public int AntCount {
+		get => this._GraphModel.AntCount;
+		set {
+			if (this._GraphModel.AntCount != value) {
+				this._GraphModel.AntCount = value is >= AntNode.MinAntCount and <= AntNode.MaxAntCount ?
+					value : value is < AntNode.MinAntCount ?
+						AntNode.MinAntCount : AntNode.MaxAntCount;
+				this.OnPropertyChanged(nameof(this.AntCount));
+			}
+		}
+	}
+	/// <summary>
+	/// Evaporation rate for TSP
+	/// </summary>
+	public double PheromoneEvaporationRate {
+		get => this._GraphModel.PheromoneEvaporationRate;
+		set {
+			if (this._GraphModel.PheromoneEvaporationRate != value) {
+				this._GraphModel.PheromoneEvaporationRate = value is >= PheromoneNode.MinPheromoneEvaporationRate and <= PheromoneNode.MaxPheromoneEvaporationRate ?
+					value : value is < PheromoneNode.MinPheromoneEvaporationRate ?
+					PheromoneNode.MinPheromoneEvaporationRate : PheromoneNode.MaxPheromoneEvaporationRate;
+				this.OnPropertyChanged(nameof(this.PheromoneEvaporationRate));
+			}
+		}
+	}
 	#endregion
 	#region Constructors
 	/// <summary>

@@ -88,7 +88,7 @@
 			</MaterialDesign:Card>
 			<StackPanel VerticalAlignment="Center" MinWidth="300" Margin="8, 0, 0, 0" DockPanel.Dock="Right">
 				<MaterialDesign:Card Margin="0, 0, 0, 8">
-					<StackPanel Margin="8">
+					<StackPanel Margin="8" IsEnabled="{Binding CanOperate}">
 						<TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}" HorizontalAlignment="Center">TSP Options</TextBlock>
 						<Grid Margin="8">
 							<Grid.RowDefinitions>
@@ -102,10 +102,10 @@
 							</Grid.ColumnDefinitions>
 							<TextBlock Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center" Grid.ColumnSpan="2">Number of ants</TextBlock>
 							<TextBlock Grid.Row="1" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center" Grid.ColumnSpan="2">Evaporation rate</TextBlock>
-							<TextBox Grid.Row="0" Grid.Column="1" IsEnabled="{Binding CanOperate}" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding AntCount, Converter={StaticResource AntCountConverter}, Mode=TwoWay}" Grid.ColumnSpan="2" Margin="187,0,0,24" Grid.RowSpan="2"/>
-							<TextBox Grid.Row="1" Grid.Column="1" IsEnabled="{Binding CanOperate}" Style="{DynamicResource MaterialDesignTextBox}" Text="{Binding PheromoneEvaporationRate, Converter={StaticResource PheromoneEvaporationRateConverter}, Mode=TwoWay}" Grid.ColumnSpan="2" Margin="187,0,0,0"/>
+							<TextBox Grid.Row="0" Grid.Column="1" Style="{DynamicResource MaterialDesignTextBox}" DataContext="{Binding GraphViewModel}" Text="{Binding AntCount, Converter={StaticResource AntCountConverter}, Mode=TwoWay}" Grid.ColumnSpan="2" Margin="187,0,0,24" Grid.RowSpan="2"/>
+							<TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource MaterialDesignTextBox}" DataContext="{Binding GraphViewModel}" Text="{Binding PheromoneEvaporationRate, Converter={StaticResource PheromoneEvaporationRateConverter}, Mode=TwoWay}" Grid.ColumnSpan="2" Margin="187,0,0,0"/>
 						</Grid>
-						<Button Click="Run" Margin="8" Style="{DynamicResource MaterialDesignFlatDarkBgButton}" IsEnabled="{Binding CanOperate}">Run</Button>
+						<Button Click="Run" Margin="8" Style="{DynamicResource MaterialDesignFlatDarkBgButton}">Run</Button>
 					</StackPanel>
 				</MaterialDesign:Card>
 				<MaterialDesign:Card>

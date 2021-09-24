@@ -26,14 +26,6 @@ internal class MainModel {
 	/// Checks if the program can execute the TSP
 	/// </summary>
 	public bool CanOperate { get; set; }
-	/// <summary>
-	/// Ant count for TSP
-	/// </summary>
-	public int AntCount { get; set; }
-	/// <summary>
-	/// Pheromone evaporation rate
-	/// </summary>
-	public double PheromoneEvaporationRate { get; set; }
 	#endregion
 	#region Constants
 	/// <summary>
