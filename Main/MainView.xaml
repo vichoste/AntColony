@@ -2,7 +2,7 @@
 		xmlns:MaterialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" TextElement.Foreground="{DynamicResource MaterialDesignBody}" TextElement.FontWeight="Regular" TextElement.FontSize="13" TextOptions.TextFormattingMode="Ideal" TextOptions.TextRenderingMode="Auto" Background="Transparent" FontFamily="{DynamicResource MaterialDesignFont}"
 		AllowsTransparency="True" WindowStartupLocation="CenterScreen" WindowStyle="None"
 		xmlns:Main="clr-namespace:AntColony.Main" xmlns:Colony="clr-namespace:AntColony.Colony"
-		KeyUp="ReleaseKey" KeyDown="CheckControlPressed" MouseWheel="ZoomPixels">
+		KeyUp="ReleaseKey" KeyDown="CheckControlPressed" MouseWheel="ZoomPixels" ToolTip="To zoom in/out, place your cursor outside of the canvas, and scroll the mouse wheel while holding CTRL">
 	<Window.DataContext>
 		<Main:MainViewModel/>
 	</Window.DataContext>
@@ -52,7 +52,6 @@
 			<Style x:Key="PheromoneStyle" TargetType="TextBlock">
 				<Setter Property="Width" Value="24"/>
 				<Setter Property="Height" Value="24"/>
-				<Setter Property="Background" Value="LightGray"/>
 				<Setter Property="Foreground" Value="Orange"/>
 				<Setter Property="Text" Value="{Binding Id, FallbackValue=0, TargetNullValue=0}"/>
 				<Setter Property="FontSize" Value="12"/>
@@ -150,7 +149,7 @@
 							<TextBlock Grid.Row="2" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}">Path</TextBlock>
 							<TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource PathStyle}" Width="8" Height="8" Text=""/>
 							<TextBlock Grid.Row="3" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}">Pheromone [fade]</TextBlock>
-							<TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource PheromoneStyle}" Width="8" Height="8" Text=""/>
+							<TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource PheromoneStyle}" Background="DarkGray" Width="8" Height="8" Text=""/>
 						</Grid>
 					</StackPanel>
 				</MaterialDesign:Card>
@@ -164,9 +163,9 @@
 					</StatusBar>
 				</MaterialDesign:Card>
 			</StackPanel>
-			<MaterialDesign:Card>
+			<MaterialDesign:Card Background="{DynamicResource MaterialDesignLightBackground}">
 				<ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" CanContentScroll="True">
-					<ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding Graph}" ItemsSource="{Binding Foods}" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Standard">
+					<ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding Graph}" ItemsSource="{Binding Nodes}" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Standard">
 						<ItemsControl.LayoutTransform>
 							<ScaleTransform ScaleX="{Binding PixelsZoom}" ScaleY="{Binding PixelsZoom}"/>
 						</ItemsControl.LayoutTransform>
