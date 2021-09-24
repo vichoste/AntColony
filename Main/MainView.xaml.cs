@@ -2,8 +2,6 @@
 using System.Windows;
 using System.Windows.Input;
 
-using AntColony.Colony;
-
 using MaterialDesignThemes.Wpf;
 
 namespace AntColony.Main;

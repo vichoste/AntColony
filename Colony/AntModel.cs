@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AntColony.Colony;
+﻿namespace AntColony.Colony;
 /// <summary>
 /// This is an ant
 /// </summary>

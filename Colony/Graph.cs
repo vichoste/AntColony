@@ -2,10 +2,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Navigation;
-
-using AntColony.Main;
 
 namespace AntColony.Colony;
 
