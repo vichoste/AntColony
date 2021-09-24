@@ -53,7 +53,6 @@ public partial class MainView : Window {
 	/// <param name="sender"></param>
 	/// <param name="e"></param>
 	private void CheckMouseDown(object sender, MouseButtonEventArgs e) {
-		System.Diagnostics.Debug.WriteLine($"{e.Source} - {e.OriginalSource}");
 		if (e.LeftButton is MouseButtonState.Pressed) {
 			if (e.ClickCount is 2 && this.WindowState is WindowState.Normal) {
 				this.MaximizeWindow();
