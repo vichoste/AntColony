@@ -96,6 +96,15 @@ public partial class MainView : Window {
 			this._MainViewModel.PixelsZoom -= GraphModel.ZoomFactor;
 		}
 	}
+	/// <summary>
+	/// Starts the TSP
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="e"></param>
+	private async void Run(object sender, RoutedEventArgs e) {
+		this._MainViewModel.CanOperate = false;
+
+	}
 	#endregion
 	#region Methods
 	/// <summary>
