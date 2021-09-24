@@ -3,12 +3,6 @@
 /// This is an ant
 /// </summary>
 internal class Ant : Node {
-	#region Fields
-	/// <summary>
-	/// Ant ID
-	/// </summary>
-	public int Id { get; set; }
-	#endregion
 	#region Constants
 	/// <summary>
 	/// Minimum ant count

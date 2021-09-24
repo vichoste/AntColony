@@ -17,13 +17,13 @@ internal abstract class Node {
 	/// </summary>
 	public int Y { get; set; }
 	/// <summary>
-	/// X observable coordinate
+	/// X coordinate
 	/// </summary>
 	public int ObservableX => this.X * ObservableMargin;
 	/// <summary>
-	/// Y observable coordinate
+	/// Y coordinate
 	/// </summary>
-	public int ObservableY => this.Y * ObservableMargin;
+	public int ObservableY => (MaxNodes - this.Y) * ObservableMargin;
 	#endregion
 	#region Constants
 	/// <summary>
@@ -33,6 +33,6 @@ internal abstract class Node {
 	/// <summary>
 	/// Observable margin
 	/// </summary>
-	public const int ObservableMargin = 2;
+	public const int ObservableMargin = 4;
 	#endregion
 }

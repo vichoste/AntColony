@@ -19,6 +19,10 @@ internal class MainModel {
 	/// </summary>
 	public int BorderMargin { get; set; }
 	/// <summary>
+	/// Checks if the control button is pressed
+	/// </summary>
+	public bool IsControlPressed { get; set; }
+	/// <summary>
 	/// Checks if the program can execute the TSP
 	/// </summary>
 	public bool CanOperate { get; set; }
@@ -32,18 +36,6 @@ internal class MainModel {
 	public double PheromoneEvaporationRate { get; set; }
 	#endregion
 	#region Constants
-	/// <summary>
-	/// Zoom factor
-	/// </summary>
-	public const double ZoomFactor = 1;
-	/// <summary>
-	/// Minimum zoom factor
-	/// </summary>
-	public const double MinZoomFactor = 1;
-	/// <summary>
-	/// Maximum zoom factor
-	/// </summary>
-	public const double MaxZoomFactor = 24;
 	/// <summary>
 	/// Normal border margin
 	/// </summary>

@@ -61,6 +61,18 @@ internal class MainViewModel : INotifyPropertyChanged {
 		}
 	}
 	/// <summary>
+	/// Checks if the control button is pressed
+	/// </summary>
+	public bool IsControlPressed {
+		get => this._MainModel.IsControlPressed;
+		set {
+			if (this._MainModel.IsControlPressed != value) {
+				this._MainModel.IsControlPressed = value;
+				this.OnPropertyChanged(nameof(this.IsControlPressed));
+			}
+		}
+	}
+	/// <summary>
 	/// Checks if the program can execute the TSP
 	/// </summary>
 	public bool CanOperate {
@@ -106,9 +118,21 @@ internal class MainViewModel : INotifyPropertyChanged {
 	public Graph? Graph {
 		get => this._Graph;
 		set {
-			if (this._Graph != value) {
+			if (value is not null && this._Graph != value) {
 				this._Graph = value;
 				this.OnPropertyChanged(nameof(this.Graph));
+			}
+		}
+	}
+	/// <summary>
+	/// Current pixels zoom
+	/// </summary>
+	public double PixelsZoom {
+		get => this._Graph is not null ? this._Graph.PixelsZoom : 0;
+		set {
+			if (this._Graph is not null && this._Graph.PixelsZoom != value) {
+				this._Graph.PixelsZoom = value;
+				this.OnPropertyChanged(nameof(this.PixelsZoom));
 			}
 		}
 	}

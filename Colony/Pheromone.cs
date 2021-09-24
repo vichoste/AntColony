@@ -1,6 +1,12 @@
 ﻿namespace AntColony.Colony;
 
 internal class Pheromone : Node {
+	#region Fields
+	/// <summary>
+	/// This value will evaporate over time
+	/// </summary>
+	public byte Strength { get; set; }
+	#endregion
 	#region Constants
 	/// <summary>
 	/// Minimum evaporation rate

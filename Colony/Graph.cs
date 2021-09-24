@@ -11,12 +11,25 @@ namespace AntColony.Colony;
 internal class Graph : INotifyPropertyChanged {
 	#region Attributes
 	private readonly List<Food> _Foods;
+	private readonly GraphModel _GraphModel;
 	#endregion
 	#region Fields
 	/// <summary>
 	/// Gets the current food nodes
 	/// </summary>
 	public ObservableCollection<Food> Foods => new(this._Foods);
+	/// <summary>
+	/// Current pixels zoom
+	/// </summary>
+	public double PixelsZoom {
+		get => this._GraphModel.PixelsZoom;
+		set {
+			if (this._GraphModel.PixelsZoom != value) {
+				this._GraphModel.PixelsZoom = value;
+				this.OnPropertyChanged(nameof(this.PixelsZoom));
+			}
+		}
+	}
 	#endregion
 	#region Constructors
 	/// <summary>
@@ -24,6 +37,9 @@ internal class Graph : INotifyPropertyChanged {
 	/// </summary>
 	public Graph() {
 		this._Foods = new();
+		this._GraphModel = new GraphModel() {
+			PixelsZoom = GraphModel.MinZoomFactor
+		};
 		this.OnPropertyChanged(nameof(this.Foods));
 	}
 	#endregion
