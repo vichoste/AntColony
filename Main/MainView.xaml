@@ -6,7 +6,7 @@
 		<Main:MainViewModel/>
 	</Window.DataContext>
 	<Window.InputBindings>
-		<KeyBinding Command="{Binding OpenTspFileCommand}" CommandParameter="{Binding }" Modifiers="Ctrl" Key="O"/>
+		<KeyBinding Command="{Binding OpenTspFileCommand}" Modifiers="Ctrl" Key="O"/>
 	</Window.InputBindings>
 	<Window.Resources>
 		<ResourceDictionary>
@@ -84,27 +84,31 @@
 				</StatusBar>
 			</MaterialDesign:Card>
 			<MaterialDesign:Card>
-				<ItemsControl x:Name="Cells" DataContext="{Binding CellViewModel}" ItemsSource="{Binding Cells}">
+				<ItemsControl DataContext="{Binding Graph}" ItemsSource="{Binding Nodes}">
 					<ItemsControl.Resources>
 						<Style x:Key="PixelStyle" TargetType="TextBlock">
-							<Setter Property="Width" Value="1"/>
-							<Setter Property="Height" Value="1"/>
+							<Setter Property="Width" Value="16"/>
+							<Setter Property="Height" Value="16"/>
 							<Setter Property="TextAlignment" Value="Center"/>
-							<Setter Property="FontSize" Value="1"/>
+							<Setter Property="FontSize" Value="8"/>
+							<Setter Property="HorizontalAlignment" Value="Center"/>
+							<Setter Property="VerticalAlignment" Value="Center"/>
 							<Setter Property="Margin" Value="0"/>
-							<Setter Property="Padding" Value="0, 1, 0, 0"/>
 							<Setter Property="FontWeight" Value="Bold"/>
 							<Setter Property="Cursor" Value="Hand"/>
 							<Setter Property="Background" Value="{DynamicResource MaterialDesignLightBackground}"/>
 							<Setter Property="Foreground" Value="DarkBlue"/>
+							<Setter Property="Text" Value="{Binding Id}"/>
 							<Style.Triggers>
-								<DataTrigger Binding="{Binding IsNode}" Value="•"/>
+								<DataTrigger Binding="{Binding IsDiscovered}" Value="True">
+									<Setter Property="Background" Value="DarkGreen"/>
+								</DataTrigger>
 							</Style.Triggers>
 						</Style>
 					</ItemsControl.Resources>
 					<ItemsControl.ItemsPanel>
 						<ItemsPanelTemplate>
-							<WrapPanel/>
+							<Canvas/>
 						</ItemsPanelTemplate>
 					</ItemsControl.ItemsPanel>
 					<ItemsControl.ItemTemplate>

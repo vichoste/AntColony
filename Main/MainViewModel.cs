@@ -104,12 +104,12 @@ internal class MainViewModel : INotifyPropertyChanged {
 	/// <summary>
 	/// Cell view model
 	/// </summary>>
-	public Graph? CellViewModel {
+	public Graph? Graph {
 		get => this._CellViewModel;
 		set {
 			if (this._CellViewModel != value) {
 				this._CellViewModel = value;
-				this.OnPropertyChanged(nameof(this.CellViewModel));
+				this.OnPropertyChanged(nameof(this.Graph));
 			}
 		}
 	}
@@ -123,7 +123,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 			this.Status = Status.Opening;
 			var openFileDialog = new OpenFileDialog();
 			if (openFileDialog.ShowDialog() is true) {
-				this.CellViewModel = await Graph.BuildCellViewModelAsync();
+				this.Graph = new Graph();
 				// Allow only TSP files
 				if (!openFileDialog.FileName.ToLower().EndsWith(".tsp")) {
 					_ = MessageBox.Show("Can't open file. Only *.tsp files are allowed!");
@@ -144,20 +144,14 @@ internal class MainViewModel : INotifyPropertyChanged {
 						await Task.Run(() => {
 							// Parse integers (https://stackoverflow.com/questions/4961675/select-parsed-int-if-string-was-parseable-to-int)
 							var splitted = lines[i].Split(' ').Select(str => {
-								var success = int.TryParse(str, out var value);
+								var success = double.TryParse(str, out var value);
 								return (value, success);
 							}).Where(pair => pair.success).Select(pair => pair.value).ToList();
-							if (splitted[1] > Node.MaxCells || splitted[2] > Node.MaxCells) {
-								_ = MessageBox.Show("Can't open file. For simplicity, only distances below 300!");
-								return;
-							}
-							if (this.CellViewModel is not null) {
-								this.CellViewModel.AddNode(new() {
-									Id = splitted[0],
-									X = splitted[1],
-									Y = splitted[2]
-								});
-							}
+							this.Graph.AddNode(new() {
+								Id = int.Parse(splitted[0].ToString()),
+								X = splitted[0],
+								Y = splitted[1]
+							});
 						});
 					} catch (Exception) {
 						_ = MessageBox.Show("Can't open file. For simplicity, only integers!");
@@ -166,7 +160,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 				}
 				this.CanOperate = true;
 			} else {
-				this.CellViewModel = await Graph.BuildCellViewModelAsync();
+				this.Graph = new Graph();
 				this.CanOperate = false;
 			}
 			this.Status = Status.Ready;

@@ -20,14 +20,14 @@ internal class Graph : INotifyPropertyChanged {
 	/// <summary>
 	/// Gets the current nodes
 	/// </summary>
-	public List<Node> Nodes => this._Nodes.ToList();
+	public ObservableCollection<Node> Nodes => new(this._Nodes);
 	#endregion
 	#region Constructors
 	/// <summary>
 	/// Creates the environment
 	/// </summary>
-	private Graph(Node[,] cells) {
-		this._Nodes = cells;
+	public Graph() {
+		this._Nodes = new();
 		this.OnPropertyChanged(nameof(this.Nodes));
 	}
 	#endregion
@@ -37,13 +37,15 @@ internal class Graph : INotifyPropertyChanged {
 	/// </summary>
 	/// <param name="node">Node name</param>
 	/// <returns>Node</returns>
-	public bool this[int node] {
+	public bool this[Node? node] {
 		get {
 			this.OnPropertyChanged(nameof(this.Nodes));
-			return this._Nodes.Find(node => node.Id is node);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+			return this._Nodes.ToList().Find(n => n.Id == node.Id).IsDiscovered;
 		}
 		set {
-			this._Nodes.Find(node => node.Id is node).IsDiscovered = value;
+			this._Nodes.ToList().Find(n => n.Id == node.Id).IsDiscovered = value;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 			this.OnPropertyChanged(nameof(this.Nodes));
 		}
 	}
@@ -61,27 +63,14 @@ internal class Graph : INotifyPropertyChanged {
 		this.PropertyChanged?.Invoke(this, new(value));
 	}
 	#endregion
-	#region Asynchronous Singleton
-	/// <summary>
-	/// Creates a cell view model in an asynchronous way
-	/// https://stackoverflow.com/questions/8145479/can-constructors-be-async
-	/// </summary>
-	/// <returns>New instance of the cell view model</returns>
-	public static async Task<Graph> BuildCellViewModelAsync() {
-		var cells = new Node[Node.MaxNodes, Node.MaxNodes];
-		var tasks = new List<Task>();
-		for (var i = 0; i < Node.MaxNodes; i++) {
-			for (var j = 0; j < Node.MaxNodes; j++) {
-				tasks.Add(new Task(() => { cells[i, j] = new(); }));
-			}
-		}
-		await Task.WhenAll(tasks);
-		return new Graph(cells);
-	}
-	#endregion
 	#region Methods
-	public bool AddNode(Node node) {
+	/// <summary>
+	/// Adds a node into the graph
+	/// </summary>
+	/// <param name="node">Node to add</param>
+	public void AddNode(Node node) {
 		this._Nodes.Add(node);
+		this.OnPropertyChanged(nameof(this.Nodes));
 	}
 	#endregion
 }
