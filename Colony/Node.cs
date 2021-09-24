@@ -48,6 +48,6 @@ internal abstract class Node {
 	/// <param name="firstNode">First node</param>
 	/// <param name="secondNode">Second node</param>
 	/// <returns>Euclidian scalar distance</returns>
-	public static double Distance(Node firstNode, Node secondNode) => Math.Sqrt(Math.Pow(secondNode.X - firstNode.X, 2) + Math.Pow(secondNode.Y - firstNode.Y,2));
+	public static double Distance(Node firstNode, Node secondNode) => Math.Sqrt(Math.Pow(secondNode.X - firstNode.X, 2) + Math.Pow(secondNode.Y - firstNode.Y, 2));
 	#endregion
 }
