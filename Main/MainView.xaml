@@ -15,29 +15,36 @@
 			<Main:PheromoneEvaporationRateConverter x:Key="PheromoneEvaporationRateConverter"/>
 			<Main:StatusConverter x:Key="StatusConverter"/>
 			<Colony:ObservableStrengthConverter x:Key="ObservableStrengthConverter"/>
-			<Style x:Key="PixelStyle" TargetType="TextBlock">
-				<Setter Property="Width" Value="24"/>
-				<Setter Property="Height" Value="24"/>
-				<Setter Property="Text" Value="{Binding Id, FallbackValue=0, TargetNullValue=0}"/>
-				<Setter Property="FontSize" Value="12"/>
-				<Setter Property="FontWeight" Value="Bold"/>
-				<Setter Property="Padding" Value="1, 1, 0, 0"/>
+			<Style x:Key="PixelStyle" TargetType="Border">
+				<Style.Setters>
+					<Setter Property="Margin" Value="8"/>
+					<Setter Property="Padding" Value="8"/>
+					<Setter Property="BorderThickness" Value="1"/>
+					<Setter Property="CornerRadius" Value="8"/>
+					<Setter Property="Padding" Value="1, 1, 0, 0"/>
+					<Setter Property="LayoutTransform">
+						<Setter.Value>
+							<ScaleTransform ScaleY="-1"/>
+						</Setter.Value>
+					</Setter>
+					<Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+				</Style.Setters>
 				<Style.Triggers>
 					<DataTrigger Binding="{Binding ObservableNodeType}" Value="Ant">
+						<Setter Property="BorderBrush" Value="#7FFF0000"/>
 						<Setter Property="Background" Value="Red"/>
-						<Setter Property="Foreground" Value="Orange"/>
 					</DataTrigger>
 					<DataTrigger Binding="{Binding ObservableNodeType}" Value="Food">
+						<Setter Property="BorderBrush" Value="#7F0000FF"/>
 						<Setter Property="Background" Value="Blue"/>
-						<Setter Property="Foreground" Value="Orange"/>
 					</DataTrigger>
 					<DataTrigger Binding="{Binding ObservableNodeType}" Value="Path">
+						<Setter Property="BorderBrush" Value="#7FFFFF00"/>
 						<Setter Property="Background" Value="Yellow"/>
-						<Setter Property="Foreground" Value="Orange"/>
 					</DataTrigger>
 					<DataTrigger Binding="{Binding ObservableNodeType}" Value="Pheromone">
+						<Setter Property="BorderBrush" Value="#7F000000"/>
 						<Setter Property="Background" Value="{Binding ObservableStrength, Converter={StaticResource ObservableStrengthConverter}}"/>
-						<Setter Property="Foreground" Value="Orange"/>
 					</DataTrigger>
 				</Style.Triggers>
 			</Style>
@@ -147,25 +154,31 @@
 				</MaterialDesign:Card>
 			</StackPanel>
 			<MaterialDesign:Card Background="{DynamicResource MaterialDesignLightBackground}">
-				<ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" CanContentScroll="True">
+				<ScrollViewer x:Name="ScrollViewer" Style="{DynamicResource MaterialDesignScrollViewer}" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" CanContentScroll="True">
 					<ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding GraphViewModel}" ItemsSource="{Binding Nodes}">
 						<ItemsControl.LayoutTransform>
 							<ScaleTransform ScaleX="{Binding PixelsZoom}" ScaleY="{Binding PixelsZoom}"/>
 						</ItemsControl.LayoutTransform>
 						<ItemsControl.ItemsPanel>
 							<ItemsPanelTemplate>
-								<Canvas MinWidth="1920" MinHeight="1920"/>
+								<Canvas Width="{Binding ActualWidth, ElementName=ScrollViewer}" Height="{Binding ActualHeight, ElementName=ScrollViewer}" RenderTransformOrigin="0.5, 0.5">
+									<Canvas.RenderTransform>
+										<TransformGroup>
+											<ScaleTransform ScaleY="-1"/>
+										</TransformGroup>
+									</Canvas.RenderTransform>
+								</Canvas>
 							</ItemsPanelTemplate>
 						</ItemsControl.ItemsPanel>
 						<ItemsControl.ItemContainerStyle>
 							<Style>
-								<Setter Property="Canvas.Top" Value="{Binding Path=ObservableY}"/>
-								<Setter Property="Canvas.Left" Value="{Binding Path=ObservableX}"/>
+								<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
+								<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
 							</Style>
 						</ItemsControl.ItemContainerStyle>
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
-								<TextBlock Style="{StaticResource PixelStyle}"/>
+								<Border Style="{StaticResource PixelStyle}"/>
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>
 					</ItemsControl>

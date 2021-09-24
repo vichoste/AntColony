@@ -30,11 +30,11 @@ internal class GraphModel {
 	/// <summary>
 	/// Zoom factor
 	/// </summary>
-	public const double ZoomFactor = .5;
+	public const double ZoomFactor = .1;
 	/// <summary>
 	/// Minimum zoom factor
 	/// </summary>
-	public const double MinZoomFactor = .5;
+	public const double MinZoomFactor = .1;
 	/// <summary>
 	/// Maximum zoom factor
 	/// </summary>

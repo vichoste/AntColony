@@ -19,14 +19,6 @@ internal abstract class Node {
 	/// </summary>
 	public int Y { get; set; }
 	/// <summary>
-	/// X coordinate
-	/// </summary>
-	public int ObservableX => this.X * ObservableMargin;
-	/// <summary>
-	/// Y coordinate
-	/// </summary>
-	public int ObservableY => (MaxNodes - this.Y) * ObservableMargin;
-	/// <summary>
 	/// Node type
 	/// </summary>
 	public string? ObservableNodeType { get; protected set; }
@@ -36,10 +28,6 @@ internal abstract class Node {
 	/// Maximum amount of nodes
 	/// </summary>
 	public const int MaxNodes = 300;
-	/// <summary>
-	/// Observable margin
-	/// </summary>
-	public const int ObservableMargin = 4;
 	#endregion
 	#region Static methods
 	/// <summary>

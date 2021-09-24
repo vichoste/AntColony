@@ -85,9 +85,9 @@ internal class GraphViewModel : INotifyPropertyChanged {
 	public GraphViewModel() {
 		this._Nodes = new();
 		this._GraphModel = new GraphModel() {
-			PixelsZoom = GraphModel.MinZoomFactor,
+			PixelsZoom = 1,
 			MinCoordinate = int.MaxValue,
-			MaxCoordinate = 0
+			MaxCoordinate = 0,
 		};
 	}
 	#endregion

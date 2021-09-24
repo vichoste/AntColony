@@ -90,7 +90,6 @@ public partial class MainView : Window {
 	/// <param name="sender"></param>
 	/// <param name="e"></param>
 	private void ZoomPixels(object sender, MouseWheelEventArgs e) {
-		System.Diagnostics.Debug.WriteLine($"{e.Source} - {e.OriginalSource}");
 		if (e.Delta > 0 && this._MainViewModel.IsControlPressed && this._MainViewModel.PixelsZoom + GraphModel.ZoomFactor <= GraphModel.MaxZoomFactor) {
 			this._MainViewModel.PixelsZoom += GraphModel.ZoomFactor;
 		} else if (e.Delta < 0 && this._MainViewModel.IsControlPressed && this._MainViewModel.PixelsZoom - GraphModel.ZoomFactor >= GraphModel.MinZoomFactor) {

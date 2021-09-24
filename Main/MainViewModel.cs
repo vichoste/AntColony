@@ -104,7 +104,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 		set {
 			if (this._GraphViewModel is not null && this._GraphViewModel.PixelsZoom != value) {
 				this._GraphViewModel.PixelsZoom = value;
-				this.OnPropertyChanged(nameof(this.PixelsZoom));
+				this._GraphViewModel.OnPropertyChanged(nameof(this._GraphViewModel.PixelsZoom));
 			}
 		}
 	}
