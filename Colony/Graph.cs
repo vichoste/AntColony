@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 
 namespace AntColony.Colony;
 
@@ -10,14 +9,14 @@ namespace AntColony.Colony;
 /// </summary>
 internal class Graph : INotifyPropertyChanged {
 	#region Attributes
-	private readonly List<Food> _Foods;
+	private readonly List<Node> _Nodes;
 	private readonly GraphModel _GraphModel;
 	#endregion
 	#region Fields
 	/// <summary>
 	/// Gets the current food nodes
 	/// </summary>
-	public ObservableCollection<Food> Foods => new(this._Foods);
+	public ObservableCollection<Node> Nodes => new(this._Nodes);
 	/// <summary>
 	/// Current pixels zoom
 	/// </summary>
@@ -36,29 +35,29 @@ internal class Graph : INotifyPropertyChanged {
 	/// Creates the environment
 	/// </summary>
 	public Graph() {
-		this._Foods = new();
+		this._Nodes = new();
 		this._GraphModel = new GraphModel() {
 			PixelsZoom = GraphModel.MinZoomFactor
 		};
-		this.OnPropertyChanged(nameof(this.Foods));
+		this.OnPropertyChanged(nameof(this.Nodes));
 	}
 	#endregion
 	#region Indexers
 	/// <summary>
-	/// Gets or marks a food node as discovered
+	/// Gets or sets a node
 	/// </summary>
-	/// <param name="node">Food name</param>
+	/// <param name="index">Node index</param>
 	/// <returns>Food</returns>
-	public bool this[Food? node] {
+	public Node? this[int index] {
 		get {
-			this.OnPropertyChanged(nameof(this.Foods));
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-			return this._Foods.ToList().Find(n => n.Id == node.Id).IsDiscovered;
+			this.OnPropertyChanged(nameof(this.Nodes));
+			return this._Nodes is not null ? this._Nodes[index] : null;
 		}
 		set {
-			this._Foods.ToList().Find(n => n.Id == node.Id).IsDiscovered = value;
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-			this.OnPropertyChanged(nameof(this.Foods));
+			if (value is not null) {
+				_ = this._Nodes[index] = value;
+				this.OnPropertyChanged(nameof(this.Nodes));
+			}
 		}
 	}
 	#endregion
@@ -79,8 +78,8 @@ internal class Graph : INotifyPropertyChanged {
 	/// </summary>
 	/// <param name="food">Food to add</param>
 	public void AddFood(Food food) {
-		this._Foods.Add(food);
-		this.OnPropertyChanged(nameof(this.Foods));
+		this._Nodes.Add(food);
+		this.OnPropertyChanged(nameof(this.Nodes));
 	}
 	#endregion
 }
