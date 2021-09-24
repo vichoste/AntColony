@@ -11,10 +11,4 @@ internal class AntModel {
 	/// </summary>
 	public int Id { get; set; }
 	#endregion
-	#region Collections
-	/// <summary>
-	/// The ant colony itself
-	/// </summary>
-	public static List<AntModel> Ants = new();
-	#endregion
 }

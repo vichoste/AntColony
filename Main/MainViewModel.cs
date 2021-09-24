@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 using AntColony.Colony;
@@ -19,6 +20,9 @@ namespace AntColony.Main;
 internal class MainViewModel : INotifyPropertyChanged {
 	#region Model
 	private readonly MainModel _MainModel;
+	#endregion
+	#region References
+	private Graph? _CellViewModel;
 	#endregion
 	#region Fields
 	/// <summary>
@@ -97,21 +101,29 @@ internal class MainViewModel : INotifyPropertyChanged {
 			}
 		}
 	}
+	/// <summary>
+	/// Cell view model
+	/// </summary>>
+	public Graph? CellViewModel {
+		get => this._CellViewModel;
+		set {
+			if (this._CellViewModel != value) {
+				this._CellViewModel = value;
+				this.OnPropertyChanged(nameof(this.CellViewModel));
+			}
+		}
+	}
 	#endregion
 	#region Constructors
 	/// <summary>
 	/// Creates the view model
 	/// </summary>
 	public MainViewModel() {
-		for (var i = 0; i < CellModel.MaxCells; i++) {
-			for (var j = 0; j < CellModel.MaxCells; j++) {
-				CellModel.Cells[i, j] = new CellModel();
-			}
-		}
-		this.OpenTspFileCommand = new AsyncCommand(async () => {
+		this.OpenTspFileCommand = new(async () => {
 			this.Status = Status.Opening;
 			var openFileDialog = new OpenFileDialog();
-			if (openFileDialog.ShowDialog() == true) {
+			if (openFileDialog.ShowDialog() is true) {
+				this.CellViewModel = await Graph.BuildCellViewModelAsync();
 				// Allow only TSP files
 				if (!openFileDialog.FileName.ToLower().EndsWith(".tsp")) {
 					_ = MessageBox.Show("Can't open file. Only *.tsp files are allowed!");
@@ -129,25 +141,37 @@ internal class MainViewModel : INotifyPropertyChanged {
 				}
 				for (var i = 6; i < lines.Length - 1; i++) {
 					try {
-						// Parse integers (https://stackoverflow.com/questions/4961675/select-parsed-int-if-string-was-parseable-to-int)
-						var splitted = lines[i].Split(' ').Select(str => {
-							var success = int.TryParse(str, out var value);
-							return (value, success);
-						}).Where(pair => pair.success).Select(pair => pair.value).ToList();
-						if (splitted[1] > 512 || splitted[2] > 512) {
-							_ = MessageBox.Show("Can't open file. For simplicity, only distances below 512!");
-							return;
-						}
-						CellModel.Cells[splitted[1], splitted[2]].IsNode = true; // Mark this as a node
+						await Task.Run(() => {
+							// Parse integers (https://stackoverflow.com/questions/4961675/select-parsed-int-if-string-was-parseable-to-int)
+							var splitted = lines[i].Split(' ').Select(str => {
+								var success = int.TryParse(str, out var value);
+								return (value, success);
+							}).Where(pair => pair.success).Select(pair => pair.value).ToList();
+							if (splitted[1] > Node.MaxCells || splitted[2] > Node.MaxCells) {
+								_ = MessageBox.Show("Can't open file. For simplicity, only distances below 300!");
+								return;
+							}
+							if (this.CellViewModel is not null) {
+								this.CellViewModel.AddNode(new() {
+									Id = splitted[0],
+									X = splitted[1],
+									Y = splitted[2]
+								});
+							}
+						});
 					} catch (Exception) {
 						_ = MessageBox.Show("Can't open file. For simplicity, only integers!");
 						return;
 					}
 				}
+				this.CanOperate = true;
+			} else {
+				this.CellViewModel = await Graph.BuildCellViewModelAsync();
+				this.CanOperate = false;
 			}
 			this.Status = Status.Ready;
 		});
-		this._MainModel = new MainModel() {
+		this._MainModel = new() {
 			MaximizeIcon = PackIconKind.WindowMaximize,
 			Status = Status.Ready,
 			BorderMargin = 8,
@@ -166,13 +190,13 @@ internal class MainViewModel : INotifyPropertyChanged {
 	/// </summary>
 	/// <param name="value">Property name</param>
 	public void OnPropertyChanged(string value) {
-		this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(value));
+		this.PropertyChanged?.Invoke(this, new(value));
 	}
 	#endregion
 	#region Command properties
 	/// <summary>
 	/// Test command
 	/// </summary>
-	public IAsyncCommand OpenTspFileCommand { get; set; }
+	public AsyncCommand OpenTspFileCommand { get; set; }
 	#endregion
 }

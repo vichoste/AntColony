@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Input;
 
+using AntColony.Colony;
+
 using MaterialDesignThemes.Wpf;
 
 namespace AntColony.Main;
@@ -57,11 +59,11 @@ public partial class MainView : Window {
 	/// <param name="sender"></param>
 	/// <param name="e"></param>
 	private void CheckMouseDown(object sender, MouseButtonEventArgs e) {
-		if (e.LeftButton == MouseButtonState.Pressed) {
-			if (e.ClickCount == 2 && this.WindowState == WindowState.Normal) {
+		if (e.LeftButton is MouseButtonState.Pressed) {
+			if (e.ClickCount is 2 && this.WindowState is WindowState.Normal) {
 				this.MaximizeWindow();
 			}
-			if (e.LeftButton == MouseButtonState.Pressed && this.WindowState == WindowState.Maximized && e.ClickCount < 2) {
+			if (e.LeftButton is MouseButtonState.Pressed && this.WindowState is WindowState.Maximized && e.ClickCount < 2) {
 				this.WindowState = WindowState.Normal;
 				var dataContext = (MainViewModel)this.DataContext;
 				dataContext.MaximizeIcon = PackIconKind.WindowMaximize;
@@ -100,7 +102,7 @@ public partial class MainView : Window {
 	public static Point GetMousePositionRelativeToScreen() {
 		var w32Mouse = new Win32Point();
 		_ = GetCursorPos(ref w32Mouse);
-		return new Point(w32Mouse.X, w32Mouse.Y);
+		return new(w32Mouse.X, w32Mouse.Y);
 	}
 	#endregion
 }
