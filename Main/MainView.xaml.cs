@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
+using AntColony.Algorithms;
 using AntColony.Colony;
 
 using MaterialDesignThemes.Wpf;
@@ -102,8 +103,11 @@ public partial class MainView : Window {
 	/// <param name="sender"></param>
 	/// <param name="e"></param>
 	private async void Run(object sender, RoutedEventArgs e) {
-		this._MainViewModel.CanOperate = false;
-
+		if (this._MainViewModel.GraphViewModel is not null) {
+			this._MainViewModel.CanOperate = false;
+			var pathfinder = new Pathfinder(this._MainViewModel.GraphViewModel);
+			await pathfinder.Run();
+		}
 	}
 	#endregion
 	#region Methods

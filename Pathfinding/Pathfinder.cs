@@ -14,4 +14,11 @@ internal class Pathfinder {
 	public Pathfinder(GraphViewModel graphViewModel) {
 		this._GraphViewModel = graphViewModel;
 	}
+	/// <summary>
+	/// Starts the TSP
+	/// </summary>
+	/// <returns></returns>
+	public async Task Run() {
+
+	}
 }
