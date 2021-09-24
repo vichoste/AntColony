@@ -2,7 +2,7 @@
 /// <summary>
 /// This is an ant
 /// </summary>
-internal class AntModel {
+internal class Ant {
 	#region Fields
 	/// <summary>
 	/// Ant ID
