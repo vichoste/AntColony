@@ -21,7 +21,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 	private readonly MainModel _MainModel;
 	#endregion
 	#region References
-	private Graph? _Graph;
+	private GraphViewModel? _GraphViewModel;
 	#endregion
 	#region Fields
 	/// <summary>
@@ -91,9 +91,9 @@ internal class MainViewModel : INotifyPropertyChanged {
 		get => this._MainModel.AntCount;
 		set {
 			if (this._MainModel.AntCount != value) {
-				this._MainModel.AntCount = value is >= Ant.MinAntCount and <= Ant.MaxAntCount ?
-					value : value is < Ant.MinAntCount ?
-						Ant.MinAntCount : Ant.MaxAntCount;
+				this._MainModel.AntCount = value is >= AntNode.MinAntCount and <= AntNode.MaxAntCount ?
+					value : value is < AntNode.MinAntCount ?
+						AntNode.MinAntCount : AntNode.MaxAntCount;
 				this.OnPropertyChanged(nameof(this.AntCount));
 			}
 		}
@@ -105,9 +105,9 @@ internal class MainViewModel : INotifyPropertyChanged {
 		get => this._MainModel.PheromoneEvaporationRate;
 		set {
 			if (this._MainModel.PheromoneEvaporationRate != value) {
-				this._MainModel.PheromoneEvaporationRate = value is >= Pheromone.MinPheromoneEvaporationRate and <= Pheromone.MaxPheromoneEvaporationRate ?
-					value : value is < Pheromone.MinPheromoneEvaporationRate ?
-					Pheromone.MinPheromoneEvaporationRate : Pheromone.MaxPheromoneEvaporationRate;
+				this._MainModel.PheromoneEvaporationRate = value is >= PheromoneNode.MinPheromoneEvaporationRate and <= PheromoneNode.MaxPheromoneEvaporationRate ?
+					value : value is < PheromoneNode.MinPheromoneEvaporationRate ?
+					PheromoneNode.MinPheromoneEvaporationRate : PheromoneNode.MaxPheromoneEvaporationRate;
 				this.OnPropertyChanged(nameof(this.PheromoneEvaporationRate));
 			}
 		}
@@ -115,11 +115,11 @@ internal class MainViewModel : INotifyPropertyChanged {
 	/// <summary>
 	/// Cell view model
 	/// </summary>>
-	public Graph? Graph {
-		get => this._Graph;
+	public GraphViewModel? Graph {
+		get => this._GraphViewModel;
 		set {
-			if (value is not null && this._Graph != value) {
-				this._Graph = value;
+			if (value is not null && this._GraphViewModel != value) {
+				this._GraphViewModel = value;
 				this.OnPropertyChanged(nameof(this.Graph));
 			}
 		}
@@ -128,10 +128,10 @@ internal class MainViewModel : INotifyPropertyChanged {
 	/// Current pixels zoom
 	/// </summary>
 	public double PixelsZoom {
-		get => this._Graph is not null ? this._Graph.PixelsZoom : 0;
+		get => this._GraphViewModel is not null ? this._GraphViewModel.PixelsZoom : 0;
 		set {
-			if (this._Graph is not null && this._Graph.PixelsZoom != value) {
-				this._Graph.PixelsZoom = value;
+			if (this._GraphViewModel is not null && this._GraphViewModel.PixelsZoom != value) {
+				this._GraphViewModel.PixelsZoom = value;
 				this.OnPropertyChanged(nameof(this.PixelsZoom));
 			}
 		}
@@ -146,7 +146,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 			this.Status = Status.Opening;
 			var openFileDialog = new OpenFileDialog();
 			if (openFileDialog.ShowDialog() is true) {
-				this.Graph = new Graph();
+				this.Graph = new GraphViewModel();
 				// Allow only TSP files
 				if (!openFileDialog.FileName.ToLower().EndsWith(".tsp")) {
 					_ = MessageBox.Show("Can't open file. Only *.tsp files are allowed!");
@@ -195,7 +195,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 					this.CanOperate = true;
 				}
 			} else {
-				this.Graph = new Graph();
+				this.Graph = new GraphViewModel();
 				this.CanOperate = false;
 			}
 			this.Status = Status.Ready;

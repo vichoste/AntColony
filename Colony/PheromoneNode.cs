@@ -1,6 +1,6 @@
 ﻿namespace AntColony.Colony;
 
-internal class Pheromone : Node {
+internal class PheromoneNode : Node {
 	#region Fields
 	/// <summary>
 	/// This value will evaporate over time
@@ -15,7 +15,10 @@ internal class Pheromone : Node {
 	/// <summary>
 	/// Places a pheromone
 	/// </summary>
-	public Pheromone() => this.Strength = byte.MaxValue;
+	public PheromoneNode() {
+		this.ObservableNodeType = "Pheromone";
+		this.Strength = byte.MaxValue;
+	}
 	#endregion
 	#region Constants
 	/// <summary>

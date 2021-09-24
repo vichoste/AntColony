@@ -7,7 +7,7 @@ namespace AntColony.Colony;
 /// <summary>
 /// Environment
 /// </summary>
-internal class Graph : INotifyPropertyChanged {
+internal class GraphViewModel : INotifyPropertyChanged {
 	#region Attributes
 	private readonly List<Node> _Nodes;
 	private readonly GraphModel _GraphModel;
@@ -34,7 +34,7 @@ internal class Graph : INotifyPropertyChanged {
 	/// <summary>
 	/// Creates the environment
 	/// </summary>
-	public Graph() {
+	public GraphViewModel() {
 		this._Nodes = new();
 		this._GraphModel = new GraphModel() {
 			PixelsZoom = GraphModel.MinZoomFactor
@@ -77,7 +77,7 @@ internal class Graph : INotifyPropertyChanged {
 	/// Adds a food node into the graph
 	/// </summary>
 	/// <param name="food">Food to add</param>
-	public void AddFood(Food food) {
+	public void AddFood(FoodNode food) {
 		this._Nodes.Add(food);
 		this.OnPropertyChanged(nameof(this.Nodes));
 	}

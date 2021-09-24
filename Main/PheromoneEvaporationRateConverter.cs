@@ -18,7 +18,7 @@ internal class PheromoneEvaporationRateConverter : IValueConverter {
 	/// <param name="parameter"></param>
 	/// <param name="culture"></param>
 	/// <returns>Status as string</returns>
-	public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value is double antCount ? antCount.ToString() : Pheromone.MinPheromoneEvaporationRate.ToString();
+	public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value is double antCount ? antCount.ToString() : PheromoneNode.MinPheromoneEvaporationRate.ToString();
 
 	/// <summary>
 	/// Convert ant count to double
@@ -28,6 +28,6 @@ internal class PheromoneEvaporationRateConverter : IValueConverter {
 	/// <param name="parameter"></param>
 	/// <param name="culture"></param>
 	/// <returns>Status as enum</returns>
-	public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => value is string antCount && double.TryParse(antCount, out var result) ? result : Pheromone.MinPheromoneEvaporationRate;
+	public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => value is string antCount && double.TryParse(antCount, out var result) ? result : PheromoneNode.MinPheromoneEvaporationRate;
 	#endregion
 }

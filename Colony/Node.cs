@@ -24,6 +24,10 @@ internal abstract class Node {
 	/// Y coordinate
 	/// </summary>
 	public int ObservableY => (MaxNodes - this.Y) * ObservableMargin;
+	/// <summary>
+	/// Node type
+	/// </summary>
+	public string? ObservableNodeType { get; protected set; }
 	#endregion
 	#region Constants
 	/// <summary>

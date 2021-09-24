@@ -18,7 +18,7 @@ public class AntCountConverter : IValueConverter {
 	/// <param name="parameter"></param>
 	/// <param name="culture"></param>
 	/// <returns>Status as string</returns>
-	public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value is int antCount ? antCount.ToString() : Ant.MaxAntCount.ToString();
+	public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value is int antCount ? antCount.ToString() : AntNode.MaxAntCount.ToString();
 
 	/// <summary>
 	/// Convert ant count to int
@@ -28,6 +28,6 @@ public class AntCountConverter : IValueConverter {
 	/// <param name="parameter"></param>
 	/// <param name="culture"></param>
 	/// <returns>Status as enum</returns>
-	public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => value is string antCount && int.TryParse(antCount, out var result) ? result : Ant.MinAntCount;
+	public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => value is string antCount && int.TryParse(antCount, out var result) ? result : AntNode.MinAntCount;
 	#endregion
 }

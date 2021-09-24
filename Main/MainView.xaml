@@ -14,49 +14,32 @@
 			<Main:AntCountConverter x:Key="AntCountConverter"/>
 			<Main:PheromoneEvaporationRateConverter x:Key="PheromoneEvaporationRateConverter"/>
 			<Main:StatusConverter x:Key="StatusConverter"/>
-			<Style x:Key="AntStyle" TargetType="TextBlock">
+			<Colony:ObservableStrengthConverter x:Key="ObservableStrengthConverter"/>
+			<Style x:Key="PixelStyle" TargetType="TextBlock">
 				<Setter Property="Width" Value="24"/>
 				<Setter Property="Height" Value="24"/>
-				<Setter Property="Background" Value="Red"/>
-				<Setter Property="Foreground" Value="Orange"/>
-				<Setter Property="Text" Value="{Binding Id, FallbackValue=0, TargetNullValue=0}"/>
-				<Setter Property="FontSize" Value="12"/>
-				<Setter Property="FontWeight" Value="Bold"/>
-				<Setter Property="Padding" Value="1, 1, 0, 0"/>
-			</Style>
-			<Style x:Key="FoodStyle" TargetType="TextBlock">
-				<Setter Property="Width" Value="24"/>
-				<Setter Property="Height" Value="24"/>
-				<Setter Property="Background" Value="Blue"/>
-				<Setter Property="Foreground" Value="Orange"/>
 				<Setter Property="Text" Value="{Binding Id, FallbackValue=0, TargetNullValue=0}"/>
 				<Setter Property="FontSize" Value="12"/>
 				<Setter Property="FontWeight" Value="Bold"/>
 				<Setter Property="Padding" Value="1, 1, 0, 0"/>
 				<Style.Triggers>
-					<DataTrigger Binding="{Binding IsDiscovered}" Value="True">
-						<Setter Property="Background" Value="Green"/>
+					<DataTrigger Binding="{Binding ObservableNodeType}" Value="Ant">
+						<Setter Property="Background" Value="Red"/>
+						<Setter Property="Foreground" Value="Orange"/>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding ObservableNodeType}" Value="Food">
+						<Setter Property="Background" Value="Blue"/>
+						<Setter Property="Foreground" Value="Orange"/>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding ObservableNodeType}" Value="Path">
+						<Setter Property="Background" Value="Yellow"/>
+						<Setter Property="Foreground" Value="Orange"/>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding ObservableNodeType}" Value="Pheromone">
+						<Setter Property="Background" Value="{Binding ObservableStrength, Converter={StaticResource ObservableStrengthConverter}}"/>
+						<Setter Property="Foreground" Value="Orange"/>
 					</DataTrigger>
 				</Style.Triggers>
-			</Style>
-			<Style x:Key="PathStyle" TargetType="TextBlock">
-				<Setter Property="Width" Value="24"/>
-				<Setter Property="Height" Value="24"/>
-				<Setter Property="Background" Value="Yellow"/>
-				<Setter Property="Foreground" Value="Orange"/>
-				<Setter Property="Text" Value="{Binding Id, FallbackValue=0, TargetNullValue=0}"/>
-				<Setter Property="FontSize" Value="12"/>
-				<Setter Property="FontWeight" Value="Bold"/>
-				<Setter Property="Padding" Value="1, 1, 0, 0"/>
-			</Style>
-			<Style x:Key="PheromoneStyle" TargetType="TextBlock">
-				<Setter Property="Width" Value="24"/>
-				<Setter Property="Height" Value="24"/>
-				<Setter Property="Foreground" Value="Orange"/>
-				<Setter Property="Text" Value="{Binding Id, FallbackValue=0, TargetNullValue=0}"/>
-				<Setter Property="FontSize" Value="12"/>
-				<Setter Property="FontWeight" Value="Bold"/>
-				<Setter Property="Padding" Value="1, 1, 0, 0"/>
 			</Style>
 		</ResourceDictionary>
 	</Window.Resources>
@@ -140,16 +123,16 @@
 								<ColumnDefinition/>
 							</Grid.ColumnDefinitions>
 							<TextBlock Grid.Row="0" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}">Ant</TextBlock>
-							<TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource AntStyle}" Width="8" Height="8" Text=""/>
+							<TextBlock Grid.Row="0" Grid.Column="1" Width="8" Height="8" Background="Red" Text=""/>
 							<TextBlock Grid.Row="1" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}">Food, found food</TextBlock>
 							<StackPanel HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-								<TextBlock Style="{StaticResource FoodStyle}" Width="8" Height="8" Margin="0, 0, 8, 0" Text=""/>
-								<TextBlock Style="{StaticResource FoodStyle}" Width="8" Height="8" Background="Green" Text=""/>
+								<TextBlock Width="8" Height="8" Margin="0, 0, 8, 0" Background="Blue" Text=""/>
+								<TextBlock Width="8" Height="8" Background="Green" Text=""/>
 							</StackPanel>
 							<TextBlock Grid.Row="2" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}">Path</TextBlock>
-							<TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource PathStyle}" Width="8" Height="8" Text=""/>
+							<TextBlock Grid.Row="2" Grid.Column="1" Width="8" Height="8" Background="Yellow" Text=""/>
 							<TextBlock Grid.Row="3" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}">Pheromone [fade]</TextBlock>
-							<TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource PheromoneStyle}" Background="DarkGray" Width="8" Height="8" Text=""/>
+							<TextBlock Grid.Row="3" Grid.Column="1"  Background="DarkGray" Width="8" Height="8" Text=""/>
 						</Grid>
 					</StackPanel>
 				</MaterialDesign:Card>
@@ -182,7 +165,7 @@
 						</ItemsControl.ItemContainerStyle>
 						<ItemsControl.ItemTemplate>
 							<DataTemplate>
-								<TextBlock Style="{StaticResource FoodStyle}"/>
+								<TextBlock Style="{StaticResource PixelStyle}"/>
 							</DataTemplate>
 						</ItemsControl.ItemTemplate>
 					</ItemsControl>
