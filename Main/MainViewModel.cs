@@ -115,12 +115,12 @@ internal class MainViewModel : INotifyPropertyChanged {
 	/// <summary>
 	/// Cell view model
 	/// </summary>>
-	public GraphViewModel? Graph {
+	public GraphViewModel? GraphViewModel {
 		get => this._GraphViewModel;
 		set {
 			if (value is not null && this._GraphViewModel != value) {
 				this._GraphViewModel = value;
-				this.OnPropertyChanged(nameof(this.Graph));
+				this.OnPropertyChanged(nameof(this.GraphViewModel));
 			}
 		}
 	}
@@ -146,7 +146,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 			this.Status = Status.Opening;
 			var openFileDialog = new OpenFileDialog();
 			if (openFileDialog.ShowDialog() is true) {
-				this.Graph = new GraphViewModel();
+				this.GraphViewModel = new GraphViewModel();
 				// Allow only TSP files
 				if (!openFileDialog.FileName.ToLower().EndsWith(".tsp")) {
 					_ = MessageBox.Show("Can't open file. Only *.tsp files are allowed!");
@@ -178,7 +178,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 							result = false;
 							return;
 						}
-						this.Graph.AddFood(new() {
+						this.GraphViewModel.AddNode(new FoodNode() {
 							Id = splitted[0],
 							X = splitted[1],
 							Y = splitted[2]
@@ -192,10 +192,11 @@ internal class MainViewModel : INotifyPropertyChanged {
 					_ = MessageBox.Show("Can't open file. Non-integers were found in the file!");
 					this.CanOperate = false;
 				} else {
+					this.GraphViewModel.OnPropertyChanged(nameof(this.GraphViewModel.Nodes));
 					this.CanOperate = true;
 				}
 			} else {
-				this.Graph = new GraphViewModel();
+				this.GraphViewModel = new GraphViewModel();
 				this.CanOperate = false;
 			}
 			this.Status = Status.Ready;

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace AntColony.Colony;
@@ -16,7 +15,7 @@ internal class GraphViewModel : INotifyPropertyChanged {
 	/// <summary>
 	/// Gets the current food nodes
 	/// </summary>
-	public ObservableCollection<Node> Nodes => new(this._Nodes);
+	public List<Node> Nodes => new(this._Nodes);
 	/// <summary>
 	/// Current pixels zoom
 	/// </summary>
@@ -25,7 +24,6 @@ internal class GraphViewModel : INotifyPropertyChanged {
 		set {
 			if (this._GraphModel.PixelsZoom != value) {
 				this._GraphModel.PixelsZoom = value;
-				this.OnPropertyChanged(nameof(this.PixelsZoom));
 			}
 		}
 	}
@@ -39,7 +37,6 @@ internal class GraphViewModel : INotifyPropertyChanged {
 		this._GraphModel = new GraphModel() {
 			PixelsZoom = GraphModel.MinZoomFactor
 		};
-		this.OnPropertyChanged(nameof(this.Nodes));
 	}
 	#endregion
 	#region Indexers
@@ -76,10 +73,7 @@ internal class GraphViewModel : INotifyPropertyChanged {
 	/// <summary>
 	/// Adds a food node into the graph
 	/// </summary>
-	/// <param name="food">Food to add</param>
-	public void AddFood(FoodNode food) {
-		this._Nodes.Add(food);
-		this.OnPropertyChanged(nameof(this.Nodes));
-	}
+	/// <param name="node">Food to add</param>
+	public void AddNode(Node node) => this._Nodes.Add(node);
 	#endregion
 }

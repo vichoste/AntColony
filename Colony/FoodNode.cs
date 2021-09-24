@@ -15,6 +15,4 @@ internal class FoodNode : Node {
 	/// </summary>
 	public FoodNode() => this.ObservableNodeType = "Food";
 	#endregion
-	#region Constants
-	#endregion
 }

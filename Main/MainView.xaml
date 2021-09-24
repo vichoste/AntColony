@@ -148,7 +148,7 @@
 			</StackPanel>
 			<MaterialDesign:Card Background="{DynamicResource MaterialDesignLightBackground}">
 				<ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" CanContentScroll="True">
-					<ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding Graph}" ItemsSource="{Binding Nodes}" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Standard">
+					<ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding GraphViewModel}" ItemsSource="{Binding Nodes}">
 						<ItemsControl.LayoutTransform>
 							<ScaleTransform ScaleX="{Binding PixelsZoom}" ScaleY="{Binding PixelsZoom}"/>
 						</ItemsControl.LayoutTransform>

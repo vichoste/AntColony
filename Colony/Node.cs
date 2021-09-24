@@ -1,4 +1,6 @@
-﻿namespace AntColony.Colony;
+﻿using System;
+
+namespace AntColony.Colony;
 /// <summary>
 /// This is a node from the environment
 /// </summary>
@@ -38,5 +40,14 @@ internal abstract class Node {
 	/// Observable margin
 	/// </summary>
 	public const int ObservableMargin = 4;
+	#endregion
+	#region Static methods
+	/// <summary>
+	/// Calculates distance between two nodes
+	/// </summary>
+	/// <param name="firstNode">First node</param>
+	/// <param name="secondNode">Second node</param>
+	/// <returns>Euclidian scalar distance</returns>
+	public static double Distance(Node firstNode, Node secondNode) => Math.Sqrt(Math.Pow(secondNode.X - firstNode.X, 2) + Math.Pow(secondNode.Y - firstNode.Y,2));
 	#endregion
 }
