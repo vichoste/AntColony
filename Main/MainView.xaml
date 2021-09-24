@@ -84,39 +84,38 @@
 				</StatusBar>
 			</MaterialDesign:Card>
 			<MaterialDesign:Card>
-				<ItemsControl DataContext="{Binding Graph}" ItemsSource="{Binding Nodes}">
-					<ItemsControl.Resources>
-						<Style x:Key="PixelStyle" TargetType="TextBlock">
-							<Setter Property="Width" Value="16"/>
-							<Setter Property="Height" Value="16"/>
-							<Setter Property="TextAlignment" Value="Center"/>
-							<Setter Property="FontSize" Value="8"/>
-							<Setter Property="HorizontalAlignment" Value="Center"/>
-							<Setter Property="VerticalAlignment" Value="Center"/>
-							<Setter Property="Margin" Value="0"/>
-							<Setter Property="FontWeight" Value="Bold"/>
-							<Setter Property="Cursor" Value="Hand"/>
-							<Setter Property="Background" Value="{DynamicResource MaterialDesignLightBackground}"/>
-							<Setter Property="Foreground" Value="DarkBlue"/>
-							<Setter Property="Text" Value="{Binding Id}"/>
-							<Style.Triggers>
-								<DataTrigger Binding="{Binding IsDiscovered}" Value="True">
-									<Setter Property="Background" Value="DarkGreen"/>
-								</DataTrigger>
-							</Style.Triggers>
-						</Style>
-					</ItemsControl.Resources>
-					<ItemsControl.ItemsPanel>
-						<ItemsPanelTemplate>
-							<Canvas/>
-						</ItemsPanelTemplate>
-					</ItemsControl.ItemsPanel>
-					<ItemsControl.ItemTemplate>
-						<DataTemplate>
-							<TextBlock Style="{StaticResource PixelStyle}"/>
-						</DataTemplate>
-					</ItemsControl.ItemTemplate>
-				</ItemsControl>
+				<ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+					<ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding Graph}" ItemsSource="{Binding Nodes}">
+						<ItemsControl.Resources>
+							<Style x:Key="PixelStyle" TargetType="TextBlock">
+								<Setter Property="Width" Value="4"/>
+								<Setter Property="Height" Value="4"/>
+								<Setter Property="Background" Value="{DynamicResource MaterialDesignLightBackground}"/>
+								<Style.Triggers>
+									<DataTrigger Binding="{Binding IsDiscovered}" Value="True">
+										<Setter Property="Background" Value="DarkGreen"/>
+									</DataTrigger>
+								</Style.Triggers>
+							</Style>
+						</ItemsControl.Resources>
+						<ItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<Canvas Width="800" Height="800"/>
+							</ItemsPanelTemplate>
+						</ItemsControl.ItemsPanel>
+						<ItemsControl.ItemContainerStyle>
+							<Style>
+								<Setter Property="Canvas.Left" Value="{Binding Path=ObservableX}"/>
+								<Setter Property="Canvas.Top" Value="{Binding Path=ObservableY}"/>
+							</Style>
+						</ItemsControl.ItemContainerStyle>
+						<ItemsControl.ItemTemplate>
+							<DataTemplate>
+								<TextBlock Style="{StaticResource PixelStyle}"/>
+							</DataTemplate>
+						</ItemsControl.ItemTemplate>
+					</ItemsControl>
+				</ScrollViewer>
 			</MaterialDesign:Card>
 		</DockPanel>
 	</Border>

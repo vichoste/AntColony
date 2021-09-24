@@ -33,6 +33,18 @@ internal class MainModel {
 	#endregion
 	#region Constants
 	/// <summary>
+	/// Zoom factor
+	/// </summary>
+	public const double ZoomFactor = 1;
+	/// <summary>
+	/// Minimum zoom factor
+	/// </summary>
+	public const double MinZoomFactor = 1;
+	/// <summary>
+	/// Maximum zoom factor
+	/// </summary>
+	public const double MaxZoomFactor = 24;
+	/// <summary>
 	/// Minimum ant count
 	/// </summary>
 	public const int MinAntCount = 0;

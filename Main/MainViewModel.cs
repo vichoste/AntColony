@@ -131,6 +131,10 @@ internal class MainViewModel : INotifyPropertyChanged {
 				}
 				// Read all lines
 				var lines = await AsyncFileReader.ReadAllLinesAsync(openFileDialog.FileName, Encoding.UTF8);
+				if (int.Parse(lines[3].Split(':')[1].Trim()) > 300) {
+					_ = MessageBox.Show("Can't open file. For performance reasons, only graphs with < 300 nodes are allowed!");
+					return;
+				}
 				if (!lines[4].EndsWith("EUC_2D")) { // Only allow Euclidian 2D, because I don't have time for other graph types
 					_ = MessageBox.Show("Can't open file. Only EUC_2D graphs are allowed!");
 					return;
@@ -139,26 +143,32 @@ internal class MainViewModel : INotifyPropertyChanged {
 					_ = MessageBox.Show("Can't open file. Expected \"NODE_COORD_SECTION : \" : at line 6!");
 					return;
 				}
+				var result = true;
 				for (var i = 6; i < lines.Length - 1; i++) {
-					try {
-						await Task.Run(() => {
-							// Parse integers (https://stackoverflow.com/questions/4961675/select-parsed-int-if-string-was-parseable-to-int)
-							var splitted = lines[i].Split(' ').Select(str => {
-								var success = double.TryParse(str, out var value);
-								return (value, success);
-							}).Where(pair => pair.success).Select(pair => pair.value).ToList();
-							this.Graph.AddNode(new() {
-								Id = int.Parse(splitted[0].ToString()),
-								X = splitted[0],
-								Y = splitted[1]
-							});
+					await Task.Run(() => {
+						// Parse integers (https://stackoverflow.com/questions/4961675/select-parsed-int-if-string-was-parseable-to-int)
+						var splitted = lines[i].Split(' ').Select(str => {
+							var success = int.TryParse(str, out var value);
+							return (value, success);
+						}).Where(pair => pair.success).Select(pair => pair.value).ToList();
+						if (splitted.Count is not 3) { // This implies there are not integers at all
+							result = false;
+							return;
+						}
+						this.Graph.AddNode(new() {
+							Id = splitted[0],
+							X = splitted[1],
+							Y = splitted[2]
 						});
-					} catch (Exception) {
-						_ = MessageBox.Show("Can't open file. For simplicity, only integers!");
-						return;
+					});
+					if (!result) {
+						break;
 					}
 				}
-				this.CanOperate = true;
+				if (!result) {
+					_ = MessageBox.Show("Can't open file. Non-integers were found in the file!");
+					this.CanOperate = false;
+				}
 			} else {
 				this.Graph = new Graph();
 				this.CanOperate = false;
