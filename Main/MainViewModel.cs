@@ -167,6 +167,8 @@ internal class MainViewModel : INotifyPropertyChanged {
 				if (!result) {
 					_ = MessageBox.Show("Can't open file. Non-integers were found in the file!");
 					this.CanOperate = false;
+				} else {
+					this.CanOperate = true;
 				}
 			} else {
 				this.Graph = new Graph();
