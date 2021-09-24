@@ -21,9 +21,9 @@ internal class Pathfinder {
 	public async void Run() {
 		var random = new Random();
 		// Start colony in a random position
-		var colonyStartX = random.Next(this._GraphViewModel.MinCoordinate, this._GraphViewModel.MaxCoordinate);
-		var colonyStartY = random.Next(this._GraphViewModel.MinCoordinate, this._GraphViewModel.MaxCoordinate);
 		for (var i = 0; i < this._GraphViewModel.AntCount; i++) {
+			var colonyStartX = random.Next(this._GraphViewModel.MinCoordinate, this._GraphViewModel.MaxCoordinate);
+			var colonyStartY = random.Next(this._GraphViewModel.MinCoordinate, this._GraphViewModel.MaxCoordinate);
 			this._GraphViewModel.AddNode(new AntNode() {
 				Id = i,
 				X = colonyStartX,
