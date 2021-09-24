@@ -93,9 +93,9 @@
 					</StackPanel>
 				</Grid>
 			</MaterialDesign:Card>
-			<StackPanel VerticalAlignment="Center" MinWidth="300" Margin="8, 0, 0, 0" DockPanel.Dock="Right">
+			<StackPanel VerticalAlignment="Center" Margin="8, 0, 0, 0" DockPanel.Dock="Right">
 				<MaterialDesign:Card Margin="0, 0, 0, 8">
-					<StackPanel Margin="8" IsEnabled="{Binding CanOperate}">
+					<StackPanel Margin="8" IsEnabled="{Binding CanOperate}" HorizontalAlignment="Center">
 						<TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}" HorizontalAlignment="Center">TSP Options</TextBlock>
 						<Grid Margin="8">
 							<Grid.RowDefinitions>
@@ -103,9 +103,8 @@
 								<RowDefinition/>
 							</Grid.RowDefinitions>
 							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="27*"/>
-								<ColumnDefinition Width="187*"/>
-								<ColumnDefinition Width="54*"/>
+								<ColumnDefinition/>
+								<ColumnDefinition Width="3*"/>
 							</Grid.ColumnDefinitions>
 							<TextBlock Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center" Grid.ColumnSpan="2">Number of ants</TextBlock>
 							<TextBlock Grid.Row="1" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}" VerticalAlignment="Center" Grid.ColumnSpan="2">Evaporation rate</TextBlock>
@@ -142,7 +141,7 @@
 				</MaterialDesign:Card>
 				<MaterialDesign:Card Margin="0, 8, 0, 0" DockPanel.Dock="Bottom">
 					<StatusBar Margin="8" Background="Transparent" Foreground="{DynamicResource MaterialDesignDarkForeground}">
-						<StackPanel MinWidth="280">
+						<StackPanel MinWidth="201">
 							<TextBlock Text="{Binding Status, Converter={StaticResource StatusConverter}, FallbackValue=Ready, TargetNullValue=Ready}"/>
 							<Separator Style="{DynamicResource MaterialDesignDarkSeparator}"/>
 							<TextBlock>Current optimum route:</TextBlock>
