@@ -14,5 +14,5 @@ internal class ObservableStrengthConverter : IValueConverter {
 		}
 		return Color.FromArgb(0, 0, 0);
 	}
-	public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => 0; // I am both lazy and without much time to implement this lmao
+	public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => 0;
 }
