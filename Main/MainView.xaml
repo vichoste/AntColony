@@ -119,7 +119,7 @@
 						<Grid.LayoutTransform>
 							<ScaleTransform ScaleX="{Binding PixelsZoom}" ScaleY="{Binding PixelsZoom}"/>
 						</Grid.LayoutTransform>
-						<Colony:ColonyView/>
+						<Colony:ColonyView DataContext="{Binding ColonyViewModel}"/>
 					</Grid>
 				</ScrollViewer>
 			</MaterialDesign:Card>
