@@ -25,9 +25,9 @@ internal class Pathfinder {
 		var random = new Random();
 		var ants = new List<AntNode>();
 		// Start colony in a random position
+		var colonyStartX = random.Next(this._GraphViewModel.MinCoordinate, this._GraphViewModel.MaxCoordinate);
+		var colonyStartY = random.Next(this._GraphViewModel.MinCoordinate, this._GraphViewModel.MaxCoordinate);
 		for (var i = 0; i < this._GraphViewModel.AntCount; i++) {
-			var colonyStartX = random.Next(this._GraphViewModel.MinCoordinate, this._GraphViewModel.MaxCoordinate);
-			var colonyStartY = random.Next(this._GraphViewModel.MinCoordinate, this._GraphViewModel.MaxCoordinate);
 			var ant = new AntNode() {
 				Id = i,
 				X = colonyStartX,
@@ -35,10 +35,10 @@ internal class Pathfinder {
 				OriginX = colonyStartX,
 				OriginY = colonyStartY,
 			};
-			this._GraphViewModel.AddNode(ant);
+			this._GraphViewModel.AddAnt(ant);
 			ants.Add(ant);
 		}
-		this._GraphViewModel.OnPropertyChanged(nameof(this._GraphViewModel.Nodes));
+		this._GraphViewModel.OnPropertyChanged(nameof(this._GraphViewModel.AntNodes));
 		// Start moving the ants
 		return await this.GetBestPath(ants);
 	}

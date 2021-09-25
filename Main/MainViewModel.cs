@@ -150,7 +150,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 							result = false;
 							return;
 						}
-						this.GraphViewModel.AddNode(new FoodNode() {
+						this.GraphViewModel.AddFood(new FoodNode() {
 							Id = splitted[0],
 							X = splitted[1],
 							Y = splitted[2]
@@ -168,7 +168,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 					_ = MessageBox.Show("Can't open file. Non-integers were found in the file!");
 					this.CanOperate = false;
 				} else {
-					this.GraphViewModel.OnPropertyChanged(nameof(this.GraphViewModel.Nodes));
+					this.GraphViewModel.OnPropertyChanged(nameof(this.GraphViewModel.FoodNodes));
 					this.GraphViewModel.AntCount = 4;
 					this.GraphViewModel.PheromoneEvaporationRate = .5;
 					this.CanOperate = true;

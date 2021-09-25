@@ -151,7 +151,7 @@
 			</StackPanel>
 			<MaterialDesign:Card Background="{DynamicResource MaterialDesignLightBackground}">
 				<ScrollViewer x:Name="ScrollViewer" Style="{DynamicResource MaterialDesignScrollViewer}" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" CanContentScroll="True">
-					<ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding GraphViewModel}" ItemsSource="{Binding Nodes}">
+					<ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding GraphViewModel}" ItemsSource="{Binding FoodNodes}">
 						<ItemsControl.LayoutTransform>
 							<ScaleTransform ScaleX="{Binding PixelsZoom}" ScaleY="{Binding PixelsZoom}"/>
 						</ItemsControl.LayoutTransform>

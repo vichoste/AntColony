@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 
+using AntColony.Main;
+
 namespace AntColony.Colony;
 
 /// <summary>
@@ -8,14 +10,24 @@ namespace AntColony.Colony;
 /// </summary>
 internal class GraphViewModel : INotifyPropertyChanged {
 	#region Attributes
-	private readonly List<Node> _Nodes;
+	private readonly List<FoodNode> _FoodNodes;
+	private readonly List<PheromoneNode> _PheromoneNodes;
+	private readonly List<AntNode> _AntNodes;
 	private readonly GraphModel _GraphModel;
 	#endregion
 	#region Fields
 	/// <summary>
 	/// Gets the current food nodes
 	/// </summary>
-	public List<Node> Nodes => new(this._Nodes);
+	public List<Node> FoodNodes => new(this._FoodNodes);
+	/// <summary>
+	/// Gets the current pheromone nodes
+	/// </summary>
+	public List<Node> PheromoneNodes => new(this._PheromoneNodes);
+	/// <summary>
+	/// Gets the current ant nodes
+	/// </summary>
+	public List<Node> AntNodes => new(this._AntNodes);
 	/// <summary>
 	/// Current pixels zoom
 	/// </summary>
@@ -83,31 +95,14 @@ internal class GraphViewModel : INotifyPropertyChanged {
 	/// Creates the environment
 	/// </summary>
 	public GraphViewModel() {
-		this._Nodes = new();
+		this._AntNodes = new();
+		this._FoodNodes = new();
+		this._PheromoneNodes = new();
 		this._GraphModel = new GraphModel() {
 			PixelsZoom = 1,
 			MinCoordinate = int.MaxValue,
 			MaxCoordinate = 0,
 		};
-	}
-	#endregion
-	#region Indexers
-	/// <summary>
-	/// Gets or sets a node
-	/// </summary>
-	/// <param name="index">Node index</param>
-	/// <returns>Food</returns>
-	public Node? this[int index] {
-		get {
-			this.OnPropertyChanged(nameof(this.Nodes));
-			return this._Nodes is not null ? this._Nodes[index] : null;
-		}
-		set {
-			if (value is not null) {
-				_ = this._Nodes[index] = value;
-				this.OnPropertyChanged(nameof(this.Nodes));
-			}
-		}
 	}
 	#endregion
 	#region Events
@@ -125,7 +120,17 @@ internal class GraphViewModel : INotifyPropertyChanged {
 	/// <summary>
 	/// Adds a food node into the graph
 	/// </summary>
-	/// <param name="node">Food to add</param>
-	public void AddNode(Node node) => this._Nodes.Add(node);
+	/// <param name="node">Node to add</param>
+	public void AddFood(FoodNode node) => this._FoodNodes.Add(node);
+	/// <summary>
+	/// Adds a pheromone node into the graph
+	/// </summary>
+	/// <param name="node">Node to add</param>
+	public void AddPheromone(PheromoneNode node) => this._PheromoneNodes.Add(node);
+	/// <summary>
+	/// Adds an ant node into the graph
+	/// </summary>
+	/// <param name="node">Node to add</param>
+	public void AddAnt(AntNode node) => this._AntNodes.Add(node);
 	#endregion
 }
