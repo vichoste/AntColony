@@ -3,29 +3,78 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using AntColony.Colony;
+using AntColony.Pathfinding;
 
 namespace AntColony.Algorithms;
 // TODO this entire class
 internal class Pathfinder {
 	private readonly ColonyViewModel _ColonyViewModel;
-	public Pathfinder(ColonyViewModel graphViewModel) => this._ColonyViewModel = graphViewModel;
+	public Pathfinder(ColonyViewModel colonyViewModel) => this._ColonyViewModel = colonyViewModel;
 	public async Task<Path> Run() {
-		var random = new Random();
+		var ants = await CreateAnts(this._ColonyViewModel);
+		this._ColonyViewModel.OnPropertyChanged(nameof(this._ColonyViewModel.AntNodes));
+		await MakeFirstMovement(this._ColonyViewModel, ants);
+		this._ColonyViewModel.OnPropertyChanged(nameof(this._ColonyViewModel.AntNodes));
+		return null;
+	}
+	private static async Task<List<AntNode>> CreateAnts(ColonyViewModel colonyViewModel) {
 		var ants = new List<AntNode>();
 		await Task.Run(() => {
-			var colonyStartX = random.Next(this._ColonyViewModel.MinCoordinate, this._ColonyViewModel.MaxCoordinate);
-			var colonyStartY = random.Next(this._ColonyViewModel.MinCoordinate, this._ColonyViewModel.MaxCoordinate);
-			for (var i = 0; i < this._ColonyViewModel.AntCount; i++) {
+			var random = new Random();
+			var colonyStartX = random.Next(colonyViewModel.MinCoordinate, colonyViewModel.MaxCoordinate);
+			var colonyStartY = random.Next(colonyViewModel.MinCoordinate, colonyViewModel.MaxCoordinate);
+			for (var i = 0; i < colonyViewModel.AntCount; i++) {
 				var ant = new AntNode() {
 					Id = i,
 					X = colonyStartX,
 					Y = colonyStartY,
 				};
-				this._ColonyViewModel.AddAnt(ant);
+				colonyViewModel.AddAnt(ant);
 				ants.Add(ant);
 			}
 		});
-		this._ColonyViewModel.OnPropertyChanged(nameof(this._ColonyViewModel.AntNodes));
-		return null;
+		return ants;
+	}
+	private static async Task MakeFirstMovement(ColonyViewModel colonyViewModel, List<AntNode> ants) {
+		await Task.Run(() => {
+			var random = new Random();
+			for (var i = 0; i < ants.Count; i++) {
+				var firstProbabilities = new List<Probability>() {
+					new Probability() {
+						Direction = Direction.North,
+						Value = random.NextDouble()
+					},
+					new Probability() {
+						Direction = Direction.South,
+						Value = random.NextDouble()
+					},
+					new Probability() {
+						Direction = Direction.East,
+						Value = random.NextDouble()
+					},
+					new Probability() {
+						Direction = Direction.West,
+						Value = random.NextDouble()
+					},
+					new Probability() {
+						Direction = Direction.NorthEast,
+						Value = random.NextDouble()
+					},
+					new Probability() {
+						Direction = Direction.NorthWest,
+						Value = random.NextDouble()
+					},
+					new Probability() {
+						Direction = Direction.SouthEast,
+						Value = random.NextDouble()
+					},
+					new Probability() {
+						Direction = Direction.SouthWest,
+						Value = random.NextDouble()
+					}
+				};
+				ants[i].Move(firstProbabilities);
+			}
+		});
 	}
 }
