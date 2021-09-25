@@ -157,7 +157,6 @@ internal class MainViewModel : INotifyPropertyChanged {
 			} else {
 				colonyViewModel.AntCount = 4;
 				colonyViewModel.PheromoneEvaporationRate = .5;
-				colonyViewModel.OnPropertyChanged(nameof(colonyViewModel.FoodNodes));
 				this.ColonyViewModel = colonyViewModel;
 				this.CanOperate = true;
 				this.ScrollViewer.ScrollToBottom();

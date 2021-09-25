@@ -1,18 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
 
 namespace AntColony.Colony;
 internal class ColonyViewModel : INotifyPropertyChanged {
-	private readonly List<AntNode> _AntNodes;
-	private readonly List<FoodNode> _FoodNodes;
-	private readonly List<PheromoneNode> _PheromoneNodes;
 	public event PropertyChangedEventHandler? PropertyChanged;
 	public CompositeCollection Nodes { get; }
-	public List<AntNode> AntNodes => this._AntNodes.ToList();
-	public List<FoodNode> FoodNodes => this._FoodNodes.ToList();
-	public List<PheromoneNode> PheromoneNodes => this._PheromoneNodes.ToList();
+	public ObservableCollection<AntNode> AntNodes { get; }
+	public ObservableCollection<FoodNode> FoodNodes { get; }
+	public ObservableCollection<PheromoneNode> PheromoneNodes { get; }
 	public int AntCount {
 		get => this.ColonyModel.AntCount;
 		set {
@@ -55,21 +55,33 @@ internal class ColonyViewModel : INotifyPropertyChanged {
 	}
 	public ColonyModel ColonyModel { get; }
 	public ColonyViewModel() {
-		this._AntNodes = new();
-		this._FoodNodes = new();
-		this._PheromoneNodes = new();
+		this.AntNodes = new();
+		this.FoodNodes = new();
+		this.PheromoneNodes = new();
 		this.Nodes = new() {
-			this._AntNodes,
-			this._FoodNodes,
-			this._PheromoneNodes
+			this.AntNodes,
+			this.FoodNodes,
+			this.PheromoneNodes
 		};
 		this.ColonyModel = new ColonyModel() {
 			MinCoordinate = int.MaxValue,
 			MaxCoordinate = 0,
 		};
 	}
-	public void AddAnt(AntNode ant) => this._AntNodes.Add(ant);
-	public void AddFood(FoodNode food) => this._FoodNodes.Add(food);
-	public void AddPheromone(PheromoneNode pheromone) => this._PheromoneNodes.Add(pheromone);
+	public void AddAnt(AntNode ant) => AddToAntObservableCollection(this.AntNodes, ant);
+	public void AddFood(FoodNode food) => AddToFoodObservableCollection(this.FoodNodes, food);
+	public void AddPheromone(PheromoneNode pheromone) => AddToPheromoneObservableCollection(this.PheromoneNodes, pheromone);
 	public void OnPropertyChanged(string value) => this.PropertyChanged?.Invoke(this, new(value));
+	public static void AddToAntObservableCollection(ObservableCollection<AntNode> observableCollection, AntNode ant) {
+		Action<AntNode> addMethod = observableCollection.Add;
+		_ = Application.Current.Dispatcher.BeginInvoke(addMethod, ant);
+	}
+	public static void AddToFoodObservableCollection(ObservableCollection<FoodNode> observableCollection, FoodNode food) {
+		Action<FoodNode> addMethod = observableCollection.Add;
+		_ = Application.Current.Dispatcher.BeginInvoke(addMethod, food);
+	}
+	public static void AddToPheromoneObservableCollection(ObservableCollection<PheromoneNode> observableCollection, PheromoneNode pheromone) {
+		Action<PheromoneNode> addMethod = observableCollection.Add;
+		_ = Application.Current.Dispatcher.BeginInvoke(addMethod, pheromone);
+	}
 }

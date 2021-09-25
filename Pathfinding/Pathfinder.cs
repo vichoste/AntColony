@@ -12,9 +12,7 @@ internal class Pathfinder {
 	public Pathfinder(ColonyViewModel colonyViewModel) => this._ColonyViewModel = colonyViewModel;
 	public async Task<Path> Run() {
 		var ants = await CreateAnts(this._ColonyViewModel);
-		this._ColonyViewModel.OnPropertyChanged(nameof(this._ColonyViewModel.AntNodes));
 		await MakeFirstMovement(this._ColonyViewModel, ants);
-		this._ColonyViewModel.OnPropertyChanged(nameof(this._ColonyViewModel.AntNodes));
 		return null;
 	}
 	private static async Task<List<AntNode>> CreateAnts(ColonyViewModel colonyViewModel) {

@@ -61,7 +61,6 @@ public partial class MainView : Window { // TODO optimum route
 			this._MainViewModel.PixelsZoom -= MainModel.ZoomFactor;
 		}
 	}
-	#region Win32: https://stackoverflow.com/questions/4226740/how-do-i-get-the-current-mouse-screen-coordinates-in-wpf
 	[DllImport("user32.dll")]
 	[return: MarshalAs(UnmanagedType.Bool)]
 	private static extern bool GetCursorPos(ref Win32Point pt);
@@ -75,5 +74,4 @@ public partial class MainView : Window { // TODO optimum route
 		_ = GetCursorPos(ref w32Mouse);
 		return new(w32Mouse.X, w32Mouse.Y);
 	}
-	#endregion
 }
