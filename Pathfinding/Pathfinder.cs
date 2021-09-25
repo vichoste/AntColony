@@ -33,11 +33,11 @@ internal class Pathfinder {
 		});
 		return ants;
 	}
-	private static async Task MakeFirstMovement(ColonyViewModel colonyViewModel, List<AntNode> ants) {
-		await Task.Run(() => {
-			var random = new Random();
-			for (var i = 0; i < ants.Count; i++) {
-				var firstProbabilities = new List<Probability>() {
+	private static async Task MakeFirstMovement(ColonyViewModel colonyViewModel, List<AntNode> ants) => await Task.Run(() => {
+		colonyViewModel.FlushAnts();
+		var random = new Random();
+		for (var i = 0; i < ants.Count; i++) {
+			var firstProbabilities = new List<Probability>() {
 					new Probability() {
 						Direction = Direction.North,
 						Value = random.NextDouble()
@@ -71,8 +71,8 @@ internal class Pathfinder {
 						Value = random.NextDouble()
 					}
 				};
-				ants[i].Move(firstProbabilities);
-			}
-		});
-	}
+			var ant = AntNode.MoveAnt(ants[i], firstProbabilities);
+			colonyViewModel.AddAnt(ant);
+		}
+	});
 }

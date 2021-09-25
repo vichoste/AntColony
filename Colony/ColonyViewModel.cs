@@ -1,87 +1,93 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 
 namespace AntColony.Colony;
 internal class ColonyViewModel : INotifyPropertyChanged {
+	private readonly ColonyModel _ColonyModel;
 	public event PropertyChangedEventHandler? PropertyChanged;
-	public CompositeCollection Nodes { get; }
-	public ObservableCollection<AntNode> AntNodes { get; }
-	public ObservableCollection<FoodNode> FoodNodes { get; }
-	public ObservableCollection<PheromoneNode> PheromoneNodes { get; }
+	public ObservableCollection<AntNode>? AntNodes => this._ColonyModel.AntNodes;
 	public int AntCount {
-		get => this.ColonyModel.AntCount;
+		get => this._ColonyModel.AntCount;
 		set {
-			if (this.ColonyModel.AntCount != value) {
-				this.ColonyModel.AntCount = value is >= AntNode.MinAntCount and <= AntNode.MaxAntCount ?
+			if (this._ColonyModel.AntCount != value) {
+				this._ColonyModel.AntCount = value is >= AntNode.MinAntCount and <= AntNode.MaxAntCount ?
 					value : value is < AntNode.MinAntCount ?
 						AntNode.MinAntCount : AntNode.MaxAntCount;
 				this.OnPropertyChanged(nameof(this.AntCount));
 			}
 		}
 	}
+	public ObservableCollection<FoodNode>? FoodNodes => this._ColonyModel.FoodNodes;
 	public int MaxCoordinate {
-		get => this.ColonyModel.MaxCoordinate;
+		get => this._ColonyModel.MaxCoordinate;
 		set {
-			if (this.ColonyModel.MaxCoordinate != value && value > this.MaxCoordinate) {
-				this.ColonyModel.MaxCoordinate = value;
+			if (this._ColonyModel.MaxCoordinate != value && value > this.MaxCoordinate) {
+				this._ColonyModel.MaxCoordinate = value;
 				this.OnPropertyChanged(nameof(this.MaxCoordinate));
 			}
 		}
 	}
+	public CompositeCollection? Nodes => this._ColonyModel.Nodes;
 	public int MinCoordinate {
-		get => this.ColonyModel.MinCoordinate;
+		get => this._ColonyModel.MinCoordinate;
 		set {
-			if (this.ColonyModel.MinCoordinate != value && value < this.MinCoordinate) {
-				this.ColonyModel.MinCoordinate = value;
+			if (this._ColonyModel.MinCoordinate != value && value < this.MinCoordinate) {
+				this._ColonyModel.MinCoordinate = value;
 				this.OnPropertyChanged(nameof(this.MinCoordinate));
 			}
 		}
 	}
 	public double PheromoneEvaporationRate {
-		get => this.ColonyModel.PheromoneEvaporationRate;
+		get => this._ColonyModel.PheromoneEvaporationRate;
 		set {
-			if (this.ColonyModel.PheromoneEvaporationRate != value) {
-				this.ColonyModel.PheromoneEvaporationRate = value is >= PheromoneNode.MinPheromoneEvaporationRate and <= PheromoneNode.MaxPheromoneEvaporationRate ?
+			if (this._ColonyModel.PheromoneEvaporationRate != value) {
+				this._ColonyModel.PheromoneEvaporationRate = value is >= PheromoneNode.MinPheromoneEvaporationRate and <= PheromoneNode.MaxPheromoneEvaporationRate ?
 					value : value is < PheromoneNode.MinPheromoneEvaporationRate ?
 					PheromoneNode.MinPheromoneEvaporationRate : PheromoneNode.MaxPheromoneEvaporationRate;
 				this.OnPropertyChanged(nameof(this.PheromoneEvaporationRate));
 			}
 		}
 	}
-	public ColonyModel ColonyModel { get; }
+	public ObservableCollection<PheromoneNode>? PheromoneNodes => this._ColonyModel.PheromoneNodes;
 	public ColonyViewModel() {
-		this.AntNodes = new();
-		this.FoodNodes = new();
-		this.PheromoneNodes = new();
-		this.Nodes = new() {
-			this.AntNodes,
-			this.FoodNodes,
-			this.PheromoneNodes
-		};
-		this.ColonyModel = new ColonyModel() {
+		this._ColonyModel = new ColonyModel() {
 			MinCoordinate = int.MaxValue,
 			MaxCoordinate = 0,
+			AntNodes = new(),
+			FoodNodes = new(),
+			PheromoneNodes = new(),
+			Nodes = new()
 		};
+		_ = this._ColonyModel.Nodes.Add(this._ColonyModel.AntNodes);
+		_ = this._ColonyModel.Nodes.Add(this._ColonyModel.FoodNodes);
+		_ = this._ColonyModel.Nodes.Add(this._ColonyModel.PheromoneNodes);
 	}
-	public void AddAnt(AntNode ant) => AddToAntObservableCollection(this.AntNodes, ant);
-	public void AddFood(FoodNode food) => AddToFoodObservableCollection(this.FoodNodes, food);
-	public void AddPheromone(PheromoneNode pheromone) => AddToPheromoneObservableCollection(this.PheromoneNodes, pheromone);
+	public void AddAnt(AntNode ant) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+		if (this.AntNodes is not null) {
+			this.AntNodes.Add(ant);
+			this.OnPropertyChanged(nameof(this.AntNodes));
+		}
+	}));
+	public void AddFood(FoodNode food) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+		if (this.FoodNodes is not null) {
+			this.FoodNodes.Add(food);
+			this.OnPropertyChanged(nameof(this.FoodNodes));
+		}
+	}));
+	public void AddPheromone(PheromoneNode pheromone) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+		if (this.PheromoneNodes is not null) {
+			this.PheromoneNodes.Add(pheromone);
+			this.OnPropertyChanged(nameof(this.PheromoneNodes));
+		}
+	}));
+	public void FlushAnts() => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+		if (this.AntNodes is not null) {
+			this.AntNodes.Clear();
+			this.OnPropertyChanged(nameof(this.AntNodes));
+		}
+	}));
 	public void OnPropertyChanged(string value) => this.PropertyChanged?.Invoke(this, new(value));
-	public static void AddToAntObservableCollection(ObservableCollection<AntNode> observableCollection, AntNode ant) {
-		Action<AntNode> addMethod = observableCollection.Add;
-		_ = Application.Current.Dispatcher.BeginInvoke(addMethod, ant);
-	}
-	public static void AddToFoodObservableCollection(ObservableCollection<FoodNode> observableCollection, FoodNode food) {
-		Action<FoodNode> addMethod = observableCollection.Add;
-		_ = Application.Current.Dispatcher.BeginInvoke(addMethod, food);
-	}
-	public static void AddToPheromoneObservableCollection(ObservableCollection<PheromoneNode> observableCollection, PheromoneNode pheromone) {
-		Action<PheromoneNode> addMethod = observableCollection.Add;
-		_ = Application.Current.Dispatcher.BeginInvoke(addMethod, pheromone);
-	}
 }
