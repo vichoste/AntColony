@@ -23,7 +23,7 @@ internal class Pathfinder {
 	/// <returns></returns>
 	public async Task<Path> Run() {
 		var random = new Random();
-		var ants = new List<AntNode>;
+		var ants = new List<AntNode>();
 		// Start colony in a random position
 		for (var i = 0; i < this._GraphViewModel.AntCount; i++) {
 			var colonyStartX = random.Next(this._GraphViewModel.MinCoordinate, this._GraphViewModel.MaxCoordinate);
@@ -31,8 +31,10 @@ internal class Pathfinder {
 			var ant = new AntNode() {
 				Id = i,
 				X = colonyStartX,
-				Y = colonyStartY
-			}
+				Y = colonyStartY,
+				OriginX = colonyStartX,
+				OriginY = colonyStartY,
+			};
 			this._GraphViewModel.AddNode(ant);
 			ants.Add(ant);
 		}
@@ -47,11 +49,13 @@ internal class Pathfinder {
 	private async Task<Path> GetBestPath(List<AntNode> ants) {
 		var antMoves = new List<Task<Path>>();
 		for (var i = 0; i < this._GraphViewModel.AntCount; i++) {
-
+			antMoves.Add(this.MoveAnt(ants[i]));
 		}
+		var result = await Task.WhenAny(antMoves);
 		return null;
 	}
-	private async Task<bool> MoveAnt(AntNode ant) {
-		return false;
+	private async Task<Path> MoveAnt(AntNode ant) {
+
+		return null;
 	}
 }

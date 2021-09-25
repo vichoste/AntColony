@@ -10,7 +10,18 @@ internal class AntNode : Node {
 	private readonly List<(int X, int Y)> _VisitedCoordinates;
 	#endregion
 	#region Fields
+	/// <summary>
+	/// Visited coordinates
+	/// </summary>
 	public List<(int X, int Y)> VisitedCoordinates => this._VisitedCoordinates.ToList();
+	/// <summary>
+	/// Original X coordinate of the ant
+	/// </summary>
+	public int OriginX { get; set; }
+	/// <summary>
+	/// Original Y coordinate of the ant
+	/// </summary>
+	public int OriginY { get; set; }
 	#endregion
 	#region Constructors
 	/// <summary>
