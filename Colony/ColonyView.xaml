@@ -28,11 +28,11 @@
 				<Style.Setters>
 					<Setter Property="Margin" Value="2"/>
 					<Setter Property="Padding" Value="2"/>
-					<Setter Property="BorderThickness" Value="2"/>
+					<Setter Property="BorderThickness" Value="1"/>
 					<Setter Property="CornerRadius" Value="8"/>
 					<Setter Property="Padding" Value="1, 1, 0, 0"/>
-					<Setter Property="BorderBrush" Value="#7F008000"/>
-					<Setter Property="Background" Value="Green"/>
+					<Setter Property="BorderBrush" Value="#7F0000FF"/>
+					<Setter Property="Background" Value="Blue"/>
 					<Setter Property="LayoutTransform">
 						<Setter.Value>
 							<ScaleTransform ScaleY="-1"/>
@@ -48,7 +48,6 @@
 					<Setter Property="BorderThickness" Value="2"/>
 					<Setter Property="CornerRadius" Value="8"/>
 					<Setter Property="Padding" Value="1, 1, 0, 0"/>
-					<Setter Property="BorderBrush" Value="#7F0000FF"/>
 					<Setter Property="Background" Value="{Binding ObservableStrength, Converter={StaticResource ObservableStrengthConverter}}"/>
 					<Setter Property="LayoutTransform">
 						<Setter.Value>
