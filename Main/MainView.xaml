@@ -15,13 +15,15 @@
 			<Main:PheromoneEvaporationRateConverter x:Key="PheromoneEvaporationRateConverter"/>
 			<Main:StatusConverter x:Key="StatusConverter"/>
 			<Colony:ObservableStrengthConverter x:Key="ObservableStrengthConverter"/>
-			<Style x:Key="PixelStyle" TargetType="Border">
+			<Style x:Key="AntStyle" TargetType="Border">
 				<Style.Setters>
 					<Setter Property="Margin" Value="2"/>
 					<Setter Property="Padding" Value="2"/>
 					<Setter Property="BorderThickness" Value="2"/>
 					<Setter Property="CornerRadius" Value="8"/>
 					<Setter Property="Padding" Value="1, 1, 0, 0"/>
+					<Setter Property="BorderBrush" Value="#7FFF0000"/>
+					<Setter Property="Background" Value="Red"/>
 					<Setter Property="LayoutTransform">
 						<Setter.Value>
 							<ScaleTransform ScaleY="-1"/>
@@ -29,24 +31,57 @@
 					</Setter>
 					<Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
 				</Style.Setters>
-				<Style.Triggers>
-					<DataTrigger Binding="{Binding ObservableNodeType}" Value="Ant">
-						<Setter Property="BorderBrush" Value="#7FFF0000"/>
-						<Setter Property="Background" Value="Red"/>
-					</DataTrigger>
-					<DataTrigger Binding="{Binding ObservableNodeType}" Value="Food">
-						<Setter Property="BorderBrush" Value="#7F0000FF"/>
-						<Setter Property="Background" Value="Blue"/>
-					</DataTrigger>
-					<DataTrigger Binding="{Binding ObservableNodeType}" Value="Path">
-						<Setter Property="BorderBrush" Value="#7F008000"/>
-						<Setter Property="Background" Value="Green"/>
-					</DataTrigger>
-					<DataTrigger Binding="{Binding ObservableNodeType}" Value="Pheromone">
-						<Setter Property="BorderBrush" Value="#7FFFFF00"/>
-						<Setter Property="Background" Value="{Binding ObservableStrength, Converter={StaticResource ObservableStrengthConverter}}"/>
-					</DataTrigger>
-				</Style.Triggers>
+			</Style>
+			<Style x:Key="FoodStyle" TargetType="Border">
+				<Style.Setters>
+					<Setter Property="Margin" Value="2"/>
+					<Setter Property="Padding" Value="2"/>
+					<Setter Property="BorderThickness" Value="2"/>
+					<Setter Property="CornerRadius" Value="8"/>
+					<Setter Property="Padding" Value="1, 1, 0, 0"/>
+					<Setter Property="BorderBrush" Value="#7F0000FF"/>
+					<Setter Property="Background" Value="Blue"/>
+					<Setter Property="LayoutTransform">
+						<Setter.Value>
+							<ScaleTransform ScaleY="-1"/>
+						</Setter.Value>
+					</Setter>
+					<Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+				</Style.Setters>
+			</Style>
+			<Style x:Key="PathStyle" TargetType="Border">
+				<Style.Setters>
+					<Setter Property="Margin" Value="2"/>
+					<Setter Property="Padding" Value="2"/>
+					<Setter Property="BorderThickness" Value="2"/>
+					<Setter Property="CornerRadius" Value="8"/>
+					<Setter Property="Padding" Value="1, 1, 0, 0"/>
+					<Setter Property="BorderBrush" Value="#7F008000"/>
+					<Setter Property="Background" Value="Green"/>
+					<Setter Property="LayoutTransform">
+						<Setter.Value>
+							<ScaleTransform ScaleY="-1"/>
+						</Setter.Value>
+					</Setter>
+					<Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+				</Style.Setters>
+			</Style>
+			<Style x:Key="PheromoneStyle" TargetType="Border">
+				<Style.Setters>
+					<Setter Property="Margin" Value="2"/>
+					<Setter Property="Padding" Value="2"/>
+					<Setter Property="BorderThickness" Value="2"/>
+					<Setter Property="CornerRadius" Value="8"/>
+					<Setter Property="Padding" Value="1, 1, 0, 0"/>
+					<Setter Property="BorderBrush" Value="#7FFFFF00"/>
+					<Setter Property="Background" Value="{Binding ObservableStrength, Converter={StaticResource ObservableStrengthConverter}}"/>
+					<Setter Property="LayoutTransform">
+						<Setter.Value>
+							<ScaleTransform ScaleY="-1"/>
+						</Setter.Value>
+					</Setter>
+					<Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+				</Style.Setters>
 			</Style>
 		</ResourceDictionary>
 	</Window.Resources>
@@ -151,33 +186,89 @@
 			</StackPanel>
 			<MaterialDesign:Card Background="{DynamicResource MaterialDesignLightBackground}">
 				<ScrollViewer x:Name="ScrollViewer" Style="{DynamicResource MaterialDesignScrollViewer}" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" CanContentScroll="True">
-					<ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding GraphViewModel}" ItemsSource="{Binding FoodNodes}">
-						<ItemsControl.LayoutTransform>
-							<ScaleTransform ScaleX="{Binding PixelsZoom}" ScaleY="{Binding PixelsZoom}"/>
-						</ItemsControl.LayoutTransform>
-						<ItemsControl.ItemsPanel>
-							<ItemsPanelTemplate>
-								<Canvas Width="{Binding ActualWidth, ElementName=ScrollViewer}" Height="{Binding ActualHeight, ElementName=ScrollViewer}" RenderTransformOrigin="0.5, 0.5">
-									<Canvas.RenderTransform>
-										<TransformGroup>
-											<ScaleTransform ScaleY="-1"/>
-										</TransformGroup>
-									</Canvas.RenderTransform>
-								</Canvas>
-							</ItemsPanelTemplate>
-						</ItemsControl.ItemsPanel>
-						<ItemsControl.ItemContainerStyle>
-							<Style>
-								<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
-								<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
-							</Style>
-						</ItemsControl.ItemContainerStyle>
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<Border Style="{StaticResource PixelStyle}"/>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
+					<Grid>
+						<ItemsControl Panel.ZIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding GraphViewModel}" ItemsSource="{Binding FoodNodes}">
+							<ItemsControl.LayoutTransform>
+								<ScaleTransform ScaleX="{Binding PixelsZoom}" ScaleY="{Binding PixelsZoom}"/>
+							</ItemsControl.LayoutTransform>
+							<ItemsControl.ItemsPanel>
+								<ItemsPanelTemplate>
+									<Canvas Width="{Binding ActualWidth, ElementName=ScrollViewer}" Height="{Binding ActualHeight, ElementName=ScrollViewer}" RenderTransformOrigin="0.5, 0.5">
+										<Canvas.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform ScaleY="-1"/>
+											</TransformGroup>
+										</Canvas.RenderTransform>
+									</Canvas>
+								</ItemsPanelTemplate>
+							</ItemsControl.ItemsPanel>
+							<ItemsControl.ItemContainerStyle>
+								<Style>
+									<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
+									<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
+								</Style>
+							</ItemsControl.ItemContainerStyle>
+							<ItemsControl.Resources>
+								<DataTemplate DataType="{x:Type Colony:FoodNode}">
+									<Border Style="{StaticResource FoodStyle}"/>
+								</DataTemplate>
+							</ItemsControl.Resources>
+						</ItemsControl>
+						<ItemsControl Panel.ZIndex="1" HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding GraphViewModel}" ItemsSource="{Binding PheromoneNodes}">
+							<ItemsControl.LayoutTransform>
+								<ScaleTransform ScaleX="{Binding PixelsZoom}" ScaleY="{Binding PixelsZoom}"/>
+							</ItemsControl.LayoutTransform>
+							<ItemsControl.ItemsPanel>
+								<ItemsPanelTemplate>
+									<Canvas Width="{Binding ActualWidth, ElementName=ScrollViewer}" Height="{Binding ActualHeight, ElementName=ScrollViewer}" RenderTransformOrigin="0.5, 0.5">
+										<Canvas.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform ScaleY="-1"/>
+											</TransformGroup>
+										</Canvas.RenderTransform>
+									</Canvas>
+								</ItemsPanelTemplate>
+							</ItemsControl.ItemsPanel>
+							<ItemsControl.ItemContainerStyle>
+								<Style>
+									<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
+									<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
+								</Style>
+							</ItemsControl.ItemContainerStyle>
+							<ItemsControl.Resources>
+								<DataTemplate DataType="{x:Type Colony:PheromoneNode}">
+									<Border Style="{StaticResource PheromoneStyle}"/>
+								</DataTemplate>
+							</ItemsControl.Resources>
+						</ItemsControl>
+						<ItemsControl Panel.ZIndex="2" HorizontalAlignment="Left" VerticalAlignment="Top" DataContext="{Binding GraphViewModel}" ItemsSource="{Binding AntNodes}">
+							<ItemsControl.LayoutTransform>
+								<ScaleTransform ScaleX="{Binding PixelsZoom}" ScaleY="{Binding PixelsZoom}"/>
+							</ItemsControl.LayoutTransform>
+							<ItemsControl.ItemsPanel>
+								<ItemsPanelTemplate>
+									<Canvas Width="{Binding ActualWidth, ElementName=ScrollViewer}" Height="{Binding ActualHeight, ElementName=ScrollViewer}" RenderTransformOrigin="0.5, 0.5">
+										<Canvas.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform ScaleY="-1"/>
+											</TransformGroup>
+										</Canvas.RenderTransform>
+									</Canvas>
+								</ItemsPanelTemplate>
+							</ItemsControl.ItemsPanel>
+							<ItemsControl.ItemContainerStyle>
+								<Style>
+									<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
+									<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
+								</Style>
+							</ItemsControl.ItemContainerStyle>
+							<ItemsControl.Resources>
+								<DataTemplate DataType="{x:Type Colony:AntNode}">
+									<Border Style="{StaticResource AntStyle}"/>
+								</DataTemplate>
+							</ItemsControl.Resources>
+						</ItemsControl>
+					</Grid>
 				</ScrollViewer>
 			</MaterialDesign:Card>
 		</DockPanel>

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Data;
 
 using AntColony.Main;
 
@@ -14,6 +15,7 @@ internal class GraphViewModel : INotifyPropertyChanged {
 	private readonly List<PheromoneNode> _PheromoneNodes;
 	private readonly List<AntNode> _AntNodes;
 	private readonly GraphModel _GraphModel;
+	private readonly CompositeCollection _Nodes;
 	#endregion
 	#region Fields
 	/// <summary>
@@ -28,6 +30,10 @@ internal class GraphViewModel : INotifyPropertyChanged {
 	/// Gets the current ant nodes
 	/// </summary>
 	public List<Node> AntNodes => new(this._AntNodes);
+	/// <summary>
+	/// All nodes
+	/// </summary>
+	public CompositeCollection Nodes => this._Nodes;
 	/// <summary>
 	/// Current pixels zoom
 	/// </summary>
@@ -98,6 +104,11 @@ internal class GraphViewModel : INotifyPropertyChanged {
 		this._AntNodes = new();
 		this._FoodNodes = new();
 		this._PheromoneNodes = new();
+		this._Nodes = new() {
+			this._AntNodes,
+			this._FoodNodes,
+			this._PheromoneNodes
+		};
 		this._GraphModel = new GraphModel() {
 			PixelsZoom = 1,
 			MinCoordinate = int.MaxValue,
