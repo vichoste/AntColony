@@ -1,17 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Data;
 
 namespace AntColony.Colony;
+internal delegate void HitTest();
 internal class ColonyViewModel : INotifyPropertyChanged {
+	private readonly List<AntNode> _AntNodes;
 	private readonly List<FoodNode> _FoodNodes;
 	private readonly List<PheromoneNode> _PheromoneNodes;
-	private readonly List<AntNode> _AntNodes;
 	public event PropertyChangedEventHandler? PropertyChanged;
 	public CompositeCollection Nodes { get; }
-	public List<Node> FoodNodes => new(this._FoodNodes);
-	public List<Node> PheromoneNodes => new(this._PheromoneNodes);
-	public List<Node> AntNodes => new(this._AntNodes);
+	public List<AntNode> AntNodes => this._AntNodes.ToList();
+	public List<FoodNode> FoodNodes => this._FoodNodes.ToList();
+	public List<PheromoneNode> PheromoneNodes => this._PheromoneNodes.ToList();
 	public int AntCount {
 		get => this.ColonyModel.AntCount;
 		set {
@@ -67,16 +69,8 @@ internal class ColonyViewModel : INotifyPropertyChanged {
 			MaxCoordinate = 0,
 		};
 	}
-	public void AddAnt(AntNode node) => this._AntNodes.Add(node);
-	public void AddFood(FoodNode node) => this._FoodNodes.Add(node);
-	public void AddPheromone(PheromoneNode node) => this._PheromoneNodes.Add(node);
-	public void FlushNodes() {
-		this._AntNodes.Clear();
-		this._FoodNodes.Clear();
-		this._PheromoneNodes.Clear();
-		this.OnPropertyChanged(nameof(this.AntNodes));
-		this.OnPropertyChanged(nameof(this.FoodNodes));
-		this.OnPropertyChanged(nameof(this.PheromoneNodes));
-	}
+	public void AddAnt(AntNode ant) => this._AntNodes.Add(ant);
+	public void AddFood(FoodNode food) => this._FoodNodes.Add(food);
+	public void AddPheromone(PheromoneNode pheromone) => this._PheromoneNodes.Add(pheromone);
 	public void OnPropertyChanged(string value) => this.PropertyChanged?.Invoke(this, new(value));
 }

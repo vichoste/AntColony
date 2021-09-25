@@ -8,7 +8,7 @@ using AntColony.Colony;
 using MaterialDesignThemes.Wpf;
 
 namespace AntColony.Main;
-public partial class MainView : Window {
+public partial class MainView : Window { // TODO optimum route
 	private readonly MainViewModel _MainViewModel;
 	public MainView() {
 		this.InitializeComponent();
