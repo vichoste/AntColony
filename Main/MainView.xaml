@@ -17,8 +17,8 @@
 			<Colony:ObservableStrengthConverter x:Key="ObservableStrengthConverter"/>
 			<Style x:Key="PixelStyle" TargetType="Border">
 				<Style.Setters>
-					<Setter Property="Margin" Value="8"/>
-					<Setter Property="Padding" Value="8"/>
+					<Setter Property="Margin" Value="2"/>
+					<Setter Property="Padding" Value="2"/>
 					<Setter Property="BorderThickness" Value="2"/>
 					<Setter Property="CornerRadius" Value="8"/>
 					<Setter Property="Padding" Value="1, 1, 0, 0"/>
@@ -39,11 +39,11 @@
 						<Setter Property="Background" Value="Blue"/>
 					</DataTrigger>
 					<DataTrigger Binding="{Binding ObservableNodeType}" Value="Path">
-						<Setter Property="BorderBrush" Value="#7FFFFF00"/>
-						<Setter Property="Background" Value="Yellow"/>
+						<Setter Property="BorderBrush" Value="#7F008000"/>
+						<Setter Property="Background" Value="Green"/>
 					</DataTrigger>
 					<DataTrigger Binding="{Binding ObservableNodeType}" Value="Pheromone">
-						<Setter Property="BorderBrush" Value="#7F000000"/>
+						<Setter Property="BorderBrush" Value="#7FFFFF00"/>
 						<Setter Property="Background" Value="{Binding ObservableStrength, Converter={StaticResource ObservableStrengthConverter}}"/>
 					</DataTrigger>
 				</Style.Triggers>
@@ -131,11 +131,11 @@
 							<TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}">Ant</TextBlock>
 							<Border Grid.Row="0" Grid.Column="1" Margin="8" Padding="8" BorderThickness="2" BorderBrush="#7FFF0000" Background="Red" CornerRadius="8"/>
 							<TextBlock VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}">Food</TextBlock>
-							<Border Grid.Row="1" Grid.Column="1" Margin="8" Padding="8" BorderThickness="2" BorderBrush="#7F0000FF" Background="Blue" CornerRadius="8"/>
+							<Border Grid.Row="2" Grid.Column="2" Margin="8" Padding="8" BorderThickness="2" BorderBrush="#7F0000FF" Background="Blue" CornerRadius="8"/>
 							<TextBlock VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}">Path</TextBlock>
-							<Border Grid.Row="2" Grid.Column="1" Margin="8" Padding="8" BorderThickness="2" BorderBrush="#7FFFFF00" Background="Yellow" CornerRadius="8"/>
+							<Border Grid.Row="1" Grid.Column="2" Margin="8" Padding="8" BorderThickness="2" BorderBrush="#7F008000" Background="Green" CornerRadius="8"/>
 							<TextBlock VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}">Pheromone</TextBlock>
-							<Border Grid.Row="3" Grid.Column="1" Margin="8" Padding="8" BorderThickness="2" BorderBrush="#7F000000" Background="DarkGray" CornerRadius="8"/>
+							<Border Grid.Row="3" Grid.Column="1" Margin="8" Padding="8" BorderThickness="2" BorderBrush="#7FFFFF00" Background="DarkGray" CornerRadius="8"/>
 						</Grid>
 					</StackPanel>
 				</MaterialDesign:Card>

@@ -105,7 +105,7 @@ public partial class MainView : Window {
 		if (this._MainViewModel.GraphViewModel is not null) {
 			this._MainViewModel.CanOperate = false;
 			var pathfinder = new Pathfinder(this._MainViewModel.GraphViewModel);
-			pathfinder.Run(); // TODO await
+			var bestPath = await pathfinder.Run();
 		}
 	}
 	#endregion
