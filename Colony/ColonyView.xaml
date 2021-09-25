@@ -9,8 +9,8 @@
 			<Colony:PheromoneNode x:Key="PheromoneNode"/>
 			<Style x:Key="AntStyle" TargetType="Border">
 				<Style.Setters>
-					<Setter Property="Margin" Value="2"/>
-					<Setter Property="Padding" Value="2"/>
+					<Setter Property="Margin" Value="4"/>
+					<Setter Property="Padding" Value="4"/>
 					<Setter Property="BorderThickness" Value="2"/>
 					<Setter Property="CornerRadius" Value="8"/>
 					<Setter Property="Padding" Value="1, 1, 0, 0"/>
@@ -25,23 +25,6 @@
 				</Style.Setters>
 			</Style>
 			<Style x:Key="FoodStyle" TargetType="Border">
-				<Style.Setters>
-					<Setter Property="Margin" Value="2"/>
-					<Setter Property="Padding" Value="2"/>
-					<Setter Property="BorderThickness" Value="2"/>
-					<Setter Property="CornerRadius" Value="8"/>
-					<Setter Property="Padding" Value="1, 1, 0, 0"/>
-					<Setter Property="BorderBrush" Value="#7F0000FF"/>
-					<Setter Property="Background" Value="Blue"/>
-					<Setter Property="LayoutTransform">
-						<Setter.Value>
-							<ScaleTransform ScaleY="-1"/>
-						</Setter.Value>
-					</Setter>
-					<Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
-				</Style.Setters>
-			</Style>
-			<Style x:Key="PathStyle" TargetType="Border">
 				<Style.Setters>
 					<Setter Property="Margin" Value="2"/>
 					<Setter Property="Padding" Value="2"/>
@@ -65,7 +48,7 @@
 					<Setter Property="BorderThickness" Value="2"/>
 					<Setter Property="CornerRadius" Value="8"/>
 					<Setter Property="Padding" Value="1, 1, 0, 0"/>
-					<Setter Property="BorderBrush" Value="#7FFFFF00"/>
+					<Setter Property="BorderBrush" Value="#7F0000FF"/>
 					<Setter Property="Background" Value="{Binding ObservableStrength, Converter={StaticResource ObservableStrengthConverter}}"/>
 					<Setter Property="LayoutTransform">
 						<Setter.Value>
@@ -102,7 +85,7 @@
 				</DataTemplate>
 			</ItemsControl.Resources>
 		</ItemsControl>
-		<ItemsControl Panel.ZIndex="0" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding FoodNodes}">
+		<ItemsControl Panel.ZIndex="1" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding FoodNodes}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<Canvas RenderTransformOrigin="0.5, 0.5" MinWidth="1920" MinHeight="1080">
@@ -126,7 +109,7 @@
 				</DataTemplate>
 			</ItemsControl.Resources>
 		</ItemsControl>
-		<ItemsControl Panel.ZIndex="1" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding PheromoneNodes}">
+		<ItemsControl Panel.ZIndex="0" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding PheromoneNodes}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<Canvas RenderTransformOrigin="0.5, 0.5" MinWidth="1920" MinHeight="1080">
