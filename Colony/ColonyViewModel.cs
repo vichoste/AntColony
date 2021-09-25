@@ -8,7 +8,15 @@ namespace AntColony.Colony;
 internal class ColonyViewModel : INotifyPropertyChanged {
 	private readonly ColonyModel _ColonyModel;
 	public event PropertyChangedEventHandler? PropertyChanged;
-	public ObservableCollection<AntNode>? AntNodes => this._ColonyModel.AntNodes;
+	public ObservableCollection<AntNode>? AntNodes {
+		get => this._ColonyModel.AntNodes;
+		set {
+			if (this._ColonyModel.AntNodes is not null && this._ColonyModel.AntNodes != value) {
+				this._ColonyModel.AntNodes = value;
+				this.OnPropertyChanged(nameof(this.AntNodes));
+			}
+		}
+	}
 	public int AntCount {
 		get => this._ColonyModel.AntCount;
 		set {
@@ -20,7 +28,15 @@ internal class ColonyViewModel : INotifyPropertyChanged {
 			}
 		}
 	}
-	public ObservableCollection<FoodNode>? FoodNodes => this._ColonyModel.FoodNodes;
+	public ObservableCollection<FoodNode>? FoodNodes {
+		get => this._ColonyModel.FoodNodes;
+		set {
+			if (this._ColonyModel.FoodNodes is not null && this._ColonyModel.FoodNodes != value) {
+				this._ColonyModel.FoodNodes = value;
+				this.OnPropertyChanged(nameof(this.FoodNodes));
+			}
+		}
+	}
 	public int MaxCoordinate {
 		get => this._ColonyModel.MaxCoordinate;
 		set {
@@ -51,7 +67,15 @@ internal class ColonyViewModel : INotifyPropertyChanged {
 			}
 		}
 	}
-	public ObservableCollection<PheromoneNode>? PheromoneNodes => this._ColonyModel.PheromoneNodes;
+	public ObservableCollection<PheromoneNode>? PheromoneNodes {
+		get => this._ColonyModel.PheromoneNodes;
+		set {
+			if (this._ColonyModel.PheromoneNodes is not null && this._ColonyModel.PheromoneNodes != value) {
+				this._ColonyModel.PheromoneNodes = value;
+				this.OnPropertyChanged(nameof(this.PheromoneNodes));
+			}
+		}
+	}
 	public ColonyViewModel() {
 		this._ColonyModel = new ColonyModel() {
 			MinCoordinate = int.MaxValue,
@@ -68,25 +92,16 @@ internal class ColonyViewModel : INotifyPropertyChanged {
 	public void AddAnt(AntNode ant) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
 		if (this.AntNodes is not null) {
 			this.AntNodes.Add(ant);
-			this.OnPropertyChanged(nameof(this.AntNodes));
 		}
 	}));
 	public void AddFood(FoodNode food) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
 		if (this.FoodNodes is not null) {
 			this.FoodNodes.Add(food);
-			this.OnPropertyChanged(nameof(this.FoodNodes));
 		}
 	}));
 	public void AddPheromone(PheromoneNode pheromone) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
 		if (this.PheromoneNodes is not null) {
 			this.PheromoneNodes.Add(pheromone);
-			this.OnPropertyChanged(nameof(this.PheromoneNodes));
-		}
-	}));
-	public void FlushAnts() => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-		if (this.AntNodes is not null) {
-			this.AntNodes.Clear();
-			this.OnPropertyChanged(nameof(this.AntNodes));
 		}
 	}));
 	public void OnPropertyChanged(string value) => this.PropertyChanged?.Invoke(this, new(value));
