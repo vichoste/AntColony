@@ -47,7 +47,7 @@ public partial class MainView : Window { // TODO optimum route
 		if (this._MainViewModel.ColonyViewModel is not null) {
 			this._MainViewModel.CanOperate = false;
 			var pathfinder = new Pathfinder(this._MainViewModel.ColonyViewModel);
-			var bestPath = await pathfinder.Run(); // TODO something with this result
+			await pathfinder.Run(); // TODO something with this result
 		}
 	}
 	private void ZoomPixels(object sender, MouseWheelEventArgs e) {

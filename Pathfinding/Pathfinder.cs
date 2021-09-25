@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using AntColony.Colony;
@@ -10,10 +11,9 @@ namespace AntColony.Algorithms;
 internal class Pathfinder {
 	private readonly ColonyViewModel _ColonyViewModel;
 	public Pathfinder(ColonyViewModel colonyViewModel) => this._ColonyViewModel = colonyViewModel;
-	public async Task<Path> Run() {
+	public async Task Run() {
 		var ants = await CreateAnts(this._ColonyViewModel);
-		await MakeFirstAntMovement(this._ColonyViewModel, ants);
-		return null;
+		await this.MoveAnts();
 	}
 	private static async Task<List<AntNode>> CreateAnts(ColonyViewModel colonyViewModel) {
 		var ants = new List<AntNode>();
@@ -33,46 +33,49 @@ internal class Pathfinder {
 		});
 		return ants;
 	}
-	private static async Task MakeFirstAntMovement(ColonyViewModel colonyViewModel, List<AntNode> ants) => await Task.Run(() => {
-		colonyViewModel.FlushAnts();
-		var random = new Random();
-		for (var i = 0; i < ants.Count; i++) {
-			var firstProbabilities = new List<Probability>() {
-				new Probability() {
-					Direction = Direction.North,
-					Value = random.NextDouble()
-				},
-				new Probability() {
-					Direction = Direction.South,
-					Value = random.NextDouble()
-				},
-				new Probability() {
-					Direction = Direction.East,
-					Value = random.NextDouble()
-				},
-				new Probability() {
-					Direction = Direction.West,
-					Value = random.NextDouble()
-				},
-				new Probability() {
-					Direction = Direction.NorthEast,
-					Value = random.NextDouble()
-				},
-				new Probability() {
-					Direction = Direction.NorthWest,
-					Value = random.NextDouble()
-				},
-				new Probability() {
-					Direction = Direction.SouthEast,
-					Value = random.NextDouble()
-				},
-				new Probability() {
-					Direction = Direction.SouthWest,
-					Value = random.NextDouble()
-				}
-			};
-			var ant = AntNode.MoveAnt(ants[i], firstProbabilities);
-			colonyViewModel.AddAnt(ant);
+	private async Task MoveAnts() => await Task.Run(() => {
+		if (this._ColonyViewModel.AntNodes is not null) {
+			var ants = this._ColonyViewModel.AntNodes.ToList();
+			var count = this._ColonyViewModel.AntNodes.Count;
+			for (var i = 0; i < count; i++) {
+				var random = new Random();
+				var firstProbabilities = new List<Probability>() {
+					new Probability() {
+						Direction = Direction.North,
+						Value = random.NextDouble()
+					},
+					new Probability() {
+						Direction = Direction.South,
+						Value = random.NextDouble()
+					},
+					new Probability() {
+						Direction = Direction.East,
+						Value = random.NextDouble()
+					},
+					new Probability() {
+						Direction = Direction.West,
+						Value = random.NextDouble()
+					},
+					new Probability() {
+						Direction = Direction.NorthEast,
+						Value = random.NextDouble()
+					},
+					new Probability() {
+						Direction = Direction.NorthWest,
+						Value = random.NextDouble()
+					},
+					new Probability() {
+						Direction = Direction.SouthEast,
+						Value = random.NextDouble()
+					},
+					new Probability() {
+						Direction = Direction.SouthWest,
+						Value = random.NextDouble()
+					}
+				};
+				var ant = AntNode.MoveAnt(ants[i], firstProbabilities);
+				this._ColonyViewModel.AddAnt(ants[i]);
+			}
 		}
 	});
 }
