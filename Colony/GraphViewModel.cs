@@ -2,8 +2,6 @@
 using System.ComponentModel;
 using System.Windows.Data;
 
-using AntColony.Main;
-
 namespace AntColony.Colony;
 
 /// <summary>

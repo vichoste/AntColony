@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 
 using AntColony.Colony;
 
@@ -54,8 +53,5 @@ internal class Pathfinder {
 		var result = await Task.WhenAny(antMoves);
 		return null;
 	}
-	private async Task<Path> MoveAnt(AntNode ant) {
-
-		return null;
-	}
+	private async Task<Path> MoveAnt(AntNode ant) => null;
 }
