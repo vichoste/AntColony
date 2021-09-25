@@ -52,12 +52,8 @@ public partial class MainView : Window { // TODO optimum route
 	}
 	private void ZoomPixels(object sender, MouseWheelEventArgs e) {
 		if (e.Delta > 0 && this._MainViewModel.IsControlPressed && this._MainViewModel.PixelsZoom + MainModel.ZoomFactor <= MainModel.MaxZoomFactor) {
-			this.ScrollViewer.ScrollToBottom();
-			this.ScrollViewer.ScrollToLeftEnd();
 			this._MainViewModel.PixelsZoom += MainModel.ZoomFactor;
 		} else if (e.Delta < 0 && this._MainViewModel.IsControlPressed && this._MainViewModel.PixelsZoom - MainModel.ZoomFactor >= MainModel.MinZoomFactor) {
-			this.ScrollViewer.ScrollToBottom();
-			this.ScrollViewer.ScrollToLeftEnd();
 			this._MainViewModel.PixelsZoom -= MainModel.ZoomFactor;
 		}
 	}

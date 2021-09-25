@@ -5,7 +5,8 @@ using AntColony.Pathfinding;
 
 namespace AntColony.Colony;
 internal class AntNode : Node {
-	public const int MinAntCount = 0;
+	public const int DefaultAntCount = 4;
+	public const int MinAntCount = 1;
 	public const int MaxAntCount = 10;
 	public static AntNode Clone(AntNode ant) {
 		var clone = new AntNode() {
@@ -23,13 +24,13 @@ internal class AntNode : Node {
 					ant.Y = ant.Y + 1 > Node.MaxNodes ? ant.Y - 1 : ant.Y + 1;
 					break;
 				case Direction.South:
-					ant.Y = ant.Y - 1 > Node.MaxNodes ? ant.Y + 1 : ant.Y - 1;
+					ant.Y = ant.Y - 1 < 0 ? ant.Y + 1 : ant.Y - 1;
 					break;
 				case Direction.East:
 					ant.X = ant.X + 1 > Node.MaxNodes ? ant.X - 1 : ant.X + 1;
 					break;
 				case Direction.West:
-					ant.X = ant.X - 1 > Node.MaxNodes ? ant.X + 1 : ant.X - 1;
+					ant.X = ant.X - 1 < 0 ? ant.X + 1 : ant.X - 1;
 					break;
 				case Direction.NorthEast:
 					ant.Y = ant.Y + 1 > Node.MaxNodes ? ant.Y - 1 : ant.Y + 1;
@@ -37,19 +38,19 @@ internal class AntNode : Node {
 					break;
 				case Direction.NorthWest:
 					ant.Y = ant.Y + 1 > Node.MaxNodes ? ant.Y - 1 : ant.Y + 1;
-					ant.X = ant.X - 1 > Node.MaxNodes ? ant.X + 1 : ant.X - 1;
+					ant.X = ant.X - 1 < 0 ? ant.X + 1 : ant.X - 1;
 					break;
 				case Direction.SouthEast:
-					ant.Y = ant.Y - 1 > Node.MaxNodes ? ant.Y + 1 : ant.Y - 1;
+					ant.Y = ant.Y - 1 < 0 ? ant.Y + 1 : ant.Y - 1;
 					ant.X = ant.X + 1 > Node.MaxNodes ? ant.X - 1 : ant.X + 1;
 					break;
 				case Direction.SouthWest:
-					ant.Y = ant.Y - 1 > Node.MaxNodes ? ant.Y + 1 : ant.Y - 1;
-					ant.X = ant.X - 1 > Node.MaxNodes ? ant.X + 1 : ant.X - 1;
+					ant.Y = ant.Y - 1 < 0 ? ant.Y + 1 : ant.Y - 1;
+					ant.X = ant.X - 1 < 0 ? ant.X + 1 : ant.X - 1;
 					break;
 			}
-			return AntNode.Clone(ant);
+			return Clone(ant);
 		}
-		return ant;
+		return Clone(ant);
 	}
 }

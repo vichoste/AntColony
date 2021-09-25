@@ -39,10 +39,8 @@ internal class MainViewModel : INotifyPropertyChanged {
 	public ColonyViewModel? ColonyViewModel {
 		get => this._MainModel.ColonyViewModel;
 		set {
-			if (this._MainModel.ColonyViewModel != value) {
-				this._MainModel.ColonyViewModel = value;
-				this.OnPropertyChanged(nameof(this.ColonyViewModel));
-			}
+			this._MainModel.ColonyViewModel = value;
+			this.OnPropertyChanged(nameof(this.ColonyViewModel));
 		}
 	}
 	public bool IsControlPressed {
@@ -124,7 +122,6 @@ internal class MainViewModel : INotifyPropertyChanged {
 				_ = MessageBox.Show("Can't open file. Expected \"NODE_COORD_SECTION : \" : at line 6!");
 				return;
 			}
-			var result = true;
 			for (var i = 6; i < lines.Length - 1; i++) {
 				await Task.Run(() => {
 					// Parse integers (https://stackoverflow.com/questions/4961675/select-parsed-int-if-string-was-parseable-to-int)
@@ -133,7 +130,10 @@ internal class MainViewModel : INotifyPropertyChanged {
 						return (value, success);
 					}).Where(pair => pair.success).Select(pair => pair.value).ToList();
 					if (splitted.Count is not 3) { // This implies there are not integers at all
-						result = false;
+						_ = MessageBox.Show("Can't open file. Non-integers were found in the file!");
+						this.CanOperate = false;
+						this.Status = Status.Ready;
+						return;
 					}
 					colonyViewModel.AddFood(new FoodNode() {
 						Id = splitted[0],
@@ -145,28 +145,14 @@ internal class MainViewModel : INotifyPropertyChanged {
 						colonyViewModel.MaxCoordinate = splitted[1] < splitted[2] ? splitted[1] : splitted[2];
 					}
 				});
-				if (!result) {
-					break;
-				}
 			}
-			if (!result) {
-				_ = MessageBox.Show("Can't open file. Non-integers were found in the file!");
-				this.CanOperate = false;
-				this.Status = Status.Ready;
-				return;
-			} else {
-				colonyViewModel.AntCount = 4;
-				colonyViewModel.PheromoneEvaporationRate = .5;
-				this.ColonyViewModel = colonyViewModel;
-				this.CanOperate = true;
-				this.ScrollViewer.ScrollToBottom();
-				this.ScrollViewer.ScrollToLeftEnd();
-				this.Status = Status.Ready;
-			}
-		} else {
-			this.CanOperate = false;
+			colonyViewModel.AntCount = AntNode.DefaultAntCount;
+			colonyViewModel.PheromoneEvaporationRate = PheromoneNode.DefaultEvaporationRate;
+			this.ColonyViewModel = colonyViewModel;
+			this.CanOperate = true;
+			this.ScrollViewer.ScrollToBottom();
+			this.ScrollViewer.ScrollToLeftEnd();
 			this.Status = Status.Ready;
-			return;
 		}
 	}
 	public void OnPropertyChanged(string value) => this.PropertyChanged?.Invoke(this, new(value));
