@@ -3,9 +3,9 @@
 		xmlns:Colony="clr-namespace:AntColony.Colony" Width="1920" Height="1080">
 	<UserControl.Resources>
 		<ResourceDictionary>
-			<Colony:ObservableStrengthConverter x:Key="ObservableStrengthConverter"/>
 			<Colony:AntNode x:Key="AntNode"/>
 			<Colony:FoodNode x:Key="FoodNode"/>
+			<Colony:ObservableStrengthConverter x:Key="ObservableStrengthConverter"/>
 			<Colony:PheromoneNode x:Key="PheromoneNode"/>
 			<Style x:Key="AntStyle" TargetType="Border">
 				<Style.Setters>
@@ -78,11 +78,31 @@
 		</ResourceDictionary>
 	</UserControl.Resources>
 	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="0*"/>
-			<RowDefinition Height="0*"/>
-		</Grid.RowDefinitions>
-		<ItemsControl Panel.ZIndex="0" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding FoodNodes}" Grid.Row="1">
+		<ItemsControl Panel.ZIndex="2" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding AntNodes}">
+			<ItemsControl.ItemContainerStyle>
+				<Style>
+					<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
+					<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
+				</Style>
+			</ItemsControl.ItemContainerStyle>
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas RenderTransformOrigin="0.5, 0.5" MinWidth="1920" MinHeight="1080">
+						<Canvas.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleY="-1"/>
+							</TransformGroup>
+						</Canvas.RenderTransform>
+					</Canvas>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.Resources>
+				<DataTemplate DataType="{x:Type Colony:AntNode}">
+					<Border Style="{StaticResource AntStyle}"/>
+				</DataTemplate>
+			</ItemsControl.Resources>
+		</ItemsControl>
+		<ItemsControl Panel.ZIndex="0" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding FoodNodes}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<Canvas RenderTransformOrigin="0.5, 0.5" MinWidth="1920" MinHeight="1080">
@@ -106,7 +126,7 @@
 				</DataTemplate>
 			</ItemsControl.Resources>
 		</ItemsControl>
-		<ItemsControl Panel.ZIndex="1" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding PheromoneNodes}" Grid.Row="1">
+		<ItemsControl Panel.ZIndex="1" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding PheromoneNodes}">
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<Canvas RenderTransformOrigin="0.5, 0.5" MinWidth="1920" MinHeight="1080">
@@ -127,30 +147,6 @@
 			<ItemsControl.Resources>
 				<DataTemplate DataType="{x:Type Colony:PheromoneNode}">
 					<Border Style="{StaticResource PheromoneStyle}"/>
-				</DataTemplate>
-			</ItemsControl.Resources>
-		</ItemsControl>
-		<ItemsControl Panel.ZIndex="2" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding AntNodes}" Grid.Row="1">
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<Canvas RenderTransformOrigin="0.5, 0.5" MinWidth="1920" MinHeight="1080">
-						<Canvas.RenderTransform>
-							<TransformGroup>
-								<ScaleTransform ScaleY="-1"/>
-							</TransformGroup>
-						</Canvas.RenderTransform>
-					</Canvas>
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
-			<ItemsControl.ItemContainerStyle>
-				<Style>
-					<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
-					<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
-				</Style>
-			</ItemsControl.ItemContainerStyle>
-			<ItemsControl.Resources>
-				<DataTemplate DataType="{x:Type Colony:AntNode}">
-					<Border Style="{StaticResource AntStyle}"/>
 				</DataTemplate>
 			</ItemsControl.Resources>
 		</ItemsControl>
