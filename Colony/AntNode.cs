@@ -1,18 +1,47 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using AntColony.Pathfinding;
+
 namespace AntColony.Colony;
 internal class AntNode : Node {
-	private readonly List<(int X, int Y)> _VisitedCoordinates;
 	public const int MinAntCount = 0;
 	public const int MaxAntCount = 10;
 	public int OriginX { get; set; }
 	public int OriginY { get; set; }
-	public List<(int X, int Y)> VisitedCoordinates => this._VisitedCoordinates.ToList();
-	public AntNode() => this._VisitedCoordinates = new();
-	public void Move(int x, int y) {
-		this.X = x;
-		this.Y = y;
-		this._VisitedCoordinates.Add((x, y));
+	public void Move(List<Probability> probabilities) {
+		var maxProbability = probabilities.MaxBy(p => p.Value);
+		if (maxProbability is not null) {
+			switch (maxProbability.Direction) {
+				case Direction.North:
+					this.Y = this.Y + 1 > MaxNodes ? this.Y - 1 : this.Y + 1;
+					break;
+				case Direction.South:
+					this.Y = this.Y - 1 > MaxNodes ? this.Y + 1 : this.Y - 1;
+					break;
+				case Direction.East:
+					this.X = this.X + 1 > MaxNodes ? this.X - 1 : this.X + 1;
+					break;
+				case Direction.West:
+					this.X = this.X - 1 > MaxNodes ? this.X + 1 : this.X - 1;
+					break;
+				case Direction.NorthEast:
+					this.Y = this.Y + 1 > MaxNodes ? this.Y - 1 : this.Y + 1;
+					this.X = this.X + 1 > MaxNodes ? this.X - 1 : this.X + 1;
+					break;
+				case Direction.NorthWest:
+					this.Y = this.Y + 1 > MaxNodes ? this.Y - 1 : this.Y + 1;
+					this.X = this.X - 1 > MaxNodes ? this.X + 1 : this.X - 1;
+					break;
+				case Direction.SouthEast:
+					this.Y = this.Y - 1 > MaxNodes ? this.Y + 1 : this.Y - 1;
+					this.X = this.X + 1 > MaxNodes ? this.X - 1 : this.X + 1;
+					break;
+				case Direction.SouthWest:
+					this.Y = this.Y - 1 > MaxNodes ? this.Y + 1 : this.Y - 1;
+					this.X = this.X - 1 > MaxNodes ? this.X + 1 : this.X - 1;
+					break;
+			}
+		}
 	}
 }

@@ -59,7 +59,7 @@
 					</StackPanel>
 				</Grid>
 			</MaterialDesign:Card>
-			<StackPanel VerticalAlignment="Center" Margin="8, 0, 0, 0" DockPanel.Dock="Right">
+			<StackPanel MinWidth="300" VerticalAlignment="Center" Margin="8, 0, 0, 0" DockPanel.Dock="Right">
 				<MaterialDesign:Card Margin="0, 0, 0, 8">
 					<StackPanel Margin="8" IsEnabled="{Binding CanOperate}" HorizontalAlignment="Center">
 						<TextBlock Style="{DynamicResource MaterialDesignHeadline6TextBlock}" HorizontalAlignment="Center">TSP Options</TextBlock>
@@ -107,8 +107,6 @@
 					<StatusBar Margin="8" Background="Transparent" Foreground="{DynamicResource MaterialDesignDarkForeground}">
 						<StackPanel MinWidth="201">
 							<TextBlock Text="{Binding Status, Converter={StaticResource StatusConverter}, FallbackValue=Ready, TargetNullValue=Ready}"/>
-							<Separator Style="{DynamicResource MaterialDesignDarkSeparator}"/>
-							<TextBlock>Current optimum route:</TextBlock>
 						</StackPanel>
 					</StatusBar>
 				</MaterialDesign:Card>

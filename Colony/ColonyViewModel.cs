@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows.Data;
 
 namespace AntColony.Colony;
-internal delegate void HitTest();
 internal class ColonyViewModel : INotifyPropertyChanged {
 	private readonly List<AntNode> _AntNodes;
 	private readonly List<FoodNode> _FoodNodes;
