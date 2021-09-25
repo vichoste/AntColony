@@ -94,12 +94,12 @@
 								<ColumnDefinition/>
 								<ColumnDefinition/>
 							</Grid.ColumnDefinitions>
+							<Ellipse Grid.Row="0" Grid.Column="1" Height="20" Width="20" Margin="2" Stroke="#7FFF0000" Fill="#7FFF0000"/>
+							<Ellipse Grid.Row="1" Grid.Column="1" Height="15" Width="15" Margin="3.5" Stroke="#7F0000FF" Fill="#7F0000FF"/>
+							<Ellipse Grid.Row="2" Grid.Column="1" Height="10" Width="10" Margin="5" Stroke="#7F808080" Fill="#7F808080"/>
 							<TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}">Ant</TextBlock>
-							<Border Grid.Row="0" Grid.Column="1" Margin="8" Padding="8" BorderThickness="2" BorderBrush="#7FFF0000" Background="Red" CornerRadius="8"/>
 							<TextBlock VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}">Food</TextBlock>
-							<Border Grid.Row="1" Grid.Column="2" Margin="8" Padding="8" BorderThickness="2" BorderBrush="#7F0000FF" Background="Blue" CornerRadius="8"/>
-							<TextBlock VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}">Pheromone</TextBlock>
-							<Border Grid.Row="3" Grid.Column="1" Margin="8" Padding="8" BorderThickness="2" BorderBrush="Black" Background="DarkGray" CornerRadius="8"/>
+							<TextBlock VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Style="{DynamicResource MaterialDesignBody2TextBlock}">Pheromone</TextBlock>
 						</Grid>
 					</StackPanel>
 				</MaterialDesign:Card>

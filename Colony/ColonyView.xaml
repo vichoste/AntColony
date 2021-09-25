@@ -7,60 +7,34 @@
 			<Colony:FoodNode x:Key="FoodNode"/>
 			<Colony:ObservableStrengthConverter x:Key="ObservableStrengthConverter"/>
 			<Colony:PheromoneNode x:Key="PheromoneNode"/>
-			<Style x:Key="AntStyle" TargetType="Border">
+			<Style x:Key="AntStyle" TargetType="Ellipse">
 				<Style.Setters>
-					<Setter Property="Margin" Value="4"/>
-					<Setter Property="Padding" Value="4"/>
-					<Setter Property="BorderThickness" Value="2"/>
-					<Setter Property="CornerRadius" Value="8"/>
-					<Setter Property="Padding" Value="1, 1, 0, 0"/>
-					<Setter Property="BorderBrush" Value="#7FFF0000"/>
-					<Setter Property="Background" Value="Red"/>
-					<Setter Property="LayoutTransform">
-						<Setter.Value>
-							<ScaleTransform ScaleY="-1"/>
-						</Setter.Value>
-					</Setter>
-					<Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+					<Setter Property="Height" Value="10"/>
+					<Setter Property="Width" Value="10"/>
+					<Setter Property="Stroke" Value="#7FFF0000"/>
+					<Setter Property="Fill" Value="#7FFF0000"/>
 				</Style.Setters>
 			</Style>
-			<Style x:Key="FoodStyle" TargetType="Border">
+			<Style x:Key="FoodStyle" TargetType="Ellipse">
 				<Style.Setters>
-					<Setter Property="Margin" Value="2"/>
-					<Setter Property="Padding" Value="2"/>
-					<Setter Property="BorderThickness" Value="1"/>
-					<Setter Property="CornerRadius" Value="8"/>
-					<Setter Property="Padding" Value="1, 1, 0, 0"/>
-					<Setter Property="BorderBrush" Value="#7F0000FF"/>
-					<Setter Property="Background" Value="Blue"/>
-					<Setter Property="LayoutTransform">
-						<Setter.Value>
-							<ScaleTransform ScaleY="-1"/>
-						</Setter.Value>
-					</Setter>
-					<Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+					<Setter Property="Height" Value="5"/>
+					<Setter Property="Width" Value="5"/>
+					<Setter Property="Stroke" Value="#7F0000FF"/>
+					<Setter Property="Fill" Value="#7F0000FF"/>
 				</Style.Setters>
 				<Style.Triggers>
 					<DataTrigger Binding="{Binding IsVisited}" Value="True">
-						<Setter Property="BorderBrush" Value="#7F008000"/>
-						<Setter Property="Background" Value="Blue"/>
+						<Setter Property="Stroke" Value="#7F008000"/>
+						<Setter Property="Fill" Value="#7F0000FF"/>
 					</DataTrigger>
 				</Style.Triggers>
 			</Style>
-			<Style x:Key="PheromoneStyle" TargetType="Border">
+			<Style x:Key="PheromoneStyle" TargetType="Ellipse">
 				<Style.Setters>
-					<Setter Property="Margin" Value="2"/>
-					<Setter Property="Padding" Value="2"/>
-					<Setter Property="BorderThickness" Value="2"/>
-					<Setter Property="CornerRadius" Value="8"/>
-					<Setter Property="Padding" Value="1, 1, 0, 0"/>
-					<Setter Property="Background" Value="{Binding ObservableStrength, Converter={StaticResource ObservableStrengthConverter}}"/>
-					<Setter Property="LayoutTransform">
-						<Setter.Value>
-							<ScaleTransform ScaleY="-1"/>
-						</Setter.Value>
-					</Setter>
-					<Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+					<Setter Property="Height" Value="2.5"/>
+					<Setter Property="Width" Value="2.5"/>
+					<Setter Property="Stroke" Value="#7F808080"/>
+					<Setter Property="Fill" Value="{Binding ObservableStrength, Converter={StaticResource ObservableStrengthConverter}}"/>
 				</Style.Setters>
 			</Style>
 		</ResourceDictionary>
@@ -86,7 +60,7 @@
 			</ItemsControl.ItemsPanel>
 			<ItemsControl.Resources>
 				<DataTemplate DataType="{x:Type Colony:AntNode}">
-					<Border Style="{StaticResource AntStyle}"/>
+					<Ellipse Style="{StaticResource AntStyle}"/>
 				</DataTemplate>
 			</ItemsControl.Resources>
 		</ItemsControl>
@@ -110,7 +84,7 @@
 			</ItemsControl.ItemContainerStyle>
 			<ItemsControl.Resources>
 				<DataTemplate DataType="{x:Type Colony:FoodNode}">
-					<Border Style="{StaticResource FoodStyle}"/>
+					<Ellipse Style="{StaticResource FoodStyle}"/>
 				</DataTemplate>
 			</ItemsControl.Resources>
 		</ItemsControl>
@@ -134,7 +108,7 @@
 			</ItemsControl.ItemContainerStyle>
 			<ItemsControl.Resources>
 				<DataTemplate DataType="{x:Type Colony:PheromoneNode}">
-					<Border Style="{StaticResource PheromoneStyle}"/>
+					<Ellipse Style="{StaticResource PheromoneStyle}"/>
 				</DataTemplate>
 			</ItemsControl.Resources>
 		</ItemsControl>
