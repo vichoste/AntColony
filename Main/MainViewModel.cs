@@ -14,7 +14,7 @@ using Microsoft.Win32;
 
 namespace AntColony.Main;
 internal class MainViewModel : INotifyPropertyChanged {
-	private readonly MainModel _MainModel;
+	private MainModel _MainModel;
 	public AsyncCommand OpenTspFileCommand { get; set; }
 	public event PropertyChangedEventHandler? PropertyChanged;
 	public int BorderMargin {

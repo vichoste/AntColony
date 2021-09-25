@@ -81,8 +81,8 @@
 		<ItemsControl Panel.ZIndex="2" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding AntNodes}">
 			<ItemsControl.ItemContainerStyle>
 				<Style>
-					<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
 					<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
+					<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
 				</Style>
 			</ItemsControl.ItemContainerStyle>
 			<ItemsControl.ItemsPanel>
@@ -116,8 +116,8 @@
 			</ItemsControl.ItemsPanel>
 			<ItemsControl.ItemContainerStyle>
 				<Style>
-					<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
 					<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
+					<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
 				</Style>
 			</ItemsControl.ItemContainerStyle>
 			<ItemsControl.Resources>
@@ -140,8 +140,8 @@
 			</ItemsControl.ItemsPanel>
 			<ItemsControl.ItemContainerStyle>
 				<Style>
-					<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
 					<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
+					<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
 				</Style>
 			</ItemsControl.ItemContainerStyle>
 			<ItemsControl.Resources>

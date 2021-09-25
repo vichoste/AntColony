@@ -3,7 +3,7 @@
 using MaterialDesignThemes.Wpf;
 
 namespace AntColony.Main;
-internal class MainModel {
+internal struct MainModel {
 	public const int MaximizedBorderMargin = 16;
 	public const int NormalBorderMargin = 8;
 	public ColonyViewModel? ColonyViewModel { get; set; }
