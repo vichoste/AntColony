@@ -1,0 +1,158 @@
+﻿<UserControl x:Class="AntColony.Colony.ColonyView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d"
+		xmlns:MaterialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" TextElement.Foreground="{DynamicResource MaterialDesignBody}" TextElement.FontWeight="Regular" TextElement.FontSize="13" TextOptions.TextFormattingMode="Ideal" TextOptions.TextRenderingMode="Auto" FontFamily="{DynamicResource MaterialDesignFont}"
+		xmlns:Colony="clr-namespace:AntColony.Colony" Width="1920" Height="1080">
+	<UserControl.Resources>
+		<ResourceDictionary>
+			<Colony:ObservableStrengthConverter x:Key="ObservableStrengthConverter"/>
+			<Colony:AntNode x:Key="AntNode"/>
+			<Colony:FoodNode x:Key="FoodNode"/>
+			<Colony:PheromoneNode x:Key="PheromoneNode"/>
+			<Style x:Key="AntStyle" TargetType="Border">
+				<Style.Setters>
+					<Setter Property="Margin" Value="2"/>
+					<Setter Property="Padding" Value="2"/>
+					<Setter Property="BorderThickness" Value="2"/>
+					<Setter Property="CornerRadius" Value="8"/>
+					<Setter Property="Padding" Value="1, 1, 0, 0"/>
+					<Setter Property="BorderBrush" Value="#7FFF0000"/>
+					<Setter Property="Background" Value="Red"/>
+					<Setter Property="LayoutTransform">
+						<Setter.Value>
+							<ScaleTransform ScaleY="-1"/>
+						</Setter.Value>
+					</Setter>
+					<Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+				</Style.Setters>
+			</Style>
+			<Style x:Key="FoodStyle" TargetType="Border">
+				<Style.Setters>
+					<Setter Property="Margin" Value="2"/>
+					<Setter Property="Padding" Value="2"/>
+					<Setter Property="BorderThickness" Value="2"/>
+					<Setter Property="CornerRadius" Value="8"/>
+					<Setter Property="Padding" Value="1, 1, 0, 0"/>
+					<Setter Property="BorderBrush" Value="#7F0000FF"/>
+					<Setter Property="Background" Value="Blue"/>
+					<Setter Property="LayoutTransform">
+						<Setter.Value>
+							<ScaleTransform ScaleY="-1"/>
+						</Setter.Value>
+					</Setter>
+					<Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+				</Style.Setters>
+			</Style>
+			<Style x:Key="PathStyle" TargetType="Border">
+				<Style.Setters>
+					<Setter Property="Margin" Value="2"/>
+					<Setter Property="Padding" Value="2"/>
+					<Setter Property="BorderThickness" Value="2"/>
+					<Setter Property="CornerRadius" Value="8"/>
+					<Setter Property="Padding" Value="1, 1, 0, 0"/>
+					<Setter Property="BorderBrush" Value="#7F008000"/>
+					<Setter Property="Background" Value="Green"/>
+					<Setter Property="LayoutTransform">
+						<Setter.Value>
+							<ScaleTransform ScaleY="-1"/>
+						</Setter.Value>
+					</Setter>
+					<Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+				</Style.Setters>
+			</Style>
+			<Style x:Key="PheromoneStyle" TargetType="Border">
+				<Style.Setters>
+					<Setter Property="Margin" Value="2"/>
+					<Setter Property="Padding" Value="2"/>
+					<Setter Property="BorderThickness" Value="2"/>
+					<Setter Property="CornerRadius" Value="8"/>
+					<Setter Property="Padding" Value="1, 1, 0, 0"/>
+					<Setter Property="BorderBrush" Value="#7FFFFF00"/>
+					<Setter Property="Background" Value="{Binding ObservableStrength, Converter={StaticResource ObservableStrengthConverter}}"/>
+					<Setter Property="LayoutTransform">
+						<Setter.Value>
+							<ScaleTransform ScaleY="-1"/>
+						</Setter.Value>
+					</Setter>
+					<Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+				</Style.Setters>
+			</Style>
+		</ResourceDictionary>
+	</UserControl.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="0*"/>
+			<RowDefinition Height="0*"/>
+		</Grid.RowDefinitions>
+		<ItemsControl Panel.ZIndex="0" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding FoodNodes}" Grid.Row="1">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas RenderTransformOrigin="0.5, 0.5" MinWidth="1920" MinHeight="1080">
+						<Canvas.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleY="-1"/>
+							</TransformGroup>
+						</Canvas.RenderTransform>
+					</Canvas>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemContainerStyle>
+				<Style>
+					<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
+					<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
+				</Style>
+			</ItemsControl.ItemContainerStyle>
+			<ItemsControl.Resources>
+				<DataTemplate DataType="{x:Type Colony:FoodNode}">
+					<Border Style="{StaticResource FoodStyle}"/>
+				</DataTemplate>
+			</ItemsControl.Resources>
+		</ItemsControl>
+		<ItemsControl Panel.ZIndex="1" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding PheromoneNodes}" Grid.Row="1">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas RenderTransformOrigin="0.5, 0.5" MinWidth="1920" MinHeight="1080">
+						<Canvas.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleY="-1"/>
+							</TransformGroup>
+						</Canvas.RenderTransform>
+					</Canvas>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemContainerStyle>
+				<Style>
+					<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
+					<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
+				</Style>
+			</ItemsControl.ItemContainerStyle>
+			<ItemsControl.Resources>
+				<DataTemplate DataType="{x:Type Colony:PheromoneNode}">
+					<Border Style="{StaticResource PheromoneStyle}"/>
+				</DataTemplate>
+			</ItemsControl.Resources>
+		</ItemsControl>
+		<ItemsControl Panel.ZIndex="2" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding AntNodes}" Grid.Row="1">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas RenderTransformOrigin="0.5, 0.5" MinWidth="1920" MinHeight="1080">
+						<Canvas.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleY="-1"/>
+							</TransformGroup>
+						</Canvas.RenderTransform>
+					</Canvas>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemContainerStyle>
+				<Style>
+					<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
+					<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
+				</Style>
+			</ItemsControl.ItemContainerStyle>
+			<ItemsControl.Resources>
+				<DataTemplate DataType="{x:Type Colony:AntNode}">
+					<Border Style="{StaticResource AntStyle}"/>
+				</DataTemplate>
+			</ItemsControl.Resources>
+		</ItemsControl>
+	</Grid>
+</UserControl>

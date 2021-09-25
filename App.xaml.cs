@@ -1,8 +1,5 @@
 ﻿using System.Windows;
 
-namespace PgmLab;
-/// <summary>
-/// Application
-/// </summary>
+namespace AntColony;
 public partial class App : Application {
 }
