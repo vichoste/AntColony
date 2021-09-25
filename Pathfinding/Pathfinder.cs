@@ -64,6 +64,10 @@ internal class Pathfinder {
 							}
 						};
 						var ant = AntNode.MoveAnt(newAnts[i], firstProbabilities);
+						var newPheromone = new PheromoneNode() {
+							X = ant.X,
+							Y = ant.Y
+						};
 					}
 					this._ColonyViewModel.AntNodes = new ObservableCollection<AntNode>(newAnts);
 				}

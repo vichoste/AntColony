@@ -4,7 +4,6 @@ internal class PheromoneNode : Node {
 	public const double MinPheromoneEvaporationRate = .5;
 	public const double MaxPheromoneEvaporationRate = .9;
 	public double Strength { get; private set; }
-	public byte ObservableStrength => (byte)(85000 * this.Strength / 333 - 85 / 333);
 	public PheromoneNode() => this.Strength = byte.MaxValue;
 	public double Evaporate(double pheromoneEvaporationRate) {
 		if (this.Strength - pheromoneEvaporationRate < 0) {
