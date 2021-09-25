@@ -15,6 +15,7 @@ public partial class MainView : Window {
 		this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 		this.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
 		this._MainViewModel = (MainViewModel)this.DataContext;
+		this._MainViewModel.ScrollViewer = this.ScrollViewer;
 	}
 	private void CheckControlPressed(object sender, KeyEventArgs e) => this._MainViewModel.IsControlPressed = e.Key is Key.LeftCtrl or Key.RightCtrl;
 	private void CheckMouseDown(object sender, MouseButtonEventArgs e) {
@@ -52,8 +53,12 @@ public partial class MainView : Window {
 	}
 	private void ZoomPixels(object sender, MouseWheelEventArgs e) {
 		if (e.Delta > 0 && this._MainViewModel.IsControlPressed && this._MainViewModel.PixelsZoom + ColonyModel.ZoomFactor <= ColonyModel.MaxZoomFactor) {
+			this.ScrollViewer.ScrollToBottom();
+			this.ScrollViewer.ScrollToLeftEnd();
 			this._MainViewModel.PixelsZoom += ColonyModel.ZoomFactor;
 		} else if (e.Delta < 0 && this._MainViewModel.IsControlPressed && this._MainViewModel.PixelsZoom - ColonyModel.ZoomFactor >= ColonyModel.MinZoomFactor) {
+			this.ScrollViewer.ScrollToBottom();
+			this.ScrollViewer.ScrollToLeftEnd();
 			this._MainViewModel.PixelsZoom -= ColonyModel.ZoomFactor;
 		}
 	}

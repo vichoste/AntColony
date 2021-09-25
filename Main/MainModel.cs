@@ -1,4 +1,6 @@
-﻿using AntColony.Colony;
+﻿using System.Windows.Controls;
+
+using AntColony.Colony;
 
 using MaterialDesignThemes.Wpf;
 
@@ -12,5 +14,6 @@ internal struct MainModel {
 	public bool IsControlPressed { get; set; }
 	public PackIconKind? MaximizeIcon { get; set; }
 	public double PixelsZoom { get; set; }
+	public ScrollViewer ScrollViewer { get; set; }
 	public Status Status { get; set; }
 }

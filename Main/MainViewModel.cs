@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 using AntColony.Colony;
 
@@ -71,6 +72,15 @@ internal class MainViewModel : INotifyPropertyChanged {
 			}
 		}
 	}
+	public ScrollViewer ScrollViewer {
+		get => this._MainModel.ScrollViewer;
+		set {
+			if (this._MainModel.ScrollViewer != value) {
+				this._MainModel.ScrollViewer = value;
+				this.OnPropertyChanged(nameof(this.ScrollViewer));
+			}
+		}
+	}
 	public Status Status {
 		get => this._MainModel.Status;
 		set {
@@ -88,6 +98,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 			BorderMargin = 8,
 			PixelsZoom = 1
 		};
+		this.ScrollViewer = new();
 	}
 	public async Task ExecuteOpenTspFile() {
 		this.Status = Status.Opening;
@@ -149,6 +160,8 @@ internal class MainViewModel : INotifyPropertyChanged {
 				colonyViewModel.OnPropertyChanged(nameof(colonyViewModel.FoodNodes));
 				this.ColonyViewModel = colonyViewModel;
 				this.CanOperate = true;
+				this.ScrollViewer.ScrollToBottom();
+				this.ScrollViewer.ScrollToLeftEnd();
 				this.Status = Status.Ready;
 			}
 		} else {
