@@ -7,8 +7,6 @@ namespace AntColony.Colony;
 internal class AntNode : Node {
 	public const int MinAntCount = 0;
 	public const int MaxAntCount = 10;
-	public int OriginX { get; set; }
-	public int OriginY { get; set; }
 	public void Move(List<Probability> probabilities) {
 		var maxProbability = probabilities.MaxBy(p => p.Value);
 		if (maxProbability is not null) {

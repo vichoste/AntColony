@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Input;
 
 using AntColony.Algorithms;
-using AntColony.Colony;
 
 using MaterialDesignThemes.Wpf;
 
