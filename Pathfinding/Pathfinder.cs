@@ -30,16 +30,37 @@ internal class Pathfinder {
 			this._ColonyViewModel.AntNodes = new ObservableCollection<AntNode>(newAnts);
 		}
 	}
-	private async Task CheckAntHit() {
+	private async Task CheckFoods() {
 		if (this._ColonyViewModel.FoodNodes is not null && this._ColonyViewModel.AntNodes is not null) {
 			for (var i = 0; i < this._ColonyViewModel.AntNodes.Count; i++) {
 				await Task.Run(() => {
 					var currentAnt = this._ColonyViewModel.AntNodes[i];
-					var matchingFood = this._ColonyViewModel.FoodNodes.ToList().Find(f => f.X == currentAnt.X && f.Y == currentAnt.Y);
-					if (matchingFood is not null) {
+					var hitFood = this._ColonyViewModel.FoodNodes.ToList().Find(f => f.X == currentAnt.X && f.Y == currentAnt.Y);
+					if (hitFood is not null) {
 						System.Diagnostics.Debug.WriteLine("Hit!");
 					}
 				});
+			}
+		}
+	}
+	private async Task CheckPheromones() {
+		if (this._ColonyViewModel.AntNodes is not null && this._ColonyViewModel.PheromoneNodes is not null) {
+			List<PheromoneNode>? hitPheromones = null;
+			for (var i = 0; i < this._ColonyViewModel.AntNodes.Count; i++) {
+				await Task.Run(() => {
+					var currentAnt = this._ColonyViewModel.AntNodes[i];
+					var currentPheromones = this._ColonyViewModel.PheromoneNodes.ToList();
+					hitPheromones = currentPheromones.Where(p => p.X == currentAnt.X && p.Y == currentAnt.Y).ToList();
+				});
+			}
+			if (hitPheromones is not null) {
+				if (hitPheromones.Count == 0) {
+
+				} else {
+					for (var i = 0; i < hitPheromones.Count; i++) {
+						await Task.Run(() => hitPheromones[i].Renew());
+					}
+				}
 			}
 		}
 	}
@@ -100,34 +121,16 @@ internal class Pathfinder {
 					newAnts.Add(movedAnt);
 				});
 			}
-			await this.CheckAntHit();
+			await this.CheckFoods();
+			await this.CheckPheromones();
 			this._ColonyViewModel.AntNodes = new ObservableCollection<AntNode>(newAnts);
-			//if (this._ColonyViewModel.AntNodes is not null && this._ColonyViewModel.PheromoneNodes is not null) {
-			//	for (var j = 0; j < this._ColonyViewModel.AntNodes.Count; j++) {
-			//		await Task.Run(() => {
-			//			var currentPheromones = this._ColonyViewModel.PheromoneNodes.ToList();
-			//			var hitPheromones = currentPheromones.Where(p => p.X == movedAnt.X && p.Y == movedAnt.Y).ToList();
-			//			if (hitPheromones.Count == 0) {
-			//				var newPheromone = new PheromoneNode() {
-			//					X = movedAnt.X,
-			//					Y = movedAnt.Y
-			//				};
-			//				this._ColonyViewModel.AddPheromoneObservable(newPheromone);
-			//			} else {
-			//				for (var i = 0; i < hitPheromones.Count; i++) {
-			//					hitPheromones[i].Renew();
-			//				}
-			//			}
-			//		});
-			//	}
-			//}
-			//await this.EvaporatePheromones();
 		}
 	}
 	public async void Run() {
 		await this.CreateAnts();
 		while (true) {
 			await this.MoveAnts();
+			await this.EvaporatePheromones();
 		}
 	}
 	private async Task<AntNode> MoveAnt(AntNode currentAnt) {
