@@ -102,7 +102,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 		this.Status = Status.Opening;
 		var colonyViewModel = new ColonyViewModel();
 		var openFileDialog = new OpenFileDialog();
-		if (openFileDialog.ShowDialog() is true) {
+		if (colonyViewModel.FoodNodes is not null && openFileDialog.ShowDialog() is true) {
 			// Allow only TSP files
 			if (!openFileDialog.FileName.ToLower().EndsWith(".tsp")) {
 				_ = MessageBox.Show("Can't open file. Only *.tsp files are allowed!");
@@ -135,7 +135,7 @@ internal class MainViewModel : INotifyPropertyChanged {
 						this.Status = Status.Ready;
 						return;
 					}
-					colonyViewModel.AddFood(new FoodNode() {
+					colonyViewModel.AddFoodObservable(new FoodNode() {
 						Id = splitted[0],
 						X = splitted[1],
 						Y = splitted[2]

@@ -11,7 +11,7 @@ internal class ColonyViewModel : INotifyPropertyChanged {
 	public ObservableCollection<AntNode>? AntNodes {
 		get => this._ColonyModel.AntNodes;
 		set {
-			if (this._ColonyModel.AntNodes is not null && this._ColonyModel.AntNodes != value) {
+			if (this._ColonyModel.AntNodes != value) {
 				this._ColonyModel.AntNodes = value;
 				this.OnPropertyChanged(nameof(this.AntNodes));
 			}
@@ -31,7 +31,7 @@ internal class ColonyViewModel : INotifyPropertyChanged {
 	public ObservableCollection<FoodNode>? FoodNodes {
 		get => this._ColonyModel.FoodNodes;
 		set {
-			if (this._ColonyModel.FoodNodes is not null && this._ColonyModel.FoodNodes != value) {
+			if (this._ColonyModel.FoodNodes != value) {
 				this._ColonyModel.FoodNodes = value;
 				this.OnPropertyChanged(nameof(this.FoodNodes));
 			}
@@ -70,7 +70,7 @@ internal class ColonyViewModel : INotifyPropertyChanged {
 	public ObservableCollection<PheromoneNode>? PheromoneNodes {
 		get => this._ColonyModel.PheromoneNodes;
 		set {
-			if (this._ColonyModel.PheromoneNodes is not null && this._ColonyModel.PheromoneNodes != value) {
+			if (this._ColonyModel.PheromoneNodes != value) {
 				this._ColonyModel.PheromoneNodes = value;
 				this.OnPropertyChanged(nameof(this.PheromoneNodes));
 			}
@@ -89,20 +89,30 @@ internal class ColonyViewModel : INotifyPropertyChanged {
 		_ = this._ColonyModel.Nodes.Add(this._ColonyModel.FoodNodes);
 		_ = this._ColonyModel.Nodes.Add(this._ColonyModel.PheromoneNodes);
 	}
-	public void AddAnt(AntNode ant) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+	public void AddAntObservable(AntNode ant) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
 		if (this.AntNodes is not null) {
 			this.AntNodes.Add(ant);
 		}
 	}));
-	public void AddFood(FoodNode food) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+	public void AddFoodObservable(FoodNode food) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
 		if (this.FoodNodes is not null) {
 			this.FoodNodes.Add(food);
 		}
 	}));
-	public void AddPheromone(PheromoneNode pheromone) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+	public void AddPheromoneObservable(PheromoneNode pheromone) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
 		if (this.PheromoneNodes is not null) {
 			this.PheromoneNodes.Add(pheromone);
 		}
 	}));
+	public void RemoveAntObservable(AntNode ant) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+		if (this.AntNodes is not null) {
+			_ = this.AntNodes.Remove(ant);
+		}
+	}));
+	public void RemovePheromoneObservable(PheromoneNode pheromoneNode) {
+		if (this.PheromoneNodes is not null) {
+			_ = this.PheromoneNodes.Remove(pheromoneNode);
+		}
+	}
 	public void OnPropertyChanged(string value) => this.PropertyChanged?.Invoke(this, new(value));
 }
