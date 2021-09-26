@@ -11,8 +11,8 @@ internal class AntNode : Node {
 	public const int MinAntCount = 1;
 	public const int MaxAntCount = 4;
 	public bool CanLayPheromones { get; set; }
-	public int SurroundingMoves { get; set; }
 	public bool ReturningHome { get; set; }
+	public int SurroundingMoves { get; set; }
 	public Direction Direction { get; set; }
 	public List<PheromoneNode> Pheromones { get; set; }
 	public AntNode() => this.Pheromones = new List<PheromoneNode>();

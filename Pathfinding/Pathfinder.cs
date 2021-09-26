@@ -5,7 +5,6 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 using AntColony.Colony;
-using AntColony.Pathfinding;
 
 namespace AntColony.Algorithms;
 internal class Pathfinder {
@@ -66,44 +65,6 @@ internal class Pathfinder {
 			this._ColonyViewModel.PheromoneNodes = new ObservableCollection<PheromoneNode>(updatedPheromones);
 		}
 	});
-	private static async Task<List<Probability>> GenerateProbabilities() {
-		List<Probability> probabilities;
-		probabilities = await Task.Run(() => probabilities = new() {
-			new Probability() {
-				Direction = Direction.North,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			},
-			new Probability() {
-				Direction = Direction.South,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			},
-			new Probability() {
-				Direction = Direction.East,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			},
-			new Probability() {
-				Direction = Direction.West,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			},
-			new Probability() {
-				Direction = Direction.NorthEast,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			},
-			new Probability() {
-				Direction = Direction.NorthWest,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			},
-			new Probability() {
-				Direction = Direction.SouthEast,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			},
-			new Probability() {
-				Direction = Direction.SouthWest,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			}
-		});
-		return probabilities;
-	}
 	private async Task LayPheromone(AntNode ant) => await Task.Run(() => {
 		if (ant.CanLayPheromones && this._ColonyViewModel.PheromoneNodes is not null && ant.CanLayPheromones) {
 			var pheromones = this._ColonyViewModel.PheromoneNodes.ToList();
