@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows;
 using System.Windows.Data;
 
 namespace AntColony.Colony;
@@ -89,10 +87,5 @@ internal class ColonyViewModel : INotifyPropertyChanged {
 		_ = this._ColonyModel.Nodes.Add(this._ColonyModel.FoodNodes);
 		_ = this._ColonyModel.Nodes.Add(this._ColonyModel.PheromoneNodes);
 	}
-	public void AddFoodObservable(FoodNode food) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-		if (this.FoodNodes is not null) {
-			this.FoodNodes.Add(food);
-		}
-	}));
 	public void OnPropertyChanged(string value) => this.PropertyChanged?.Invoke(this, new(value));
 }

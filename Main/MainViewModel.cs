@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -100,21 +102,20 @@ internal class MainViewModel : INotifyPropertyChanged {
 	}
 	public async Task ExecuteOpenTspFile() {
 		this.Status = Status.Opening;
+		var newFoods = new List<FoodNode>();
 		var colonyViewModel = new ColonyViewModel();
 		var openFileDialog = new OpenFileDialog();
-		if (colonyViewModel.FoodNodes is not null && openFileDialog.ShowDialog() is true) {
-			// Allow only TSP files
+		if (colonyViewModel is not null && colonyViewModel.FoodNodes is not null && openFileDialog.ShowDialog() is true) {
 			if (!openFileDialog.FileName.ToLower().EndsWith(".tsp")) {
 				_ = MessageBox.Show("Can't open file. Only *.tsp files are allowed!");
 				return;
 			}
-			// Read all lines
 			var lines = await AsyncFileReader.ReadAllLinesAsync(openFileDialog.FileName, Encoding.UTF8);
 			if (int.Parse(lines[3].Split(':')[1].Trim()) > 300) {
 				_ = MessageBox.Show("Can't open file. For performance reasons, only graphs with < 300 nodes are allowed!");
 				return;
 			}
-			if (!lines[4].EndsWith("EUC_2D")) { // Only allow Euclidian 2D, because I don't have time for other graph types
+			if (!lines[4].EndsWith("EUC_2D")) {
 				_ = MessageBox.Show("Can't open file. Only EUC_2D graphs are allowed!");
 				return;
 			}
@@ -124,36 +125,35 @@ internal class MainViewModel : INotifyPropertyChanged {
 			}
 			for (var i = 6; i < lines.Length - 1; i++) {
 				await Task.Run(() => {
-					// Parse integers (https://stackoverflow.com/questions/4961675/select-parsed-int-if-string-was-parseable-to-int)
 					var splitted = lines[i].Split(' ').Select(str => {
 						var success = int.TryParse(str, out var value);
 						return (value, success);
 					}).Where(pair => pair.success).Select(pair => pair.value).ToList();
-					if (splitted.Count is not 3) { // This implies there are not integers at all
+					if (splitted.Count is not 3) {
 						_ = MessageBox.Show("Can't open file. Non-integers were found in the file!");
 						this.CanOperate = false;
 						this.Status = Status.Ready;
 						return;
 					}
-					colonyViewModel.AddFoodObservable(new FoodNode() {
+					var newFood = new FoodNode() {
 						Id = splitted[0],
 						X = splitted[1],
 						Y = splitted[2]
-					});
-					if (colonyViewModel is not null) {
-						colonyViewModel.MinCoordinate = splitted[1] > splitted[2] ? splitted[1] : splitted[2];
-						colonyViewModel.MaxCoordinate = splitted[1] < splitted[2] ? splitted[1] : splitted[2];
-					}
+					};
+					newFoods.Add(newFood);
+					colonyViewModel.MinCoordinate = splitted[1] > splitted[2] ? splitted[1] : splitted[2];
+					colonyViewModel.MaxCoordinate = splitted[1] < splitted[2] ? splitted[1] : splitted[2];
 				});
 			}
 			colonyViewModel.AntCount = AntNode.DefaultAntCount;
+			colonyViewModel.FoodNodes = new ObservableCollection<FoodNode>(newFoods);
 			colonyViewModel.PheromoneEvaporationRate = PheromoneNode.DefaultEvaporationRate;
-			this.ColonyViewModel = colonyViewModel;
 			this.CanOperate = true;
 			this.ScrollViewer.ScrollToBottom();
 			this.ScrollViewer.ScrollToLeftEnd();
 			this.Status = Status.Ready;
 		}
+		this.ColonyViewModel = colonyViewModel;
 	}
 	public void OnPropertyChanged(string value) => this.PropertyChanged?.Invoke(this, new(value));
 }
