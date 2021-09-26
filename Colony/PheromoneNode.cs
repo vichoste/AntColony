@@ -1,7 +1,7 @@
 ﻿namespace AntColony.Colony;
 internal class PheromoneNode : Node {
-	public const double DefaultEvaporationRate = .01;
-	public const double MinPheromoneEvaporationRate = .01;
+	public const double DefaultEvaporationRate = .0075;
+	public const double MinPheromoneEvaporationRate = .0075;
 	public const double MaxPheromoneEvaporationRate = .999;
 	public byte ObservableStrength => (byte)(255 - (85000 * this.Strength / 333 - 85 / 333));
 	public double Strength { get; set; }

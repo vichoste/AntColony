@@ -1,16 +1,22 @@
-﻿using System.Security.Cryptography;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace AntColony.Colony;
 internal class AntNode : Node {
-	public const int ChunkStep = 3;
+	public const int ChunkStep = 1;
 	public const int Step = 1;
-	public const int DefaultAntCount = 1;
+	public const int DefaultAntCount = 2;
 	public const int MinAntCount = 1;
 	public const int MaxAntCount = 4;
+	public bool CanLayPheromones { get; set; }
 	public int SurroundingMoves { get; set; }
 	public bool ReturningHome { get; set; }
 	public Direction Direction { get; set; }
+	public List<PheromoneNode> Pheromones { get; set; }
+	public AntNode() => this.Pheromones = new List<PheromoneNode>();
 	public static AntNode Clone(AntNode ant) {
 		var clone = new AntNode() {
 			Id = ant.Id,
@@ -18,11 +24,14 @@ internal class AntNode : Node {
 			Y = ant.Y,
 			Direction = ant.Direction,
 			ReturningHome = ant.ReturningHome,
-			SurroundingMoves = ant.SurroundingMoves
+			SurroundingMoves = ant.SurroundingMoves,
+			Pheromones = ant.Pheromones.ToList(),
+			CanLayPheromones = ant.CanLayPheromones
 		};
 		return clone;
 	}
 	public static async Task<AntNode> MoveAnt(AntNode ant) => await Task.Run(async () => {
+		System.Diagnostics.Debug.WriteLine(ant.CanLayPheromones);
 		if (ant.SurroundingMoves == 8) {
 			var choose = await Task.Run(() => RandomNumberGenerator.GetInt32(0, 4));
 			var x = 0;
@@ -50,7 +59,10 @@ internal class AntNode : Node {
 				X = x,
 				Y = y,
 				Direction = Direction.North,
-				ReturningHome = false,
+				ReturningHome = ant.ReturningHome,
+				SurroundingMoves = ant.SurroundingMoves,
+				Pheromones = ant.Pheromones.ToList(),
+				CanLayPheromones = ant.CanLayPheromones
 			};
 			return Clone(antInNewChunk);
 		}
