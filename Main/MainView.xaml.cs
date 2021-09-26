@@ -7,7 +7,7 @@ using AntColony.Algorithms;
 using MaterialDesignThemes.Wpf;
 
 namespace AntColony.Main;
-public partial class MainView : Window { // TODO optimum route
+public partial class MainView : Window {
 	private readonly MainViewModel _MainViewModel;
 	public MainView() {
 		this.InitializeComponent();
@@ -45,9 +45,10 @@ public partial class MainView : Window { // TODO optimum route
 	private void ReleaseKey(object sender, KeyEventArgs e) => this._MainViewModel.IsControlPressed = false;
 	private void Run(object sender, RoutedEventArgs e) {
 		if (this._MainViewModel.ColonyViewModel is not null) {
-			//this._MainViewModel.CanOperate = false;
+			this._MainViewModel.CanOperate = false;
 			var pathfinder = new Pathfinder(this._MainViewModel.ColonyViewModel);
 			pathfinder.Run(); // TODO something with this result
+			this._MainViewModel.CanOperate = true;
 		}
 	}
 	private void ZoomPixels(object sender, MouseWheelEventArgs e) {

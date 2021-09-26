@@ -89,30 +89,10 @@ internal class ColonyViewModel : INotifyPropertyChanged {
 		_ = this._ColonyModel.Nodes.Add(this._ColonyModel.FoodNodes);
 		_ = this._ColonyModel.Nodes.Add(this._ColonyModel.PheromoneNodes);
 	}
-	public void AddAntObservable(AntNode ant) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-		if (this.AntNodes is not null) {
-			this.AntNodes.Add(ant);
-		}
-	}));
 	public void AddFoodObservable(FoodNode food) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
 		if (this.FoodNodes is not null) {
 			this.FoodNodes.Add(food);
 		}
 	}));
-	public void AddPheromoneObservable(PheromoneNode pheromone) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-		if (this.PheromoneNodes is not null) {
-			this.PheromoneNodes.Add(pheromone);
-		}
-	}));
-	public void RemoveAntObservable(AntNode ant) => _ = Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-		if (this.AntNodes is not null) {
-			_ = this.AntNodes.Remove(ant);
-		}
-	}));
-	public void RemovePheromoneObservable(PheromoneNode pheromoneNode) {
-		if (this.PheromoneNodes is not null) {
-			_ = this.PheromoneNodes.Remove(pheromoneNode);
-		}
-	}
 	public void OnPropertyChanged(string value) => this.PropertyChanged?.Invoke(this, new(value));
 }

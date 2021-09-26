@@ -8,7 +8,6 @@ using AntColony.Colony;
 using AntColony.Pathfinding;
 
 namespace AntColony.Algorithms;
-// TODO this entire class
 internal class Pathfinder {
 	private readonly ColonyViewModel _ColonyViewModel;
 	public Pathfinder(ColonyViewModel colonyViewModel) => this._ColonyViewModel = colonyViewModel;
@@ -54,12 +53,8 @@ internal class Pathfinder {
 				});
 			}
 			if (hitPheromones is not null) {
-				if (hitPheromones.Count == 0) {
-
-				} else {
-					for (var i = 0; i < hitPheromones.Count; i++) {
-						await Task.Run(() => hitPheromones[i].Renew());
-					}
+				for (var i = 0; i < hitPheromones.Count; i++) {
+					await Task.Run(() => hitPheromones[i].Renew());
 				}
 			}
 		}
@@ -109,7 +104,16 @@ internal class Pathfinder {
 		});
 		return probabilities;
 	}
-
+	private void LayPheromone(int x, int y) {
+		if (this._ColonyViewModel.PheromoneNodes is not null) {
+			var currentPheromoneNodes = this._ColonyViewModel.PheromoneNodes.ToList();
+			currentPheromoneNodes.Add(new PheromoneNode() {
+				X = x,
+				Y = y,
+			});
+			this._ColonyViewModel.PheromoneNodes = new ObservableCollection<PheromoneNode>(currentPheromoneNodes);
+		}
+	}
 	private async Task MoveAnts() {
 		if (this._ColonyViewModel.AntNodes is not null && this._ColonyViewModel.FoodNodes is not null) {
 			var currentAnts = this._ColonyViewModel.AntNodes.ToList();
@@ -119,10 +123,10 @@ internal class Pathfinder {
 					var currentAnt = currentAnts[i];
 					var movedAnt = await this.MoveAnt(currentAnt);
 					newAnts.Add(movedAnt);
+					this.LayPheromone(movedAnt.X, movedAnt.Y);
 				});
 			}
 			await this.CheckFoods();
-			await this.CheckPheromones();
 			this._ColonyViewModel.AntNodes = new ObservableCollection<AntNode>(newAnts);
 		}
 	}
@@ -130,6 +134,7 @@ internal class Pathfinder {
 		await this.CreateAnts();
 		while (true) {
 			await this.MoveAnts();
+			await this.CheckPheromones();
 			await this.EvaporatePheromones();
 		}
 	}

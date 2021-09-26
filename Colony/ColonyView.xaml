@@ -36,11 +36,6 @@
 					<Setter Property="Stroke" Value="#7F808080"/>
 					<Setter Property="Fill" Value="{Binding ObservableStrength, Converter={StaticResource ObservableStrengthConverter}}"/>
 				</Style.Setters>
-				<Style.Triggers>
-					<DataTrigger Binding="{Binding ObservableStrength}" Value="0">
-						<Setter Property="Visibility" Value="Hidden"/>
-					</DataTrigger>
-				</Style.Triggers>
 			</Style>
 		</ResourceDictionary>
 	</UserControl.Resources>
