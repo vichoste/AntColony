@@ -45,10 +45,10 @@ public partial class MainView : Window {
 	private void ReleaseKey(object sender, KeyEventArgs e) => this._MainViewModel.IsControlPressed = false;
 	private async void Run(object sender, RoutedEventArgs e) {
 		if (this._MainViewModel.ColonyViewModel is not null) {
-			this._MainViewModel.CanOperate = false;
+			this._MainViewModel.CanOpenOperate = this._MainViewModel.CanOperate = false;
 			var pathfinder = new Pathfinder(this._MainViewModel.ColonyViewModel);
 			await pathfinder.Run(); // TODO something with this result
-			this._MainViewModel.CanOperate = true;
+			this._MainViewModel.CanOpenOperate = this._MainViewModel.CanOperate = true;
 		}
 	}
 	private void ZoomPixels(object sender, MouseWheelEventArgs e) {

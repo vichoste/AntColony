@@ -2,7 +2,6 @@
 
 namespace AntColony.Colony;
 public abstract class Node {
-	public const int MaxNodes = 300;
 	public int Id { get; set; }
 	public int X { get; set; }
 	public int Y { get; set; }

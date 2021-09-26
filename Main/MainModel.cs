@@ -13,6 +13,7 @@ internal struct MainModel {
 	public const double ZoomFactor = 1;
 	public ColonyViewModel? ColonyViewModel { get; set; }
 	public int BorderMargin { get; set; }
+	public bool CanOpenOperate { get; set; }
 	public bool CanOperate { get; set; }
 	public bool IsControlPressed { get; set; }
 	public PackIconKind? MaximizeIcon { get; set; }

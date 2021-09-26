@@ -39,7 +39,7 @@
 					</Grid.ColumnDefinitions>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0">
 						<Menu Margin="8" Style="{DynamicResource MaterialDesignMenu}">
-							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_File">
+							<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_File" IsEnabled="{Binding CanOpenOperate}">
 								<MenuItem Command="{Binding OpenTspFileCommand}" Style="{DynamicResource MaterialDesignMenuItem}" Header="_Open..."/>
 								<MenuItem Style="{DynamicResource MaterialDesignMenuItem}" Header="_Exit" Click="Exit"/>
 							</MenuItem>

@@ -29,6 +29,15 @@ internal class MainViewModel : INotifyPropertyChanged {
 			}
 		}
 	}
+	public bool CanOpenOperate {
+		get => this._MainModel.CanOpenOperate;
+		set {
+			if (this._MainModel.CanOpenOperate != value) {
+				this._MainModel.CanOpenOperate = value;
+				this.OnPropertyChanged(nameof(this.CanOpenOperate));
+			}
+		}
+	}
 	public bool CanOperate {
 		get => this._MainModel.CanOperate;
 		set {
@@ -96,7 +105,8 @@ internal class MainViewModel : INotifyPropertyChanged {
 			MaximizeIcon = PackIconKind.WindowMaximize,
 			Status = Status.Ready,
 			BorderMargin = 8,
-			PixelsZoom = 1
+			PixelsZoom = 1,
+			CanOpenOperate = true
 		};
 		this.ScrollViewer = new();
 	}
@@ -105,55 +115,57 @@ internal class MainViewModel : INotifyPropertyChanged {
 		var newFoods = new List<FoodNode>();
 		var colonyViewModel = new ColonyViewModel();
 		var openFileDialog = new OpenFileDialog();
-		if (colonyViewModel is not null && colonyViewModel.FoodNodes is not null && openFileDialog.ShowDialog() is true) {
-			if (!openFileDialog.FileName.ToLower().EndsWith(".tsp")) {
-				_ = MessageBox.Show("Can't open file. Only *.tsp files are allowed!");
-				return;
+		if (this.CanOpenOperate) {
+			if (colonyViewModel is not null && colonyViewModel.FoodNodes is not null && openFileDialog.ShowDialog() is true) {
+				if (!openFileDialog.FileName.ToLower().EndsWith(".tsp")) {
+					_ = MessageBox.Show("Can't open file. Only *.tsp files are allowed!");
+					return;
+				}
+				var lines = await AsyncFileReader.ReadAllLinesAsync(openFileDialog.FileName, Encoding.UTF8);
+				if (int.Parse(lines[3].Split(':')[1].Trim()) > 300) {
+					_ = MessageBox.Show("Can't open file. For performance reasons, only graphs with < 300 nodes are allowed!");
+					return;
+				}
+				if (!lines[4].EndsWith("EUC_2D")) {
+					_ = MessageBox.Show("Can't open file. Only EUC_2D graphs are allowed!");
+					return;
+				}
+				if (!lines[5].Equals("NODE_COORD_SECTION")) {
+					_ = MessageBox.Show("Can't open file. Expected \"NODE_COORD_SECTION : \" : at line 6!");
+					return;
+				}
+				for (var i = 6; i < lines.Length - 1; i++) {
+					await Task.Run(() => {
+						var splitted = lines[i].Split(' ').Select(str => {
+							var success = int.TryParse(str, out var value);
+							return (value, success);
+						}).Where(pair => pair.success).Select(pair => pair.value).ToList();
+						if (splitted.Count is not 3) {
+							_ = MessageBox.Show("Can't open file. Non-integers were found in the file!");
+							this.CanOperate = false;
+							this.Status = Status.Ready;
+							return;
+						}
+						var newFood = new FoodNode() {
+							Id = splitted[0],
+							X = splitted[1],
+							Y = splitted[2]
+						};
+						newFoods.Add(newFood);
+						colonyViewModel.MinCoordinate = splitted[1] > splitted[2] ? splitted[1] : splitted[2];
+						colonyViewModel.MaxCoordinate = splitted[1] < splitted[2] ? splitted[1] : splitted[2];
+					});
+				}
+				colonyViewModel.AntCount = AntNode.DefaultAntCount;
+				colonyViewModel.FoodNodes = new ObservableCollection<FoodNode>(newFoods);
+				colonyViewModel.PheromoneEvaporationRate = PheromoneNode.DefaultEvaporationRate;
 			}
-			var lines = await AsyncFileReader.ReadAllLinesAsync(openFileDialog.FileName, Encoding.UTF8);
-			if (int.Parse(lines[3].Split(':')[1].Trim()) > 300) {
-				_ = MessageBox.Show("Can't open file. For performance reasons, only graphs with < 300 nodes are allowed!");
-				return;
-			}
-			if (!lines[4].EndsWith("EUC_2D")) {
-				_ = MessageBox.Show("Can't open file. Only EUC_2D graphs are allowed!");
-				return;
-			}
-			if (!lines[5].Equals("NODE_COORD_SECTION")) {
-				_ = MessageBox.Show("Can't open file. Expected \"NODE_COORD_SECTION : \" : at line 6!");
-				return;
-			}
-			for (var i = 6; i < lines.Length - 1; i++) {
-				await Task.Run(() => {
-					var splitted = lines[i].Split(' ').Select(str => {
-						var success = int.TryParse(str, out var value);
-						return (value, success);
-					}).Where(pair => pair.success).Select(pair => pair.value).ToList();
-					if (splitted.Count is not 3) {
-						_ = MessageBox.Show("Can't open file. Non-integers were found in the file!");
-						this.CanOperate = false;
-						this.Status = Status.Ready;
-						return;
-					}
-					var newFood = new FoodNode() {
-						Id = splitted[0],
-						X = splitted[1],
-						Y = splitted[2]
-					};
-					newFoods.Add(newFood);
-					colonyViewModel.MinCoordinate = splitted[1] > splitted[2] ? splitted[1] : splitted[2];
-					colonyViewModel.MaxCoordinate = splitted[1] < splitted[2] ? splitted[1] : splitted[2];
-				});
-			}
-			colonyViewModel.AntCount = AntNode.DefaultAntCount;
-			colonyViewModel.FoodNodes = new ObservableCollection<FoodNode>(newFoods);
-			colonyViewModel.PheromoneEvaporationRate = PheromoneNode.DefaultEvaporationRate;
+			this.CanOperate = true;
+			this.ScrollViewer.ScrollToBottom();
+			this.ScrollViewer.ScrollToLeftEnd();
+			this.Status = Status.Ready;
+			this.ColonyViewModel = colonyViewModel;
 		}
-		this.CanOperate = true;
-		this.ScrollViewer.ScrollToBottom();
-		this.ScrollViewer.ScrollToLeftEnd();
-		this.Status = Status.Ready;
-		this.ColonyViewModel = colonyViewModel;
 	}
 	public void OnPropertyChanged(string value) => this.PropertyChanged?.Invoke(this, new(value));
 }

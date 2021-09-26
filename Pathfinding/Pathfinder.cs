@@ -5,7 +5,6 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 using AntColony.Colony;
-using AntColony.Pathfinding;
 
 namespace AntColony.Algorithms;
 internal class Pathfinder {
@@ -23,6 +22,8 @@ internal class Pathfinder {
 						Id = i,
 						X = colonyStartX,
 						Y = colonyStartY,
+						Direction = Direction.North,
+						ReturningHome = false
 					};
 					newAnts.Add(newAnt);
 				});
@@ -74,44 +75,6 @@ internal class Pathfinder {
 			this._ColonyViewModel.PheromoneNodes = new ObservableCollection<PheromoneNode>(updatedPheromones);
 		}
 	});
-	private static async Task<List<Probability>> GenerateProbabilities() {
-		List<Probability> probabilities;
-		probabilities = await Task.Run(() => probabilities = new() {
-			new Probability() {
-				Direction = Direction.North,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			},
-			new Probability() {
-				Direction = Direction.South,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			},
-			new Probability() {
-				Direction = Direction.East,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			},
-			new Probability() {
-				Direction = Direction.West,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			},
-			new Probability() {
-				Direction = Direction.NorthEast,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			},
-			new Probability() {
-				Direction = Direction.NorthWest,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			},
-			new Probability() {
-				Direction = Direction.SouthEast,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			},
-			new Probability() {
-				Direction = Direction.SouthWest,
-				Value = Probability.MinProbability + RandomNumberGenerator.GetInt32(Probability.MaxProbability - Probability.MinProbability)
-			}
-		});
-		return probabilities;
-	}
 	private async Task LayPheromone(int x, int y) => await Task.Run(() => {
 		if (this._ColonyViewModel.PheromoneNodes is not null) {
 			var pheromones = this._ColonyViewModel.PheromoneNodes.ToList();
@@ -134,10 +97,10 @@ internal class Pathfinder {
 			for (var i = 0; i < currentAnts.Count; i++) {
 				await Task.Run(async () => {
 					var currentAnt = currentAnts[i];
-					await this.CheckPheromone(currentAnt);
-					var movedAnt = AntNode.MoveAnt(currentAnt, await GenerateProbabilities());
+					//await this.CheckPheromone(currentAnt);
+					var movedAnt = await AntNode.MoveAnt(currentAnt);
 					updatedAnts.Add(movedAnt);
-					await this.LayPheromone(currentAnt.X, currentAnt.Y);
+					//await this.LayPheromone(currentAnt.X, currentAnt.Y);
 				});
 			}
 			this._ColonyViewModel.AntNodes = new ObservableCollection<AntNode>(updatedAnts);

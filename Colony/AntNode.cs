@@ -1,59 +1,150 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-
-using AntColony.Pathfinding;
+﻿using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace AntColony.Colony;
 internal class AntNode : Node {
-	public const int AntMaxStep = 4;
-	public const int DefaultAntCount = 2;
-	public const int MinAntCount = 2;
+	public const int ChunkStep = 3;
+	public const int Step = 1;
+	public const int DefaultAntCount = 1;
+	public const int MinAntCount = 1;
 	public const int MaxAntCount = 4;
+	public int SurroundingMoves { get; set; }
+	public bool ReturningHome { get; set; }
+	public Direction Direction { get; set; }
 	public static AntNode Clone(AntNode ant) {
 		var clone = new AntNode() {
 			Id = ant.Id,
 			X = ant.X,
-			Y = ant.Y
+			Y = ant.Y,
+			Direction = ant.Direction,
+			ReturningHome = ant.ReturningHome,
+			SurroundingMoves = ant.SurroundingMoves
 		};
 		return clone;
 	}
-	public static AntNode MoveAnt(AntNode ant, List<Probability> probabilities) {
-		var maxProbability = probabilities.MaxBy(p => p.Value);
-		var step = RandomNumberGenerator.GetInt32(AntMaxStep + 1);
-		if (maxProbability is not null) {
-			switch (maxProbability.Direction) {
-				case Direction.North:
-					ant.Y = ant.Y + step > MaxNodes ? ant.Y - step : ant.Y + step;
+	public static async Task<AntNode> MoveAnt(AntNode ant) => await Task.Run(async () => {
+		if (ant.SurroundingMoves == 8) {
+			var choose = await Task.Run(() => RandomNumberGenerator.GetInt32(0, 4));
+			var x = 0;
+			var y = 0;
+			switch (choose) {
+				case 0:
+					x = ant.X + ChunkStep;
+					y = ant.Y;
 					break;
-				case Direction.South:
-					ant.Y = ant.Y - step < 0 ? ant.Y + step : ant.Y - step;
+				case 1:
+					x = ant.X;
+					y = ant.Y - ChunkStep;
 					break;
-				case Direction.East:
-					ant.X = ant.X + step > MaxNodes ? ant.X - step : ant.X + step;
+				case 2:
+					x = ant.X - ChunkStep;
+					y = ant.Y;
 					break;
-				case Direction.West:
-					ant.X = ant.X - step < 0 ? ant.X + step : ant.X - step;
-					break;
-				case Direction.NorthEast:
-					ant.Y = ant.Y + step > MaxNodes ? ant.Y - step : ant.Y + step;
-					ant.X = ant.X + step > MaxNodes ? ant.X - step : ant.X + step;
-					break;
-				case Direction.NorthWest:
-					ant.Y = ant.Y + step > MaxNodes ? ant.Y - step : ant.Y + step;
-					ant.X = ant.X - step < 0 ? ant.X + step : ant.X - step;
-					break;
-				case Direction.SouthEast:
-					ant.Y = ant.Y - step < 0 ? ant.Y + step : ant.Y - step;
-					ant.X = ant.X + step > MaxNodes ? ant.X - step : ant.X + step;
-					break;
-				case Direction.SouthWest:
-					ant.Y = ant.Y - step < 0 ? ant.Y + step : ant.Y - step;
-					ant.X = ant.X - step < 0 ? ant.X + step : ant.X - step;
+				case 3:
+					x = ant.X;
+					y = ant.Y + ChunkStep;
 					break;
 			}
-			return Clone(ant);
+			var antInNewChunk = new AntNode() {
+				Id = ant.Id,
+				X = x,
+				Y = y,
+				Direction = Direction.North,
+				ReturningHome = false,
+			};
+			return Clone(antInNewChunk);
 		}
+		switch (ant.Direction) {
+			case Direction.North:
+				if (!ant.ReturningHome) {
+					ant.Y += Step;
+					ant.ReturningHome = true;
+					break;
+				}
+				ant.Y -= Step;
+				ant.ReturningHome = false;
+				ant.Direction = Direction.NorthWest;
+				break;
+			case Direction.South:
+				if (!ant.ReturningHome) {
+					ant.Y -= Step;
+					ant.ReturningHome = true;
+					break;
+				}
+				ant.Y += Step;
+				ant.ReturningHome = false;
+				ant.Direction = Direction.SouthEast;
+				break;
+			case Direction.East:
+				if (!ant.ReturningHome) {
+					ant.X += Step;
+					ant.ReturningHome = true;
+					break;
+				}
+				ant.X -= Step;
+				ant.ReturningHome = false;
+				ant.Direction = Direction.NorthEast;
+				break;
+			case Direction.West:
+				if (!ant.ReturningHome) {
+					ant.X -= Step;
+					ant.ReturningHome = true;
+					break;
+				}
+				ant.X += Step;
+				ant.ReturningHome = false;
+				ant.Direction = Direction.SouthWest;
+				break;
+			case Direction.NorthEast:
+				if (!ant.ReturningHome) {
+					ant.Y += Step;
+					ant.X += Step;
+					ant.ReturningHome = true;
+					break;
+				}
+				ant.Y -= Step;
+				ant.X -= Step;
+				ant.ReturningHome = false;
+				ant.Direction = Direction.North;
+				break;
+			case Direction.SouthEast:
+				if (!ant.ReturningHome) {
+					ant.Y -= Step;
+					ant.X += Step;
+					ant.ReturningHome = true;
+					break;
+				}
+				ant.Y += Step;
+				ant.X -= Step;
+				ant.ReturningHome = false;
+				ant.Direction = Direction.East;
+				break;
+			case Direction.NorthWest:
+				if (!ant.ReturningHome) {
+					ant.Y += Step;
+					ant.X -= Step;
+					ant.ReturningHome = true;
+					break;
+				}
+				ant.Y -= Step;
+				ant.X += Step;
+				ant.ReturningHome = false;
+				ant.Direction = Direction.West;
+				break;
+			case Direction.SouthWest:
+				if (!ant.ReturningHome) {
+					ant.Y -= Step;
+					ant.X -= Step;
+					ant.ReturningHome = true;
+					break;
+				}
+				ant.Y += Step;
+				ant.X += Step;
+				ant.ReturningHome = false;
+				ant.Direction = Direction.South;
+				break;
+		}
+		ant.SurroundingMoves++;
 		return Clone(ant);
-	}
+	});
 }
