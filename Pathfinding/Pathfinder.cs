@@ -121,13 +121,14 @@ internal class Pathfinder {
 	private async Task LayPheromone(AntNode ant) => await Task.Run(() => {
 		if (this._ColonyViewModel.PheromoneNodes is not null && ant.CanLayPheromones) {
 			var pheromones = this._ColonyViewModel.PheromoneNodes.ToList();
-			var newPheromone = new PheromoneNode() {
+			var pheromone = new PheromoneNode() {
 				Id = this._CurrentPheromoneId++,
 				X = ant.X,
 				Y = ant.Y,
 				Strength = 1
 			};
-			pheromones.Add(newPheromone);
+			pheromones.Add(pheromone);
+			ant.Pheromones.Add(pheromone);
 			this._ColonyViewModel.PheromoneNodes = new ObservableCollection<PheromoneNode>(pheromones);
 		}
 	});
@@ -143,9 +144,9 @@ internal class Pathfinder {
 					await this.LayPheromone(movedAnt);
 					updatedAnts.Add(movedAnt);
 				});
+				this._ColonyViewModel.AntNodes = new ObservableCollection<AntNode>(updatedAnts);
 			}
 			await this.CheckFoods();
-			this._ColonyViewModel.AntNodes = new ObservableCollection<AntNode>(updatedAnts);
 		}
 	});
 	public async Task Run() {

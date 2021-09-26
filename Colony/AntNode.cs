@@ -31,7 +31,6 @@ internal class AntNode : Node {
 		return clone;
 	}
 	public static async Task<AntNode> MoveAnt(AntNode ant) => await Task.Run(async () => {
-		System.Diagnostics.Debug.WriteLine(ant.CanLayPheromones);
 		if (ant.SurroundingMoves == 8) {
 			var choose = await Task.Run(() => RandomNumberGenerator.GetInt32(0, 4));
 			var x = 0;
