@@ -7,9 +7,9 @@ using AntColony.Pathfinding;
 namespace AntColony.Colony;
 internal class AntNode : Node {
 	public const int AntMaxStep = 4;
-	public const int DefaultAntCount = 4;
-	public const int MinAntCount = 1;
-	public const int MaxAntCount = 10;
+	public const int DefaultAntCount = 2;
+	public const int MinAntCount = 2;
+	public const int MaxAntCount = 4;
 	public static AntNode Clone(AntNode ant) {
 		var clone = new AntNode() {
 			Id = ant.Id,
