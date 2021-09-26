@@ -148,11 +148,11 @@ internal class MainViewModel : INotifyPropertyChanged {
 			colonyViewModel.AntCount = AntNode.DefaultAntCount;
 			colonyViewModel.FoodNodes = new ObservableCollection<FoodNode>(newFoods);
 			colonyViewModel.PheromoneEvaporationRate = PheromoneNode.DefaultEvaporationRate;
-			this.CanOperate = true;
-			this.ScrollViewer.ScrollToBottom();
-			this.ScrollViewer.ScrollToLeftEnd();
-			this.Status = Status.Ready;
 		}
+		this.CanOperate = true;
+		this.ScrollViewer.ScrollToBottom();
+		this.ScrollViewer.ScrollToLeftEnd();
+		this.Status = Status.Ready;
 		this.ColonyViewModel = colonyViewModel;
 	}
 	public void OnPropertyChanged(string value) => this.PropertyChanged?.Invoke(this, new(value));
