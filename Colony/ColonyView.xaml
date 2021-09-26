@@ -29,6 +29,19 @@
 					</DataTrigger>
 				</Style.Triggers>
 			</Style>
+			<Style x:Key="PheromoneStyle" TargetType="Ellipse">
+				<Style.Setters>
+					<Setter Property="Height" Value="2.5"/>
+					<Setter Property="Width" Value="2.5"/>
+					<Setter Property="Stroke" Value="#7F808080"/>
+					<Setter Property="Fill" Value="{Binding ObservableStrength, Converter={StaticResource ObservableStrengthConverter}}"/>
+				</Style.Setters>
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding ObservableStrength}" Value="0">
+						<Setter Property="Visibility" Value="Hidden"/>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
 		</ResourceDictionary>
 	</UserControl.Resources>
 	<Grid>
@@ -77,6 +90,30 @@
 			<ItemsControl.Resources>
 				<DataTemplate DataType="{x:Type Colony:FoodNode}">
 					<Ellipse Style="{StaticResource FoodStyle}"/>
+				</DataTemplate>
+			</ItemsControl.Resources>
+		</ItemsControl>
+		<ItemsControl Panel.ZIndex="0" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding PheromoneNodes}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<Canvas RenderTransformOrigin="0.5, 0.5" MinWidth="1200" MinHeight="1200">
+						<Canvas.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleY="-1"/>
+							</TransformGroup>
+						</Canvas.RenderTransform>
+					</Canvas>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemContainerStyle>
+				<Style>
+					<Setter Property="Canvas.Left" Value="{Binding Path=X}"/>
+					<Setter Property="Canvas.Top" Value="{Binding Path=Y}"/>
+				</Style>
+			</ItemsControl.ItemContainerStyle>
+			<ItemsControl.Resources>
+				<DataTemplate DataType="{x:Type Colony:PheromoneNode}">
+					<Ellipse Style="{StaticResource PheromoneStyle}"/>
 				</DataTemplate>
 			</ItemsControl.Resources>
 		</ItemsControl>
