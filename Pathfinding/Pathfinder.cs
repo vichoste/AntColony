@@ -50,6 +50,9 @@ internal class Pathfinder {
 					var currentAnt = this._ColonyViewModel.AntNodes[i];
 					var currentPheromones = this._ColonyViewModel.PheromoneNodes.ToList();
 					hitPheromones = currentPheromones.Where(p => p.X == currentAnt.X && p.Y == currentAnt.Y).ToList();
+					foreach (var hit in hitPheromones) {
+						System.Diagnostics.Debug.WriteLine(hit.Strength);
+					}
 				});
 			}
 			if (hitPheromones is not null) {
