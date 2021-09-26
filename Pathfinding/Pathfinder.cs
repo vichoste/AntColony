@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 using AntColony.Colony;
@@ -64,6 +65,14 @@ internal class Pathfinder {
 							}
 						};
 						var ant = AntNode.MoveAnt(newAnts[i], firstProbabilities);
+						if (this._ColonyViewModel.FoodNodes is not null) {
+							for (var j = 0; j < this._ColonyViewModel.FoodNodes.Count; j++) {
+								var matchingNode = this._ColonyViewModel.FoodNodes.ToList().Find(f => f.X == ant.X && f.Y == ant.Y);
+								if (matchingNode is not null) {
+									System.Diagnostics.Debug.WriteLine("Hit!");
+								}
+							}
+						}
 						var newPheromone = new PheromoneNode() {
 							X = ant.X,
 							Y = ant.Y
