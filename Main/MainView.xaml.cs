@@ -43,19 +43,23 @@ public partial class MainView : Window {
 	}
 	private void Minimize(object sender, RoutedEventArgs e) => this.WindowState = WindowState.Minimized;
 	private void ReleaseKey(object sender, KeyEventArgs e) => this._MainViewModel.IsControlPressed = false;
-	private void Run(object sender, RoutedEventArgs e) {
+	private async void Run(object sender, RoutedEventArgs e) {
 		if (this._MainViewModel.ColonyViewModel is not null) {
 			this._MainViewModel.CanOperate = false;
 			var pathfinder = new Pathfinder(this._MainViewModel.ColonyViewModel);
-			pathfinder.Run(); // TODO something with this result
+			await pathfinder.Run(); // TODO something with this result
 			this._MainViewModel.CanOperate = true;
 		}
 	}
 	private void ZoomPixels(object sender, MouseWheelEventArgs e) {
 		if (e.Delta > 0 && this._MainViewModel.IsControlPressed && this._MainViewModel.PixelsZoom + MainModel.ZoomFactor <= MainModel.MaxZoomFactor) {
 			this._MainViewModel.PixelsZoom += MainModel.ZoomFactor;
+			this._MainViewModel.ScrollViewer.ScrollToBottom();
+			this._MainViewModel.ScrollViewer.ScrollToLeftEnd();
 		} else if (e.Delta < 0 && this._MainViewModel.IsControlPressed && this._MainViewModel.PixelsZoom - MainModel.ZoomFactor >= MainModel.MinZoomFactor) {
 			this._MainViewModel.PixelsZoom -= MainModel.ZoomFactor;
+			this._MainViewModel.ScrollViewer.ScrollToBottom();
+			this._MainViewModel.ScrollViewer.ScrollToLeftEnd();
 		}
 	}
 	[DllImport("user32.dll")]

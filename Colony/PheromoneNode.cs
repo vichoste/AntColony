@@ -1,17 +1,30 @@
 ﻿namespace AntColony.Colony;
 internal class PheromoneNode : Node {
-	public const double DefaultEvaporationRate = .01;
-	public const double MinPheromoneEvaporationRate = .01;
-	public const double MaxPheromoneEvaporationRate = 1;
-	public byte ObservableStrength => (byte)(85000 * this.Strength / 333 - 85 / 333);
-	public double Strength { get; private set; }
-	public PheromoneNode() => this.Strength = 1;
-	public void Evaporate(double pheromoneEvaporationRate) {
-		if (this.Strength - pheromoneEvaporationRate < 0) {
-			this.Strength = 0;
-		} else if (this.Strength > 0) {
-			this.Strength -= pheromoneEvaporationRate;
-		}
+	public const double DefaultEvaporationRate = .1;
+	public const double MinPheromoneEvaporationRate = .1;
+	public const double MaxPheromoneEvaporationRate = .999;
+	public bool CanShow => this.Strength <= 200;
+	public byte ObservableStrength => (byte)(255 - (85000 * this.Strength / 333 - 85 / 333));
+	public double Strength { get; set; }
+	public static PheromoneNode Clone(PheromoneNode pheromone) {
+		var clone = new PheromoneNode() {
+			Id = pheromone.Id,
+			X = pheromone.X,
+			Y = pheromone.Y,
+			Strength = pheromone.Strength
+		};
+		return clone;
 	}
-	public void Renew() => this.Strength = 1;
+	public static PheromoneNode Evaporate(PheromoneNode pheromone, double pheromoneEvaporationRate) {
+		if (pheromone.Strength - pheromoneEvaporationRate <= 0) {
+			pheromone.Strength = 0;
+		} else {
+			pheromone.Strength -= pheromoneEvaporationRate;
+		}
+		return Clone(pheromone);
+	}
+	public static PheromoneNode Update(PheromoneNode pheromone) {
+		pheromone.Strength = 1;
+		return Clone(pheromone);
+	}
 }

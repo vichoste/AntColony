@@ -10,6 +10,7 @@ using AntColony.Pathfinding;
 namespace AntColony.Algorithms;
 internal class Pathfinder {
 	private readonly ColonyViewModel _ColonyViewModel;
+	private int _CurrentPheromoneId;
 	public Pathfinder(ColonyViewModel colonyViewModel) => this._ColonyViewModel = colonyViewModel;
 	private async Task CreateAnts() {
 		if (this._ColonyViewModel.AntNodes is not null) {
@@ -42,33 +43,37 @@ internal class Pathfinder {
 			}
 		}
 	}
-	private async Task CheckPheromones() {
+	private async Task CheckPheromone(AntNode ant) {
 		if (this._ColonyViewModel.AntNodes is not null && this._ColonyViewModel.PheromoneNodes is not null) {
-			List<PheromoneNode>? hitPheromones = null;
-			for (var i = 0; i < this._ColonyViewModel.AntNodes.Count; i++) {
+			var currentPheromones = this._ColonyViewModel.PheromoneNodes.ToList();
+			var updatedPheromones = new List<PheromoneNode>();
+			for (var i = 0; i < currentPheromones.Count; i++) {
 				await Task.Run(() => {
-					var currentAnt = this._ColonyViewModel.AntNodes[i];
-					var currentPheromones = this._ColonyViewModel.PheromoneNodes.ToList();
-					hitPheromones = currentPheromones.Where(p => p.X == currentAnt.X && p.Y == currentAnt.Y).ToList();
-					foreach (var hit in hitPheromones) {
-						System.Diagnostics.Debug.WriteLine(hit.Strength);
+					if (ant.X == currentPheromones[i].X && ant.Y == currentPheromones[i].Y) {
+						updatedPheromones.Add(PheromoneNode.Update(currentPheromones[i]));
+					} else {
+						updatedPheromones.Add(currentPheromones[i]);
 					}
 				});
 			}
-			if (hitPheromones is not null) {
-				for (var i = 0; i < hitPheromones.Count; i++) {
-					await Task.Run(() => hitPheromones[i].Renew());
-				}
-			}
+			this._ColonyViewModel.PheromoneNodes = new ObservableCollection<PheromoneNode>(updatedPheromones);
 		}
 	}
-	private async Task EvaporatePheromones() => await Task.Run(() => {
+	private async Task EvaporatePheromones() {
 		if (this._ColonyViewModel.PheromoneNodes is not null) {
 			var currentPheromones = this._ColonyViewModel.PheromoneNodes.ToList();
-			_ = currentPheromones.RemoveAll(p => p.Strength == 0);
-			this._ColonyViewModel.PheromoneNodes = new ObservableCollection<PheromoneNode>(currentPheromones);
+			var updatedPheromones = new List<PheromoneNode>();
+			for (var i = 0; i < currentPheromones.Count; i++) {
+				await Task.Run(() => {
+					var updatedPheromone = PheromoneNode.Evaporate(currentPheromones[i], this._ColonyViewModel.PheromoneEvaporationRate);
+					if (updatedPheromone.Strength > 0) {
+						updatedPheromones.Add(updatedPheromone);
+					}
+				});
+			}
+			this._ColonyViewModel.PheromoneNodes = new ObservableCollection<PheromoneNode>(updatedPheromones);
 		}
-	});
+	}
 	private static async Task<List<Probability>> GenerateProbabilities() {
 		List<Probability> probabilities;
 		probabilities = await Task.Run(() => probabilities = new() {
@@ -111,8 +116,10 @@ internal class Pathfinder {
 		if (this._ColonyViewModel.PheromoneNodes is not null) {
 			var currentPheromoneNodes = this._ColonyViewModel.PheromoneNodes.ToList();
 			currentPheromoneNodes.Add(new PheromoneNode() {
+				Id = this._CurrentPheromoneId++,
 				X = x,
 				Y = y,
+				Strength = 1
 			});
 			this._ColonyViewModel.PheromoneNodes = new ObservableCollection<PheromoneNode>(currentPheromoneNodes);
 		}
@@ -124,20 +131,20 @@ internal class Pathfinder {
 			for (var i = 0; i < currentAnts.Count; i++) {
 				await Task.Run(async () => {
 					var currentAnt = currentAnts[i];
+					await this.CheckPheromone(currentAnt);
 					var movedAnt = await this.MoveAnt(currentAnt);
 					newAnts.Add(movedAnt);
-					this.LayPheromone(movedAnt.X, movedAnt.Y);
+					this.LayPheromone(currentAnt.X, currentAnt.Y);
 				});
 			}
 			await this.CheckFoods();
 			this._ColonyViewModel.AntNodes = new ObservableCollection<AntNode>(newAnts);
 		}
 	}
-	public async void Run() {
+	public async Task Run() {
 		await this.CreateAnts();
 		while (true) {
 			await this.MoveAnts();
-			await this.CheckPheromones();
 			await this.EvaporatePheromones();
 		}
 	}
