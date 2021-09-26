@@ -16,16 +16,16 @@ internal class AntNode : Node {
 	public Direction Direction { get; set; }
 	public List<PheromoneNode> Pheromones { get; set; }
 	public AntNode() => this.Pheromones = new List<PheromoneNode>();
-	public static AntNode Clone(AntNode ant) {
+	public static AntNode Clone(bool canLayPheromones, int id, int x, int y, Direction direction, List<PheromoneNode> pheromones, bool returningHome, int surroundingMoves) {
 		var clone = new AntNode() {
-			Id = ant.Id,
-			X = ant.X,
-			Y = ant.Y,
-			Direction = ant.Direction,
-			ReturningHome = ant.ReturningHome,
-			SurroundingMoves = ant.SurroundingMoves,
-			Pheromones = ant.Pheromones.ToList(),
-			CanLayPheromones = ant.CanLayPheromones
+			CanLayPheromones = canLayPheromones,
+			Id = id,
+			X = x,
+			Y = y,
+			Direction = direction,
+			Pheromones = pheromones.ToList(),
+			ReturningHome = returningHome,
+			SurroundingMoves = surroundingMoves,
 		};
 		return clone;
 	}
@@ -52,17 +52,7 @@ internal class AntNode : Node {
 					y = ant.Y + ChunkStep;
 					break;
 			}
-			var antInNewChunk = new AntNode() {
-				Id = ant.Id,
-				X = x,
-				Y = y,
-				Direction = Direction.North,
-				ReturningHome = ant.ReturningHome,
-				SurroundingMoves = ant.SurroundingMoves,
-				Pheromones = ant.Pheromones.ToList(),
-				CanLayPheromones = ant.CanLayPheromones
-			};
-			return Clone(antInNewChunk);
+			return Clone(ant.CanLayPheromones, ant.Id, x, y, Direction.North, ant.Pheromones.ToList(), false, ant.SurroundingMoves);
 		}
 		switch (ant.Direction) {
 			case Direction.North:
@@ -155,6 +145,6 @@ internal class AntNode : Node {
 				break;
 		}
 		ant.SurroundingMoves++;
-		return Clone(ant);
+		return Clone(ant.CanLayPheromones, ant.Id, ant.X, ant.Y, Direction.North, ant.Pheromones.ToList(), ant.ReturningHome, ant.SurroundingMoves);
 	});
 }
