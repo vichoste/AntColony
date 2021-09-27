@@ -13,8 +13,14 @@ internal class AntNode : Node {
 	public const int MinAntCount = 1;
 	public const int MinStrength = 0;
 	public const int MaxAntCount = 4;
+	public const int StayLimit = 100;
+	public const int WanderLimit = 100;
 	public bool CanLayPheromones { get; set; }
+	public int HomeX { get; set; }
+	public int HomeY { get; set; }
 	public List<PheromoneNode> Pheromones { get; set; }
+	public int Stay { get; set; }
+	public int Wandering { get; set; }
 	public AntNode() => this.Pheromones = new List<PheromoneNode>();
 	private static async Task<List<double>> GetStrongestDistance(AntNode ant, List<PheromoneNode> pheromones) => await Task.Run(() => {
 		var strengths = new List<double>();
@@ -28,31 +34,36 @@ internal class AntNode : Node {
 		strengths.Add(foundWestPheromone is not null ? foundWestPheromone.Strength * Factor : MinStrength);
 		return strengths;
 	});
-	public static AntNode Clone(bool canLayPheromones, int id, int x, int y, List<PheromoneNode> pheromones) {
+	public static AntNode Clone(bool canLayPheromones, int homeX, int homeY, int id, int x, int y, List<PheromoneNode> pheromones, int staying, int wandering) {
 		var clone = new AntNode() {
 			CanLayPheromones = canLayPheromones,
+			HomeX = homeX,
+			HomeY = homeY,
 			Id = id,
 			X = x,
 			Y = y,
 			Pheromones = pheromones.ToList(),
+			Wandering = wandering
 		};
 		return clone;
 	}
 	public static async Task<AntNode> MoveAnt(AntNode ant, List<PheromoneNode> pheromones) => await Task.Run(async () => {
 		var strengths = await GetStrongestDistance(ant, pheromones);
-		if (strengths.Sum() == 0) {
+		if (strengths.Sum() == 0 || ant.Stay >= StayLimit) {
 			var y = RandomNumberGenerator.GetInt32(-1, 2);
 			var x = RandomNumberGenerator.GetInt32(-1, 2);
-			return Clone(ant.CanLayPheromones, ant.Id, ant.X + x, ant.Y + y, ant.Pheromones);
+			return Clone(ant.CanLayPheromones, ant.HomeX, ant.HomeY, ant.Id, ant.X + x, ant.Y + y, ant.Pheromones, 0, 0);
 		}
-		return await Task.Run(() => {
-			var x = 0;
-			var y = 0;
-			x += Math.Sign(strengths[0] * RandomNumberGenerator.GetInt32(0, 2)) + RandomNumberGenerator.GetInt32(0, 2);
-			x -= Math.Sign(strengths[1] * RandomNumberGenerator.GetInt32(0, 2)) + RandomNumberGenerator.GetInt32(0, 2);
-			y += Math.Sign(strengths[2] * RandomNumberGenerator.GetInt32(0, 2)) + RandomNumberGenerator.GetInt32(0, 2);
-			y -= Math.Sign(strengths[3] * RandomNumberGenerator.GetInt32(0, 2)) + RandomNumberGenerator.GetInt32(0, 2);
-			return Clone(ant.CanLayPheromones, ant.Id, ant.X + x, ant.Y + y, ant.Pheromones);
-		});
+		return ant.Wandering < WanderLimit
+			? await Task.Run(() => {
+				var x = 0;
+				var y = 0;
+				x += Math.Sign(strengths[0] * RandomNumberGenerator.GetInt32(0, 2)) + RandomNumberGenerator.GetInt32(0, 2);
+				x -= Math.Sign(strengths[1] * RandomNumberGenerator.GetInt32(0, 2)) + RandomNumberGenerator.GetInt32(0, 2);
+				y += Math.Sign(strengths[2] * RandomNumberGenerator.GetInt32(0, 2)) + RandomNumberGenerator.GetInt32(0, 2);
+				y -= Math.Sign(strengths[3] * RandomNumberGenerator.GetInt32(0, 2)) + RandomNumberGenerator.GetInt32(0, 2);
+				return Clone(ant.CanLayPheromones, ant.HomeX, ant.HomeY, ant.Id, ant.X + x, ant.Y + y, ant.Pheromones, ++ant.Stay, ++ant.Wandering);
+			})
+			: Clone(ant.CanLayPheromones, ant.HomeX, ant.HomeY, ant.Id, ant.HomeX, ant.HomeY, ant.Pheromones, ++ant.Stay, 0);
 	});
 }

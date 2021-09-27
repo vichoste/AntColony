@@ -22,6 +22,8 @@ internal class Pathfinder {
 						Id = i,
 						X = colonyStartX,
 						Y = colonyStartY,
+						HomeX = colonyStartX,
+						HomeY = colonyStartY,
 					};
 					newAnts.Add(newAnt);
 				});
@@ -37,6 +39,10 @@ internal class Pathfinder {
 			var hitFood = food.Find(f => f.X == ant.X && f.Y == ant.Y);
 			if (hitFood is not null) {
 				ant.CanLayPheromones = true;
+				ant.HomeX = hitFood.X;
+				ant.HomeY = hitFood.Y;
+				ant.Stay = 0;
+				ant.Wandering = 0;
 			}
 			updatedAnts.Add(ant);
 		}
